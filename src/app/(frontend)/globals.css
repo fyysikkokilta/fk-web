@@ -1,0 +1,88 @@
+@import 'tailwindcss';
+@plugin "@tailwindcss/typography";
+
+/* https://uicolors.app/generate */
+/* Colors are mainly 300 points apart from each other */
+
+@theme {
+  --color-fk-white: #ffffff; /* FK white */
+
+  --color-fk-black: #000000; /* FK black */
+
+  --color-fk-gray: #201e1e; /* FK gray */
+  --color-fk-gray-light: #686162; /* FK gray light */
+  --color-fk-gray-lightest: #bfbaba; /* FK gray lightest */
+
+  --color-fk-yellow: #fbdb1d; /* FK yellow */
+  --color-fk-yellow-light: #fefcc3; /* FK yellow light */
+  --color-fk-yellow-dark: #a26b06; /* FK yellow dark */
+
+  --color-fk-orange: #ff8a04; /* Website orange */
+  --color-fk-orange-light: #ffe2a8; /* Website orange light */
+  --color-fk-orange-dark: #9e440e; /* Website orange dark */
+
+  --color-fk-blue: #007bff; /* Website blue */
+  --color-fk-blue-light: #48cbff; /* Website blue light */
+  --color-fk-blue-dark: #0d519b; /* Website blue dark */
+
+  --color-fk-green: #28a745; /* Website green */
+  --color-fk-green-light: #90e5a3; /* Website green light */
+  --color-fk-green-dark: #1a4d27; /* Website green dark */
+
+  --color-fk-red: #911f2f; /* Website red */
+  --color-fk-red-light: #e35055; /* Website red light */
+  --color-fk-red-lightest: #f9d3d2; /* Website red lightest */
+
+  --color-fk-purple: #6f42c1; /* Website purple */
+  --color-fk-purple-light: #ac9aeb; /* Website purple light */
+  --color-fk-purple-dark: #4d2e84; /* Website purple dark */
+}
+
+@layer base {
+  /* Enhance checkboxes in prose */
+  .prose input[type='checkbox'] {
+    width: 1.25em;
+    height: 1.25em;
+    accent-color: var(--color-fk-yellow);
+    border-radius: 0.375em;
+    border: 2px solid var(--color-fk-gray-lightest);
+    margin-right: 0.5em;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    vertical-align: middle;
+    transition:
+      border-color 0.2s,
+      box-shadow 0.2s;
+  }
+
+  .prose input[type='checkbox']:focus {
+    outline: none;
+    border-color: var(--color-fk-yellow);
+    box-shadow: 0 0 0 2px var(--color-fk-yellow-light);
+  }
+
+  /* Enhance tables in prose */
+  .prose table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 0.75em;
+    overflow: hidden;
+    box-shadow: 0 2px 8px 0 rgb(0 0 0 / 0.04);
+    margin-bottom: 2em;
+  }
+
+  .prose th,
+  .prose td {
+    text-align: left;
+  }
+
+  .prose th {
+    font-weight: bold;
+    color: var(--color-fk-gray);
+    background: var(--color-fk-yellow);
+  }
+
+  .prose tr:nth-child(even) td {
+    background: var(--color-fk-gray-lightest);
+  }
+}
