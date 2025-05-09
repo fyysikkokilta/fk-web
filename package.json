@@ -6,10 +6,12 @@
   "type": "module",
   "scripts": {
     "build": "next build",
+    "ci": "pnpm migrate && pnpm build",
     "dev": "next dev --turbo",
     "generate:importmap": "payload generate:importmap",
     "generate:types": "payload generate:types",
     "lint": "next lint",
+    "migrate": "payload migrate",
     "payload": "payload",
     "start": "next start"
   },
