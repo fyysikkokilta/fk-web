@@ -6,25 +6,25 @@ services:
       context: .
       dockerfile: Dockerfile
     restart: always
-    #depends_on:
-    #  - postgres
+    depends_on:
+      - postgres
     volumes:
       - ./public/media:/app/public/media
       - ./public/documents:/app/public/documents
     env_file:
       - .env
     ports:
-      - '127.0.0.1:3000:3000'
+      - '127.0.0.1:8001:3000'
     logging:
       driver: 'json-file'
       options:
         max-size: '10m'
         max-file: '5'
 
-  #postgres:
-  #  restart: always
-  #  image: postgres:latest
-  #  volumes:
-  #    - pgdata:/var/lib/postgresql/data
-  #  ports:
-  #    - '5432:5432'
+  postgres:
+    restart: always
+    image: postgres:latest
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
