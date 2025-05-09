@@ -477,7 +477,7 @@ export default buildConfig({
         typeof process.env.GOOGLE_CLIENT_SECRET === 'string',
       strategyName: 'google',
       useEmailAsIdentity: true,
-      onUserNotFoundBehavior: 'error',
+      onUserNotFoundBehavior: process.env.ALLOW_NON_EXISTING_USERS === 'true' ? 'create' : 'error',
       serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000',
       clientId: process.env.GOOGLE_CLIENT_ID || '',
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
