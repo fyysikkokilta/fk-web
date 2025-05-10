@@ -60,6 +60,9 @@ GOOGLE_CLIENT_ID=your-google-client-id
 GOOGLE_CLIENT_SECRET=your-google-client-secret
 GOOGLE_SITE_VERIFICATION=your-google-site-verification
 
+# OAuth
+ALLOW_NON_EXISTING_USERS=false
+
 # Stripe (if using payments)
 STRIPE_SECRET_KEY=...
 STRIPE_PUBLISHABLE_KEY=...
