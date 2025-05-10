@@ -104,19 +104,17 @@ export const TableOfContents = () => {
   const activeHeading = headings.find((h) => h.id === activeId)
 
   return (
-    <nav className="fixed top-0 left-0 z-10 max-h-[calc(100vh-2rem)] w-full overflow-y-auto lg:sticky lg:w-[20%]">
+    <nav className="fixed top-0 left-0 z-10 max-h-[calc(50dvh-2rem)] w-full overflow-y-auto lg:sticky lg:w-[20%]">
       {activeHeading && (
-        <div className="bg-fk-white sticky top-0 z-10 border-b-6 px-4 lg:border-none">
+        <div className="bg-fk-white top-0 z-10 border-b-6 px-4 lg:hidden">
           <div className="flex items-center justify-between">
             <button
-              className="hover:bg-fk-gray-lightest h-12 w-full rounded-md p-2 lg:hidden"
+              className="h-12 w-full cursor-pointer rounded-md p-2"
               onClick={() => setIsDrawerOpen(!isDrawerOpen)}
               aria-label="Toggle table of contents"
             >
               <div className="flex items-center justify-between">
-                <span className="text-primary-600 dark:text-primary-400 font-medium">
-                  {activeHeading.text}
-                </span>
+                <span className="font-medium">{activeHeading.text}</span>
                 {isDrawerOpen ? <ChevronUp size={24} /> : <ChevronDown size={24} />}
               </div>
             </button>
@@ -125,10 +123,7 @@ export const TableOfContents = () => {
       )}
       {isDrawerOpen && (
         <>
-          <div
-            className="bg-fk-gray-lightest fixed inset-0 z-20 lg:hidden"
-            onClick={() => setIsDrawerOpen(false)}
-          />
+          <div className="fixed inset-0 z-20 lg:hidden" onClick={() => setIsDrawerOpen(false)} />
           <div className="bg-fk-white fixed top-0 right-0 left-0 z-30 border-b-6 shadow-sm lg:hidden lg:shadow-none">
             <ul className="ml-0 max-h-[60vh] overflow-y-auto p-2">
               {headings.map((heading) => (
@@ -136,8 +131,8 @@ export const TableOfContents = () => {
                   key={heading.id}
                   className={`rounded-md transition-colors duration-200 ${
                     activeId === heading.id
-                      ? 'text-fk-blue bg-fk-gray-lightest font-medium'
-                      : 'text-fk-gray-light'
+                      ? 'text-fk-white bg-fk-orange font-medium'
+                      : 'text-fk-black'
                   }`}
                   style={{
                     marginLeft: `${(heading.level - 1) * 0.75}rem`
@@ -158,9 +153,7 @@ export const TableOfContents = () => {
             <li
               key={heading.id}
               className={`rounded-md transition-colors duration-200 ${
-                activeId === heading.id
-                  ? 'text-fk-blue bg-fk-gray-lightest font-medium'
-                  : 'text-fk-gray-light'
+                activeId === heading.id ? 'text-fk-white bg-fk-orange font-medium' : 'text-fk-black'
               }`}
               style={{
                 marginLeft: `${(heading.level - 2) * 0.75}rem`

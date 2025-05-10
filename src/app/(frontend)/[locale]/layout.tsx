@@ -39,7 +39,7 @@ export default async function RootLayout({
       className={`${sourceSans3.variable} ${sourceSans3.className} ${lora.variable} scroll-pt-4 scroll-smooth`}
     >
       <body>
-        <main className="flex flex-1 flex-shrink-0 flex-col items-center overflow-x-hidden">
+        <main className="flex h-screen min-h-dvh flex-1 flex-shrink-0 flex-col items-center overflow-x-hidden">
           <NextIntlClientProvider>
             <NextTopLoader color="#fbdb1d" showSpinner={false} showForHashAnchor={false} />
             <SkipLink />
