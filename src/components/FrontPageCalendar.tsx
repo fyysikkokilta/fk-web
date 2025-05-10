@@ -50,7 +50,10 @@ export const FrontPageCalendar = async ({ page }: FrontPageCalendarProps) => {
           <div className="mb-2 flex items-center gap-2">
             <span className="text-lg font-bold">{event.summary}</span>
           </div>
-          <div className="mt-auto flex items-center justify-between">
+          <div
+            // Same height as the icons
+            className="mt-auto flex min-h-18 items-center justify-between"
+          >
             <div>
               <div className="text-lg">
                 {format(new Date(event.start?.dateTime || event.start?.date || ''), 'd.M.')}
