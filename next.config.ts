@@ -14,22 +14,10 @@ const nextConfig: NextConfig = {
   output: 'standalone',
   experimental: {
     reactCompiler: true,
-    useCache: true,
-    serverActions: {
-      allowedOrigins: [
-        'localhost:8010',
-        'localhost:3000',
-        (process.env.NEXT_PUBLIC_SERVER_URL || 'fyysikkokilta.fi').replace(/^https?:\/\//, '')
-      ]
-    }
+    useCache: true
   },
   images: {
-    formats: ['image/avif'],
-    remotePatterns: [
-      {
-        hostname: '**'
-      }
-    ]
+    formats: ['image/avif']
   },
   async headers() {
     return [
