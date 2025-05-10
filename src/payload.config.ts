@@ -68,7 +68,8 @@ import schedulePublishHandler from './handlers/schedulePublishHandler'
 import sendNewsletterHandler from './handlers/sendNewsletterHandler'
 import { revalidateCollection } from './hooks/revalidateCollection'
 import { revalidateDeletedCollection } from './hooks/revalidateDeletedCollection'
-import { useCloudStorage } from './utils/useCloudStorage'
+import { enableCloudStorage } from './utils/enableCloudStorage'
+import { enableOAuth } from './utils/enableOAuth'
 
 const filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(filename)
@@ -472,9 +473,7 @@ export default buildConfig({
       webhookSecret: process.env.STRIPE_WEBHOOK_SECRET || ''
     }),*/
     OAuth2Plugin({
-      enabled:
-        typeof process.env.GOOGLE_CLIENT_ID === 'string' &&
-        typeof process.env.GOOGLE_CLIENT_SECRET === 'string',
+      enabled: enableOAuth(),
       strategyName: 'google',
       useEmailAsIdentity: true,
       onUserNotFoundBehavior: process.env.ALLOW_NON_EXISTING_USERS === 'true' ? 'create' : 'error',
@@ -507,9 +506,7 @@ export default buildConfig({
       }
     }),
     uploadthingStorage({
-      // eslint thinks this is a hook :D
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      enabled: useCloudStorage(),
+      enabled: enableCloudStorage(),
       collections: {
         media: true,
         documents: true
