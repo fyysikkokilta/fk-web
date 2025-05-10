@@ -59,6 +59,7 @@ import { PageNavigations } from './collections/PageNavigations'
 import { Pages } from './collections/Pages'
 import { Translations } from './collections/Translations'
 import { Users } from './collections/Users'
+import { env } from './env'
 import { Footer } from './globals/Footer'
 import { LandingPage } from './globals/LandingPage'
 import { MainNavigation } from './globals/MainNavigation'
@@ -81,7 +82,7 @@ const converters: PlaintextConverters<DefaultNodeTypes> = {
 }
 
 export default buildConfig({
-  serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000',
+  serverURL: env.NEXT_PUBLIC_SERVER_URL,
   admin: {
     user: Users.slug,
     importMap: {
@@ -109,7 +110,7 @@ export default buildConfig({
     },
     livePreview: {
       url: ({ collectionConfig, data, globalConfig, locale, req }) => {
-        const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
+        const baseUrl = env.NEXT_PUBLIC_SERVER_URL
         if (collectionConfig) {
           switch (collectionConfig.slug) {
             case Pages.slug:
@@ -248,18 +249,18 @@ export default buildConfig({
   }),
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URI || ''
+      connectionString: env.DATABASE_URI || ''
     }
   }),
   email: nodemailerAdapter({
-    defaultFromName: process.env.EMAIL_FROM_NAME || 'Fyysikkokilta',
-    defaultFromAddress: process.env.EMAIL_FROM_ADDRESS || 'aapo.laakkio@fyysikkokilta.fi',
+    defaultFromName: env.EMAIL_FROM_NAME || 'Fyysikkokilta',
+    defaultFromAddress: env.EMAIL_FROM_ADDRESS || 'aapo.laakkio@fyysikkokilta.fi',
     transportOptions: {
-      host: process.env.SMTP_HOST,
-      port: process.env.SMTP_PORT,
+      host: env.SMTP_HOST,
+      port: env.SMTP_PORT,
       auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASSWORD
+        user: env.SMTP_USER,
+        pass: env.SMTP_PASSWORD
       }
     }
   }),
@@ -312,7 +313,7 @@ export default buildConfig({
       fileSize: 1024 * 1024 * 8 // 8MB
     }
   },
-  secret: process.env.PAYLOAD_SECRET || '',
+  secret: env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: resolve(__dirname, 'payload-types.ts')
   },
@@ -333,13 +334,11 @@ export default buildConfig({
         payment: false
       },
       redirectRelationships: [Pages.slug],
-      defaultToEmail: process.env.FORM_BUILDER_DEFAULT_TO_EMAIL || 'aapo.laakkio@fyysikkokilta.fi',
+      defaultToEmail: env.FORM_BUILDER_DEFAULT_TO_EMAIL,
       beforeEmail: async (emails) => {
         return emails.map((email) => ({
           ...email,
-          from:
-            email.from ||
-            `${process.env.EMAIL_FROM_NAME || 'Fyysikkokilta'} <${process.env.EMAIL_FROM_ADDRESS || 'aapo.laakkio@fyysikkokilta.fi'}>`
+          from: email.from || `${env.EMAIL_FROM_NAME} <${env.EMAIL_FROM_ADDRESS}>`
         }))
       },
       formOverrides: {
@@ -428,9 +427,7 @@ export default buildConfig({
       globals: [LandingPage.slug],
       uploadsCollection: 'media',
       generateTitle: ({ title, locale }) =>
-        locale === 'fi'
-          ? `${title} - ${process.env.SITE_NAME}`
-          : `${title} - ${process.env.SITE_NAME_EN}`,
+        locale === 'fi' ? `${title} - ${env.SITE_NAME}` : `${title} - ${env.SITE_NAME_EN}`,
       generateDescription: ({ doc }) => {
         const data = doc.content as unknown as SerializedEditorState
         const plainText = convertLexicalToPlaintext({ converters, data })
@@ -458,9 +455,9 @@ export default buildConfig({
       },
       generateURL: ({ doc, locale }) => {
         if ('path' in doc) {
-          return `${process.env.NEXT_PUBLIC_SERVER_URL}/${locale}/${doc.path}`
+          return `${env.NEXT_PUBLIC_SERVER_URL}/${locale}/${doc.path}`
         } else {
-          return `${process.env.NEXT_PUBLIC_SERVER_URL}/${locale}`
+          return `${env.NEXT_PUBLIC_SERVER_URL}/${locale}`
         }
       },
       tabbedUI: true
@@ -468,18 +465,18 @@ export default buildConfig({
     importExportPlugin({}),
     // TODO: Set up Stripe plugin
     /*stripePlugin({
-      secretKey: process.env.STRIPE_SECRET_KEY || '',
-      publishableKey: process.env.STRIPE_PUBLISHABLE_KEY || '',
-      webhookSecret: process.env.STRIPE_WEBHOOK_SECRET || ''
+      secretKey: env.STRIPE_SECRET_KEY,
+      publishableKey: env.STRIPE_PUBLISHABLE_KEY,
+      webhookSecret: env.STRIPE_WEBHOOK_SECRET
     }),*/
     OAuth2Plugin({
       enabled: enableOAuth(),
       strategyName: 'google',
       useEmailAsIdentity: true,
-      onUserNotFoundBehavior: process.env.ALLOW_NON_EXISTING_USERS === 'true' ? 'create' : 'error',
-      serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000',
-      clientId: process.env.GOOGLE_CLIENT_ID || '',
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
+      onUserNotFoundBehavior: env.ALLOW_NON_EXISTING_USERS ? 'create' : 'error',
+      serverURL: env.NEXT_PUBLIC_SERVER_URL,
+      clientId: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET,
       authorizePath: '/oauth/google',
       callbackPath: '/oauth/google/callback',
       authCollection: 'users',
@@ -512,7 +509,7 @@ export default buildConfig({
         documents: true
       },
       options: {
-        token: process.env.UPLOADTHING_TOKEN,
+        token: env.UPLOADTHING_TOKEN,
         acl: 'public-read'
       }
     })

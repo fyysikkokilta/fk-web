@@ -5,6 +5,7 @@ import type { MetadataRoute } from 'next'
 import { unstable_cacheTag as cacheTag } from 'next/cache'
 import { getPayload } from 'payload'
 
+import { env } from '@/env'
 import { routing } from '@/i18n/routing'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -49,7 +50,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           }
 
           return {
-            url: `${process.env.NEXT_PUBLIC_SERVER_URL}/${locale}/${localizedPath}`,
+            url: `${env.NEXT_PUBLIC_SERVER_URL}/${locale}/${localizedPath}`,
             lastModified: page.updatedAt,
             changeFrequency: 'daily' as const,
             priority: 0.7,
@@ -57,7 +58,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
               languages: Object.fromEntries(
                 routing.locales.map((innerLocale) => [
                   innerLocale,
-                  `${process.env.NEXT_PUBLIC_SERVER_URL}/${innerLocale}/${localizedPath}`
+                  `${env.NEXT_PUBLIC_SERVER_URL}/${innerLocale}/${localizedPath}`
                 ])
               )
             }
@@ -68,13 +69,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     .flat()
 
   const landingPageEntry = {
-    url: `${process.env.NEXT_PUBLIC_SERVER_URL}`,
+    url: `${env.NEXT_PUBLIC_SERVER_URL}`,
     lastModified: landingPage.updatedAt ?? new Date(),
     changeFrequency: 'daily' as const,
     priority: 1,
     alternates: {
       languages: Object.fromEntries(
-        routing.locales.map((locale) => [locale, `${process.env.NEXT_PUBLIC_SERVER_URL}/${locale}`])
+        routing.locales.map((locale) => [locale, `${env.NEXT_PUBLIC_SERVER_URL}/${locale}`])
       )
     }
   }

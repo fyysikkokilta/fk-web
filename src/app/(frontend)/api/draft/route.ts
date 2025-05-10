@@ -3,6 +3,8 @@ import { draftMode } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
 import { getPayload } from 'payload'
 
+import { env } from '@/env'
+
 export async function GET(request: NextRequest) {
   const payload = await getPayload({
     config: configPromise
@@ -28,5 +30,5 @@ export async function GET(request: NextRequest) {
   draft.enable()
 
   // Redirect to the requested page
-  return NextResponse.redirect(new URL(slug, request.url))
+  return NextResponse.redirect(new URL(slug, env.NEXT_PUBLIC_SERVER_URL))
 }

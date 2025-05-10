@@ -9,6 +9,7 @@ import { FrontPageSlideshow } from '@/components/FrontPageSlideshow'
 import { Partners } from '@/components/Partners'
 import { RefreshRouteOnSave } from '@/components/RefreshRouteOnSave'
 import { RichText } from '@/components/RichText'
+import { env } from '@/env'
 import { getLandingPage } from '@/lib/getLandingPage'
 import { getPartners } from '@/lib/getPartners'
 import { isDraftMode } from '@/utils/draftMode'
@@ -40,16 +41,16 @@ export async function generateMetadata({ params }: LandingPageProps) {
     })
     .filter(Boolean)
 
-  const siteName = locale === 'fi' ? process.env.SITE_NAME : process.env.SITE_NAME_EN
+  const siteName = locale === 'fi' ? env.SITE_NAME : env.SITE_NAME_EN
   return {
     title: page?.meta?.title || siteName,
     description: page?.meta?.description,
-    metadataBase: new URL(process.env.NEXT_PUBLIC_SERVER_URL || ''),
+    metadataBase: new URL(env.NEXT_PUBLIC_SERVER_URL || ''),
     openGraph: {
       title: page?.meta?.title,
       description: page?.meta?.description,
       images: images,
-      url: `${process.env.NEXT_PUBLIC_SERVER_URL}/${locale}`,
+      url: `${env.NEXT_PUBLIC_SERVER_URL}/${locale}`,
       siteName: siteName,
       locale: locale,
       type: 'website'
@@ -60,7 +61,7 @@ export async function generateMetadata({ params }: LandingPageProps) {
       nocache: false
     },
     verification: {
-      google: process.env.GOOGLE_SITE_VERIFICATION
+      google: env.GOOGLE_SITE_VERIFICATION
     }
   }
 }

@@ -1,3 +1,5 @@
+import { env } from '@/env'
+
 export const getCalendarEvents = async (
   calendarId: string,
   options: {
@@ -10,14 +12,14 @@ export const getCalendarEvents = async (
   searchParams.set('singleEvents', 'true')
   searchParams.set('timeMin', options.timeMin)
   searchParams.set('maxResults', String(options.maxResults))
-  searchParams.set('key', process.env.GOOGLE_API_KEY || '')
+  searchParams.set('key', env.GOOGLE_API_KEY || '')
 
   const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events?${searchParams.toString()}`
 
   try {
     const response = await fetch(url, {
       headers: {
-        Referer: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
+        Referer: env.NEXT_PUBLIC_SERVER_URL
       },
       next: {
         revalidate: 60 * 60 // 1 hour

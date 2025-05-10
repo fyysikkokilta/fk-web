@@ -1,6 +1,7 @@
 import { isThisWeek, parseISO } from 'date-fns'
 import { Locale } from 'next-intl'
 
+import { env } from '@/env'
 import type { NewsItemType, Newsletter, NewsletterSettings, Page } from '@/payload-types'
 
 export type NewsTypeGroup = {
@@ -117,7 +118,7 @@ export async function sendNewsletterToTelegram(
   const { title, newsItems } = newsletter
   const { telegramChannelId, telegramBotToken, weeklyPage } = newsletterSettings
 
-  const baseUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}/${locale}/${(weeklyPage as Page).path}`
+  const baseUrl = `${env.NEXT_PUBLIC_SERVER_URL}/${locale}/${(weeklyPage as Page).path}`
 
   const sanitizedChannelId = `@${telegramChannelId.replace('@', '')}`
 

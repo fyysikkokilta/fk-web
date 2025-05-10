@@ -1,6 +1,7 @@
 import type { CollectionConfig, FieldHook, FieldHookArgs } from 'payload'
 
 import { publishedAndVisibleOrSignedIn } from '@/access/published-and-visible-or-signed-in'
+import { env } from '@/env'
 import { revalidateCollection } from '@/hooks/revalidateCollection'
 import { revalidateDeletedCollection } from '@/hooks/revalidateDeletedCollection'
 import { slugify } from '@/utils/slugify'
@@ -36,7 +37,7 @@ export const Pages: CollectionConfig = {
     listSearchableFields: ['title', 'path'],
     preview: (doc, { req }) => {
       if (!doc?.path) return null
-      const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
+      const baseUrl = env.NEXT_PUBLIC_SERVER_URL
       const locale = typeof req.query?.locale === 'string' ? req.query.locale : req.locale || 'fi'
       return `${baseUrl}/api/draft?slug=/${locale}/${doc.path}`
     },
@@ -142,14 +143,14 @@ export const Pages: CollectionConfig = {
     }
   ],
   versions: {
-    maxPerDoc: process.env.NODE_ENV === 'production' ? 20 : 2,
+    maxPerDoc: env.NODE_ENV === 'production' ? 20 : 2,
     drafts: {
       autosave: {
         interval: 200
       },
       schedulePublish: {
         timeFormat: 'HH:mm',
-        timeIntervals: process.env.NODE_ENV === 'production' ? 60 : 1
+        timeIntervals: env.NODE_ENV === 'production' ? 60 : 1
       },
       validate: true
     }

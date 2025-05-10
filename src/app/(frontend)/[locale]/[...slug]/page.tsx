@@ -11,6 +11,7 @@ import { PayloadRedirects } from '@/components/PayloadRedirects'
 import { RefreshRouteOnSave } from '@/components/RefreshRouteOnSave'
 import { RichText } from '@/components/RichText'
 import { TableOfContents } from '@/components/TableOfContents'
+import { env } from '@/env'
 import { routing } from '@/i18n/routing'
 import { getPage } from '@/lib/getPage'
 import { getPartners } from '@/lib/getPartners'
@@ -73,16 +74,16 @@ export async function generateMetadata({ params }: PageProps) {
         }
       : null
 
-  const siteName = locale === 'fi' ? process.env.SITE_NAME : process.env.SITE_NAME_EN
+  const siteName = locale === 'fi' ? env.SITE_NAME : env.SITE_NAME_EN
   return {
     title: page?.meta?.title || `${page?.title} - ${siteName}`,
     description: page?.meta?.description,
-    metadataBase: new URL(process.env.NEXT_PUBLIC_SERVER_URL || ''),
+    metadataBase: new URL(env.NEXT_PUBLIC_SERVER_URL || ''),
     openGraph: {
       title: page?.meta?.title,
       description: page?.meta?.description,
       images: images,
-      url: `${process.env.NEXT_PUBLIC_SERVER_URL}/${locale}/${slug?.join('/')}`,
+      url: `${env.NEXT_PUBLIC_SERVER_URL}/${locale}/${slug?.join('/')}`,
       siteName: siteName,
       locale: locale,
       type: 'website'
@@ -93,7 +94,7 @@ export async function generateMetadata({ params }: PageProps) {
       nocache: false
     },
     verification: {
-      google: process.env.GOOGLE_SITE_VERIFICATION
+      google: env.GOOGLE_SITE_VERIFICATION
     }
   }
 }

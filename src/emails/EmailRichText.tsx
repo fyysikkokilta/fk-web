@@ -13,6 +13,8 @@ import {
 import { Img, Link } from '@react-email/components'
 import { Locale } from 'next-intl'
 
+import { env } from '@/env'
+
 interface RichTextProps {
   data: SerializedEditorState
   locale: Locale
@@ -25,7 +27,7 @@ const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }, local
   }
   const path = value.path
 
-  const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
+  const serverUrl = env.NEXT_PUBLIC_SERVER_URL
 
   switch (relationTo) {
     case 'pages':
@@ -36,7 +38,7 @@ const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }, local
 }
 
 const CustomUploadComponent = ({ node }: { node: SerializedUploadNode }) => {
-  const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL
+  const serverUrl = env.NEXT_PUBLIC_SERVER_URL
   if (node.relationTo === 'media') {
     const uploadDoc = node.value
     if (typeof uploadDoc !== 'object') {
@@ -81,7 +83,7 @@ const CustomRelationshipComponent = ({
   locale: Locale
 }) => {
   const { relationTo, value } = node
-  const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL
+  const serverUrl = env.NEXT_PUBLIC_SERVER_URL
   switch (relationTo) {
     case 'pages':
       if (typeof value !== 'object') {

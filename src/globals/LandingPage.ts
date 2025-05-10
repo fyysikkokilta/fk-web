@@ -3,6 +3,7 @@ import type { GlobalConfig } from 'payload'
 
 import { publishedOrSignedIn } from '@/access/published-or-signed-in'
 import { signedIn } from '@/access/signed-in'
+import { env } from '@/env'
 import { ColorField } from '@/fields/ColorField'
 import { IconField } from '@/fields/IconField'
 import { revalidateGlobal } from '@/hooks/revalidateGlobal'
@@ -15,7 +16,12 @@ export const LandingPage: GlobalConfig = {
   },
   admin: {
     group: 'Pages',
-    description: 'Settings for the landing page'
+    description: 'Settings for the landing page',
+    preview: (doc, { req }) => {
+      const baseUrl = env.NEXT_PUBLIC_SERVER_URL
+      const locale = typeof req.query?.locale === 'string' ? req.query.locale : req.locale || 'fi'
+      return `${baseUrl}/api/draft?slug=/${locale}`
+    }
   },
   fields: [
     {
@@ -144,7 +150,7 @@ export const LandingPage: GlobalConfig = {
     }
   ],
   versions: {
-    max: process.env.NODE_ENV === 'production' ? 20 : 2,
+    max: env.NODE_ENV === 'production' ? 20 : 2,
     drafts: {
       autosave: {
         interval: 200

@@ -36,7 +36,7 @@ Create a `.env` file in the root directory.
 
 ```env
 # Server and site
-NEXT_PUBLIC_SERVER_URL=http://localhost:3000
+NEXT_NEXT_PUBLIC_SERVER_URL=http://localhost:3000
 SITE_NAME=Fyysikkokilta
 SITE_NAME_EN=Guild of Physics
 

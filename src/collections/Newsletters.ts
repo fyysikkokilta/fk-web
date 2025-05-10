@@ -13,6 +13,7 @@ import type { CollectionBeforeChangeHook, CollectionConfig } from 'payload'
 
 import { publishedOrSignedIn } from '@/access/published-or-signed-in'
 import { signedIn } from '@/access/signed-in'
+import { env } from '@/env'
 import { revalidateCollection } from '@/hooks/revalidateCollection'
 import { revalidateDeletedCollection } from '@/hooks/revalidateDeletedCollection'
 import type { Newsletter as NewsletterType } from '@/payload-types'
@@ -69,7 +70,7 @@ export const Newsletters: CollectionConfig = {
     useAsTitle: 'title',
     defaultColumns: ['title', 'newsletterNumber', 'newsItems', 'sent'],
     preview: (doc, { req }) => {
-      const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
+      const baseUrl = env.NEXT_PUBLIC_SERVER_URL
       const locale = typeof req.query?.locale === 'string' ? req.query.locale : req.locale || 'fi'
       return `${baseUrl}/api/draft?slug=/newsletters/${locale}/${doc.id}`
     },
@@ -222,7 +223,7 @@ export const Newsletters: CollectionConfig = {
         date: {
           pickerAppearance: 'dayAndTime',
           displayFormat: 'dd.MM.YYYY HH:mm',
-          timeIntervals: process.env.NODE_ENV === 'production' ? 60 : 1
+          timeIntervals: env.NODE_ENV === 'production' ? 60 : 1
         },
         description:
           'The time of day to send the newsletter. Make sure the time is in the future, else it will be sent at the next clock hour.'
@@ -235,7 +236,7 @@ export const Newsletters: CollectionConfig = {
       admin: {
         position: 'sidebar',
         description: 'Whether the newsletter has been sent',
-        readOnly: process.env.NODE_ENV === 'production'
+        readOnly: env.NODE_ENV === 'production'
       }
     },
     {
@@ -247,7 +248,7 @@ export const Newsletters: CollectionConfig = {
     }
   ],
   versions: {
-    maxPerDoc: process.env.NODE_ENV === 'production' ? 5 : 2,
+    maxPerDoc: env.NODE_ENV === 'production' ? 5 : 2,
     drafts: {
       autosave: {
         interval: 200

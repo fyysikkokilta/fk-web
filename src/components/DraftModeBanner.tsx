@@ -2,6 +2,7 @@
 
 import { PayloadAdminBar } from '@payloadcms/admin-bar'
 
+import { env } from '@/env'
 import { useRouter } from '@/i18n/navigation'
 
 type DraftModeBannerProps = {
@@ -23,7 +24,7 @@ export function DraftModeBanner({ isDraft, pageId, hidden = false }: DraftModeBa
       ) : null}
       <PayloadAdminBar
         className="bottom-0"
-        cmsURL={process.env.NEXT_PUBLIC_SERVER_URL}
+        cmsURL={env.NEXT_PUBLIC_SERVER_URL}
         collectionSlug="pages"
         id={pageId}
         preview={isDraft}

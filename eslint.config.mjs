@@ -1,10 +1,10 @@
-import { dirname } from 'path'
-import { fileURLToPath } from 'url'
 import { FlatCompat } from '@eslint/eslintrc'
 import js from '@eslint/js'
+import tsParser from '@typescript-eslint/parser'
 import simpleImportSort from 'eslint-plugin-simple-import-sort'
 import globals from 'globals'
-import tsParser from '@typescript-eslint/parser'
+import { dirname } from 'path'
+import { fileURLToPath } from 'url'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
