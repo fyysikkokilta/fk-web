@@ -104,7 +104,7 @@ export const TableOfContents = () => {
   const activeHeading = headings.find((h) => h.id === activeId)
 
   return (
-    <nav className="fixed top-0 left-0 z-10 max-h-[calc(50dvh-2rem)] w-full overflow-y-auto lg:sticky lg:w-[20%]">
+    <nav className="fixed top-0 left-0 z-10 max-h-[calc(80dvh-2rem)] w-full overflow-y-auto lg:sticky lg:w-[20%]">
       {activeHeading && (
         <div className="bg-fk-white top-0 z-10 border-b-6 px-4 lg:hidden">
           <div className="flex items-center justify-between">
