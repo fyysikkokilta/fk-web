@@ -104,50 +104,53 @@ export const TableOfContents = () => {
   const activeHeading = headings.find((h) => h.id === activeId)
 
   return (
-    <nav className="fixed top-0 left-0 z-10 max-h-[calc(80dvh-2rem)] w-full overflow-y-auto lg:sticky lg:w-[20%]">
-      {activeHeading && (
-        <div className="bg-fk-white top-0 z-10 border-b-6 px-4 lg:hidden">
-          <div className="flex items-center justify-between">
-            <button
-              className="h-12 w-full cursor-pointer rounded-md p-2"
-              onClick={() => setIsDrawerOpen(!isDrawerOpen)}
-              aria-label="Toggle table of contents"
-            >
-              <div className="flex items-center justify-between">
-                <span className="font-medium">{activeHeading.text}</span>
-                {isDrawerOpen ? <ChevronUp size={24} /> : <ChevronDown size={24} />}
-              </div>
-            </button>
+    <>
+      <nav className="fixed top-0 left-0 z-10 w-full overflow-y-auto lg:hidden">
+        {activeHeading && (
+          <div className="bg-fk-white top-0 z-10 border-b-6 px-4 lg:hidden">
+            <div className="flex items-center justify-between">
+              <button
+                className="h-12 w-full cursor-pointer rounded-md p-2"
+                onClick={() => setIsDrawerOpen(!isDrawerOpen)}
+                aria-label="Toggle table of contents"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-medium">{activeHeading.text}</span>
+                  {isDrawerOpen ? <ChevronUp size={24} /> : <ChevronDown size={24} />}
+                </div>
+              </button>
+            </div>
           </div>
-        </div>
-      )}
-      {isDrawerOpen && (
-        <>
-          <div className="fixed inset-0 z-20 lg:hidden" onClick={() => setIsDrawerOpen(false)} />
-          <div className="bg-fk-white fixed top-0 right-0 left-0 z-30 border-b-6 shadow-sm lg:hidden lg:shadow-none">
-            <ul className="ml-0 max-h-[60vh] overflow-y-auto p-2">
-              {headings.map((heading) => (
-                <li
-                  key={heading.id}
-                  className={`rounded-md transition-colors duration-200 ${
-                    activeId === heading.id
-                      ? 'text-fk-white bg-fk-orange font-medium'
-                      : 'text-fk-black'
-                  }`}
-                  style={{
-                    marginLeft: `${(heading.level - 1) * 0.75}rem`
-                  }}
-                >
-                  <a href={`#${heading.id}`} className="block rounded-md py-1.5 pl-2 text-sm">
-                    {heading.text}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </>
-      )}
-      <div className="hidden lg:block">
+        )}
+        {isDrawerOpen && (
+          <>
+            <div className="fixed inset-0 z-20 lg:hidden" onClick={() => setIsDrawerOpen(false)} />
+            <div className="bg-fk-white fixed top-0 right-0 left-0 z-30 border-b-6 shadow-sm lg:hidden lg:shadow-none">
+              <ul className="ml-0 max-h-[60vh] overflow-y-auto p-2">
+                {headings.map((heading) => (
+                  <li
+                    key={heading.id}
+                    className={`rounded-md transition-colors duration-200 ${
+                      activeId === heading.id
+                        ? 'text-fk-white bg-fk-orange font-medium'
+                        : 'text-fk-black'
+                    }`}
+                    style={{
+                      marginLeft: `${(heading.level - 1) * 0.75}rem`
+                    }}
+                  >
+                    <a href={`#${heading.id}`} className="block rounded-md py-1.5 pl-2 text-sm">
+                      {heading.text}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </>
+        )}
+      </nav>
+
+      <nav className="sticky top-4 h-fit max-h-[calc(100dvh-2rem)] w-[20%] overflow-y-auto max-lg:hidden">
         <ul className="ml-0 p-2">
           {headings.map((heading) => (
             <li
@@ -165,7 +168,7 @@ export const TableOfContents = () => {
             </li>
           ))}
         </ul>
-      </div>
-    </nav>
+      </nav>
+    </>
   )
 }
