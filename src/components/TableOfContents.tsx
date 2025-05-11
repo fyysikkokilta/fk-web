@@ -145,10 +145,10 @@ export const TableOfContents = () => {
                 {headings.map((heading) => (
                   <li
                     key={heading.id}
-                    className={`rounded-md transition-colors duration-200 ${
+                    className={`rounded-md border-2 transition-colors duration-200 ${
                       activeId === heading.id
-                        ? 'text-fk-white bg-fk-orange font-medium'
-                        : 'text-fk-black'
+                        ? 'bg-fk-yellow border-fk-black'
+                        : 'border-transparent'
                     }`}
                     style={{
                       marginLeft: `${(heading.level - 1) * 0.75}rem`
@@ -165,13 +165,13 @@ export const TableOfContents = () => {
         )}
       </nav>
 
-      <nav className="sticky top-4 h-fit max-h-[calc(100dvh-2rem)] w-[20%] overflow-y-auto max-lg:hidden">
+      <nav className="border-fk-black sticky top-4 h-fit max-h-[calc(100dvh-2rem)] w-[20%] overflow-y-auto rounded border-2 max-lg:hidden">
         <ul className="ml-0 p-2">
           {headings.map((heading) => (
             <li
               key={heading.id}
-              className={`rounded-md transition-colors duration-200 ${
-                activeId === heading.id ? 'text-fk-white bg-fk-orange font-medium' : 'text-fk-black'
+              className={`rounded-md border-2 transition-colors duration-200 ${
+                activeId === heading.id ? 'bg-fk-yellow border-fk-black' : 'border-transparent'
               }`}
               style={{
                 marginLeft: `${(heading.level - 2) * 0.75}rem`
