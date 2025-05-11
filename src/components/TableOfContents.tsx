@@ -16,6 +16,7 @@ export const TableOfContents = () => {
 
   const mainHeadingRef = useRef<IntersectionObserverEntry>(undefined)
   const headingElementsRef: RefObject<Record<string, IntersectionObserverEntry>> = useRef({})
+  const mobileNavRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const contentRoot = document.getElementById('page-content-root')
@@ -101,31 +102,45 @@ export const TableOfContents = () => {
     }
   }, [mainHeadingRef.current?.isIntersecting, isDrawerOpen])
 
+  // Close drawer on outside click
+  useEffect(() => {
+    if (!isDrawerOpen) return
+    function handleClickOutside(event: MouseEvent) {
+      if (mobileNavRef.current && !mobileNavRef.current.contains(event.target as Node)) {
+        setIsDrawerOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [isDrawerOpen])
+
   const activeHeading = headings.find((h) => h.id === activeId)
 
   return (
     <>
-      <nav className="fixed top-0 left-0 z-10 w-full overflow-y-auto lg:hidden">
+      <nav
+        ref={mobileNavRef}
+        className="border-fk-black/20 bg-fk-white/50 fixed top-0 left-0 z-10 w-full overflow-y-auto border-b-1 backdrop-blur-sm lg:hidden"
+      >
         {activeHeading && (
-          <div className="bg-fk-white top-0 z-10 border-b-6 px-4 lg:hidden">
-            <div className="flex items-center justify-between">
-              <button
-                className="h-12 w-full cursor-pointer rounded-md p-2"
-                onClick={() => setIsDrawerOpen(!isDrawerOpen)}
-                aria-label="Toggle table of contents"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="font-medium">{activeHeading.text}</span>
-                  {isDrawerOpen ? <ChevronUp size={24} /> : <ChevronDown size={24} />}
-                </div>
-              </button>
-            </div>
+          <div className="flex items-center justify-between">
+            <button
+              className="w-full cursor-pointer rounded-md px-6 py-4"
+              onClick={() => setIsDrawerOpen(!isDrawerOpen)}
+              aria-label="Toggle table of contents"
+            >
+              <div className="flex items-center justify-between">
+                <span>{activeHeading.text}</span>
+                {isDrawerOpen ? <ChevronUp size={24} /> : <ChevronDown size={24} />}
+              </div>
+            </button>
           </div>
         )}
         {isDrawerOpen && (
           <>
-            <div className="fixed inset-0 z-20 lg:hidden" onClick={() => setIsDrawerOpen(false)} />
-            <div className="bg-fk-white fixed top-0 right-0 left-0 z-30 border-b-6 shadow-sm lg:hidden lg:shadow-none">
+            <div className="shadow-sm lg:hidden lg:shadow-none">
               <ul className="ml-0 max-h-[60vh] overflow-y-auto p-2">
                 {headings.map((heading) => (
                   <li
