@@ -1,5 +1,6 @@
 @import 'tailwindcss';
-@plugin "@tailwindcss/typography";
+@plugin '@tailwindcss/typography';
+@plugin 'tailwind-scrollbar';
 
 /* https://uicolors.app/generate */
 /* Colors are mainly 300 points apart from each other */
