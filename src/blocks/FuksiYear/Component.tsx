@@ -12,7 +12,7 @@ export const FuksiYear = ({ block }: FuksiYearProps) => {
   }
 
   return (
-    <div className="space-y-12">
+    <div className="prose-img:my-0 space-y-12">
       {block.fuksiGroups.map((group) => {
         if (typeof group === 'number') {
           return null
@@ -20,14 +20,14 @@ export const FuksiYear = ({ block }: FuksiYearProps) => {
 
         return (
           <div key={group.id} className="bg-fk-white rounded-lg p-6">
-            <h2 className="mb-6 text-2xl font-bold">{group.name}</h2>
+            <h3 className="mb-6 text-2xl font-bold">{group.name}</h3>
             <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
               {group.fuksis.map((fuksi) => {
                 if (typeof fuksi === 'number') return null
 
                 return (
                   <div key={fuksi.id} className="text-center">
-                    <div className="relative mb-4 aspect-square">
+                    <div className="relative mb-4 aspect-[2/3]">
                       {fuksi.photo ? (
                         <Image
                           src={(fuksi.photo as Media).url || ''}
