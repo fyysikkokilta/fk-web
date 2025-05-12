@@ -49,10 +49,12 @@ export const officialImportController: PayloadHandler = async (req: PayloadReque
     )
 
     const officialPromises = officialsToCreate.map(async (name) => {
-      const slugifiedName = name.replace(/ /g, '-')
+      const slugifiedName = [name, name.replace(/ /g, '_'), name.replace(/ /g, '-')]
       const photoResult = await req.payload.find({
         collection: 'media',
-        where: { filename: { contains: slugifiedName } },
+        where: {
+          or: slugifiedName.map((slugifiedName) => ({ filename: { equals: slugifiedName } }))
+        },
         // Assume the photo wanted is the most recent one
         // Further modifications can be done by the user in the UI
         sort: '-createdAt',

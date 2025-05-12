@@ -30,21 +30,23 @@ export const fuksiImportController: PayloadHandler = async (req: PayloadRequest)
 
     await Promise.all(
       groups.map(async (group) => {
-        const slugifiedName = group.name.replace(/ /g, '-')
-        const photoResult = await req.payload.find({
-          collection: 'media',
-          where: { filename: { contains: slugifiedName } },
-          // Assume the photo wanted is the most recent one
-          // Further modifications can be done by the user in the UI
-          sort: '-createdAt',
-          limit: 1,
-          req
-        })
-
-        const photo = photoResult.docs[0]
-
         const createdFuksis = await Promise.all(
           group.fuksis.map(async (name) => {
+            const slugifiedName = [name, name.replace(/ /g, '_'), name.replace(/ /g, '-')]
+            const photoResult = await req.payload.find({
+              collection: 'media',
+              where: {
+                or: slugifiedName.map((slugifiedName) => ({ filename: { equals: slugifiedName } }))
+              },
+              // Assume the photo wanted is the most recent one
+              // Further modifications can be done by the user in the UI
+              sort: '-createdAt',
+              limit: 1,
+              req
+            })
+
+            const photo = photoResult.docs[0]
+
             return req.payload.create({
               collection: 'fuksis',
               data: {

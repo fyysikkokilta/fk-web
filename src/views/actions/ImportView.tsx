@@ -3,7 +3,6 @@ import Link from 'next/link'
 // eslint-disable-next-line no-restricted-imports
 import { redirect } from 'next/navigation'
 import { AdminViewServerProps } from 'payload'
-import React from 'react'
 
 import { ImportForms } from './ImportForms'
 
@@ -41,10 +40,12 @@ export const ActionsView = ({
       <h1>{'Actions'}</h1>
       <div style={{ color: 'gray' }}>
         {
-          'Photos have to be uploaded manually to the media library first. The filename should contain the name of the person with first and last name separated by a space.'
+          'Photos have to be uploaded manually to the media library first. The filename should contain the name of the person with first and last name separated by a space, an underscore or a dash.'
         }
         <br />
-        {'For example, "Matti Virtanen" should have the filename "Matti-Virtanen.jpg".'}
+        {
+          'For example, "Matti Virtanen" should have the filename "Matti Virtanen.jpg", "Matti_Virtanen.jpg" or "Matti-Virtanen.jpg".'
+        }
       </div>
       <ImportForms />
     </div>
