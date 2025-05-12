@@ -49,14 +49,22 @@ export const revalidateDeletedCollection = <T extends TypeWithID>(
 
       // Same as above.
       after(async () => {
+        revalidatePath(path, 'layout')
+        revalidateTag('sitemap')
+      })
+    }
+
+    const collectionSpecificRevalidation: CollectionSlug[] = ['redirects']
+
+    if (collectionSpecificRevalidation.includes(collectionSlug)) {
+      payload.logger.info(`[Collection deleted] Revalidating ${collectionSlug}`)
+
+      after(async () => {
         // Collection specific revalidation.
         switch (collectionSlug) {
           case 'redirects':
             revalidateTag('redirects')
         }
-
-        revalidatePath(path, 'layout')
-        revalidateTag('sitemap')
       })
     }
   }
