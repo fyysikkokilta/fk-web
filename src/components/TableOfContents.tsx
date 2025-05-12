@@ -131,7 +131,7 @@ export const TableOfContents = () => {
               onClick={() => setIsDrawerOpen(!isDrawerOpen)}
               aria-label="Toggle table of contents"
             >
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between text-left">
                 <span>{activeHeading.text}</span>
                 {isDrawerOpen ? <ChevronUp size={24} /> : <ChevronDown size={24} />}
               </div>
