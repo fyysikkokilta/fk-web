@@ -34,14 +34,14 @@ export const PageNavigation = ({ block }: PageNavigationProps) => {
   }
 
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="not-prose text-fk-white grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
       {pageNavigation.pages?.map(
         ({ page, label }) =>
           typeof page === 'object' && (
             <Link
               key={page.id}
               href={`/${page.path}`}
-              className="bg-fk-orange hover:bg-fk-red text-fk-white flex aspect-square items-center justify-center px-4 py-2 text-center text-3xl font-bold transition-colors duration-200 hover:scale-120"
+              className="bg-fk-orange hover:bg-fk-red flex aspect-square items-center justify-center px-4 py-2 text-center text-3xl font-bold transition-colors duration-200 hover:scale-120"
             >
               {label}
             </Link>
