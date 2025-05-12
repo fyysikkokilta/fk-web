@@ -18,7 +18,7 @@ import { Page } from '@/payload-types'
 export const revalidateCollection = <T extends TypeWithID>(
   collectionSlug: CollectionSlug
 ): CollectionAfterChangeHook<T> => {
-  return async ({ doc, previousDoc, req: { payload } }) => {
+  return async ({ doc, previousDoc, req: { payload }, operation }) => {
     const isPage = collectionSlug === 'pages'
     const isPublished = '_status' in doc && doc._status === 'published'
     const wasPublished = '_status' in previousDoc && previousDoc._status === 'published'
@@ -60,7 +60,8 @@ export const revalidateCollection = <T extends TypeWithID>(
 
     // TODO: This is a hack to revalidate all pages when a non-page collection is updated.
     // This should be improved in the future.
-    if (!isPage) {
+    // Pages don't need to be revalidated when a non-page collection is created.
+    if (!isPage && operation !== 'create') {
       const path = '/(frontend)/[locale]'
 
       payload.logger.info(`[Collection changed] Revalidating all pages at path: ${path}`)
