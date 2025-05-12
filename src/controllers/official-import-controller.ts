@@ -53,7 +53,7 @@ export const officialImportController: PayloadHandler = async (req: PayloadReque
       const photoResult = await req.payload.find({
         collection: 'media',
         where: {
-          or: slugifiedName.map((slugifiedName) => ({ filename: { equals: slugifiedName } }))
+          or: slugifiedName.map((slugifiedName) => ({ filename: { contains: slugifiedName } }))
         },
         // Assume the photo wanted is the most recent one
         // Further modifications can be done by the user in the UI
