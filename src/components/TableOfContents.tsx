@@ -165,7 +165,7 @@ export const TableOfContents = () => {
         )}
       </nav>
 
-      <nav className="border-fk-black sticky top-4 h-fit max-h-[calc(100dvh-2rem)] w-[20%] overflow-y-auto rounded border-2 max-lg:hidden">
+      <nav className="scrollbar border-fk-black sticky top-4 h-fit max-h-[calc(100dvh-2rem)] w-[20%] overflow-y-auto rounded border-2 max-lg:hidden">
         <ul className="ml-0 p-2">
           {headings.map((heading) => (
             <li
