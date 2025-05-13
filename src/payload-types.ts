@@ -206,7 +206,6 @@ export interface Media {
    */
   alt?: string | null;
   blurDataUrl: string;
-  _key?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -893,7 +892,6 @@ export interface Document {
    * Upload a thumbnail image for the document
    */
   thumbnail?: (number | null) | Media;
-  _key?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -1343,7 +1341,6 @@ export interface DivisionsSelect<T extends boolean = true> {
 export interface DocumentsSelect<T extends boolean = true> {
   title?: T;
   thumbnail?: T;
-  _key?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -1385,7 +1382,6 @@ export interface FuksiGroupsSelect<T extends boolean = true> {
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   blurDataUrl?: T;
-  _key?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;

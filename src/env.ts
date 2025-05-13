@@ -25,7 +25,10 @@ export const env = createEnv({
     SMTP_USER: z.string(),
     SMTP_PASSWORD: z.string(),
 
-    UPLOADTHING_TOKEN: z.string().optional(),
+    S3_BUCKET: z.string().optional(),
+    S3_ACCESS_KEY_ID: z.string().optional(),
+    S3_SECRET: z.string().optional(),
+    S3_ENDPOINT: z.string().optional(),
 
     ANALYZE: z
       .string()

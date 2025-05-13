@@ -18,7 +18,7 @@ export const Media: CollectionConfig = {
     useAsTitle: 'filename',
     group: 'Files',
     description: 'Upload and manage media files',
-    defaultColumns: ['filename', 'alt', '_key']
+    defaultColumns: ['filename', 'alt']
   },
   fields: [
     {

@@ -21,7 +21,7 @@ import {
   convertLexicalToPlaintext,
   PlaintextConverters
 } from '@payloadcms/richtext-lexical/plaintext'
-import { uploadthingStorage } from '@payloadcms/storage-uploadthing'
+import { s3Storage } from '@payloadcms/storage-s3'
 import { dirname, resolve } from 'path'
 import { buildConfig, GroupField, PayloadRequest } from 'payload'
 import { OAuth2Plugin } from 'payload-oauth2'
@@ -502,15 +502,21 @@ export default buildConfig({
         return '/admin/login'
       }
     }),
-    uploadthingStorage({
+    //https://payloadcms.com/posts/guides/how-to-configure-file-storage-in-payload-with-vercel-blob-r2-and-uploadthing
+    s3Storage({
       enabled: enableCloudStorage(),
       collections: {
         media: true,
         documents: true
       },
-      options: {
-        token: env.UPLOADTHING_TOKEN,
-        acl: 'public-read'
+      bucket: env.S3_BUCKET || '',
+      config: {
+        credentials: {
+          accessKeyId: env.S3_ACCESS_KEY_ID || '',
+          secretAccessKey: env.S3_SECRET || ''
+        },
+        region: 'auto', // Cloudflare R2 uses 'auto' as the region
+        endpoint: env.S3_ENDPOINT || ''
       }
     })
   ],
