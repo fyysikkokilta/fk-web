@@ -9,6 +9,7 @@ interface Heading {
   level: number
 }
 
+// TODO: Try to make a solution to generate the table of contents from the page content
 export const TableOfContents = () => {
   const [headings, setHeadings] = useState<Heading[]>([])
   const [activeId, setActiveId] = useState<string>('')
@@ -117,6 +118,8 @@ export const TableOfContents = () => {
   }, [isDrawerOpen])
 
   const activeHeading = headings.find((h) => h.id === activeId)
+
+  if (headings.length === 0) return null
 
   return (
     <>
