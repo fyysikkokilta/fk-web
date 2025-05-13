@@ -12,14 +12,14 @@ export const FuksiYear = ({ block }: FuksiYearProps) => {
   }
 
   return (
-    <div className="prose-img:my-0 space-y-12">
+    <div className="prose-img:my-0">
       {block.fuksiGroups.map((group) => {
         if (typeof group === 'number') {
           return null
         }
 
         return (
-          <div key={group.id} className="bg-fk-white rounded-lg p-6">
+          <div key={group.id} className="bg-fk-white rounded-lg">
             <h3 className="mb-6 text-2xl font-bold">{group.name}</h3>
             <div className="grid grid-cols-2 gap-12 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
               {group.fuksis.map((fuksi) => {
