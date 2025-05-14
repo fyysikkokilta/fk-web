@@ -451,10 +451,10 @@ export default buildConfig({
         return description
       },
       generateImage: ({ doc }) => {
-        if ('bannerImage' in doc) {
-          return String('id' in doc.bannerImage ? doc.bannerImage.id : doc.bannerImage)
-        } else if ('bannerImages' in doc) {
-          return String('id' in doc.bannerImages[0] ? doc.bannerImages[0].id : doc.bannerImages[0])
+        if (doc?.bannerImage) {
+          return doc.bannerImage.id || doc.bannerImage
+        } else if (doc?.bannerImages?.length > 0) {
+          return doc.bannerImages[0].id || doc.bannerImages[0]
         } else {
           return ''
         }
