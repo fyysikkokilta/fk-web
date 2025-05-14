@@ -426,8 +426,14 @@ export default buildConfig({
       collections: [Pages.slug],
       globals: [LandingPage.slug],
       uploadsCollection: 'media',
-      generateTitle: ({ title, locale }) =>
-        locale === 'fi' ? `${title} - ${env.SITE_NAME}` : `${title} - ${env.SITE_NAME_EN}`,
+      generateTitle: ({ doc, locale }) => {
+        if ('title' in doc) {
+          const title = doc.title as string
+          return locale === 'fi' ? `${title} - ${env.SITE_NAME}` : `${title} - ${env.SITE_NAME_EN}`
+        } else {
+          return locale === 'fi' ? env.SITE_NAME : env.SITE_NAME_EN
+        }
+      },
       generateDescription: ({ doc }) => {
         const data = doc.content as unknown as SerializedEditorState
         const plainText = convertLexicalToPlaintext({ converters, data })
@@ -446,11 +452,11 @@ export default buildConfig({
       },
       generateImage: ({ doc }) => {
         if ('bannerImage' in doc) {
-          return doc.bannerImage
+          return String('id' in doc.bannerImage ? doc.bannerImage.id : doc.bannerImage)
         } else if ('bannerImages' in doc) {
-          return doc.bannerImages[0]
+          return String('id' in doc.bannerImages[0] ? doc.bannerImages[0].id : doc.bannerImages[0])
         } else {
-          return null
+          return ''
         }
       },
       generateURL: ({ doc, locale }) => {
