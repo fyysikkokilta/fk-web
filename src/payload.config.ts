@@ -522,7 +522,19 @@ export default buildConfig({
           secretAccessKey: env.S3_SECRET || ''
         },
         region: 'auto', // Cloudflare R2 uses 'auto' as the region
-        endpoint: env.S3_ENDPOINT || ''
+        endpoint: env.S3_ENDPOINT || '',
+        requestHandler: {
+          httpAgent: {
+            maxSockets: 300,
+            keepAlive: true
+          },
+          httpsAgent: {
+            maxSockets: 300,
+            keepAlive: true
+          },
+          connectionTimeout: 5000,
+          requestTimeout: 5000
+        }
       }
     })
   ],
