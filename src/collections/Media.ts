@@ -46,7 +46,7 @@ export const Media: CollectionConfig = {
     staticDir: 'public/media',
     mimeTypes: ['image/*'],
     formatOptions: {
-      format: 'avif'
+      format: 'webp'
     },
     resizeOptions: {
       withoutEnlargement: true, // Don't enlarge images if they're smaller than the specified width
