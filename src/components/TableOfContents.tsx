@@ -119,8 +119,6 @@ export const TableOfContents = () => {
 
   const activeHeading = headings.find((h) => h.id === activeId)
 
-  if (headings.length === 0) return null
-
   return (
     <>
       <nav
@@ -168,7 +166,11 @@ export const TableOfContents = () => {
         )}
       </nav>
 
-      <nav className="scrollbar border-fk-black sticky top-4 h-fit max-h-[calc(100dvh-2rem)] w-[20%] overflow-y-auto rounded border-2 max-lg:hidden">
+      <nav
+        className={`scrollbar ${
+          headings.length > 0 ? 'border-fk-black' : 'border-transparent'
+        } sticky top-4 h-fit max-h-[calc(100dvh-2rem)] w-[20%] overflow-y-auto rounded border-2 max-lg:hidden`}
+      >
         <ul className="ml-0 p-2">
           {headings.map((heading) => (
             <li
