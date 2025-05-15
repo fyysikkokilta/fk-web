@@ -43,10 +43,12 @@ export const env = createEnv({
     GOOGLE_SITE_VERIFICATION: z.string().optional()
   },
   client: {
-    NEXT_PUBLIC_SERVER_URL: z.string().url().default('http://localhost:3000')
+    NEXT_PUBLIC_SERVER_URL: z.string().url().default('http://localhost:3000'),
+    NEXT_PUBLIC_S3_PUBLIC_URL: z.string().url().optional()
   },
   experimental__runtimeEnv: {
-    NEXT_PUBLIC_SERVER_URL: process.env.NEXT_PUBLIC_SERVER_URL
+    NEXT_PUBLIC_SERVER_URL: process.env.NEXT_PUBLIC_SERVER_URL,
+    NEXT_PUBLIC_S3_PUBLIC_URL: process.env.NEXT_PUBLIC_S3_PUBLIC_URL
   },
   emptyStringAsUndefined: true
 })

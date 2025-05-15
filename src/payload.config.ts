@@ -512,8 +512,18 @@ export default buildConfig({
     s3Storage({
       enabled: enableCloudStorage(),
       collections: {
-        media: true,
-        documents: true
+        media: {
+          prefix: 'media',
+          generateFileURL: async ({ filename, prefix }) => {
+            return `${env.NEXT_PUBLIC_S3_PUBLIC_URL}/${prefix}/${filename}`
+          }
+        },
+        documents: {
+          prefix: 'documents',
+          generateFileURL: async ({ filename, prefix }) => {
+            return `${env.NEXT_PUBLIC_S3_PUBLIC_URL}/${prefix}/${filename}`
+          }
+        }
       },
       bucket: env.S3_BUCKET || '',
       config: {

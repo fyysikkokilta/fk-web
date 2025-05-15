@@ -217,7 +217,7 @@ export const Newsletters: CollectionConfig = {
       name: 'sendTime',
       type: 'date',
       timezone: true,
-      defaultValue: getNextClockHour(),
+      defaultValue: getNextClockHour,
       admin: {
         position: 'sidebar',
         date: {
