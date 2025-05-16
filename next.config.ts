@@ -1,4 +1,5 @@
 import bundleAnalyzer from '@next/bundle-analyzer'
+import { initOpenNextCloudflareForDev } from '@opennextjs/cloudflare'
 import { withPayload } from '@payloadcms/next/withPayload'
 import withPlaiceholder from '@plaiceholder/next'
 import type { NextConfig } from 'next'
@@ -25,6 +26,7 @@ const nextConfig: NextConfig = {
     ]
   },
   transpilePackages: ['@t3-oss/env-nextjs', '@t3-oss/env-core'],
+  serverExternalPackages: ['@payloadcms/db-postgres', 'jose'],
   async headers() {
     return [
       {
@@ -43,3 +45,5 @@ const nextConfig: NextConfig = {
 export default withPayload(withBundleAnalyzer(withNextIntl(withPlaiceholder(nextConfig))), {
   devBundleServerPackages: false
 })
+
+initOpenNextCloudflareForDev()

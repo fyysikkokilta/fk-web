@@ -247,10 +247,13 @@ export default buildConfig({
       EXPERIMENTAL_TableFeature()
     ]
   }),
+  telemetry: false,
   db: postgresAdapter({
     pool: {
-      connectionString: env.DATABASE_URI || ''
-    }
+      connectionString: env.DATABASE_URI || '',
+      maxUses: 1
+    },
+    push: false
   }),
   email: nodemailerAdapter({
     defaultFromName: env.EMAIL_FROM_NAME || 'Fyysikkokilta',

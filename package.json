@@ -13,13 +13,18 @@
     "lint": "next lint",
     "migrate": "payload migrate",
     "payload": "payload",
-    "start": "next start"
+    "start": "next start",
+    "cf:preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "cf:deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "cf:upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload",
+    "cf:typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpx lint-staged"
   },
   "dependencies": {
     "@next/bundle-analyzer": "^15.3.2",
+    "@opennextjs/cloudflare": "^1.0.3",
     "@payloadcms/admin-bar": "^3.37.0",
     "@payloadcms/db-postgres": "^3.37.0",
     "@payloadcms/email-nodemailer": "^3.37.0",
@@ -76,7 +81,8 @@
     "prettier-plugin-tailwindcss": "^0.6.11",
     "simple-git-hooks": "^2.13.0",
     "tailwind-scrollbar": "^4.0.2",
-    "typescript": "5.8.3"
+    "typescript": "5.8.3",
+    "wrangler": "^4.15.2"
   },
   "engines": {
     "node": "^18.20.2 || >=20.9.0",

@@ -44,3 +44,5 @@ next-env.d.ts
 /public/documents/*
 !public/media/.gitkeep
 !public/documents/.gitkeep
+
+.open-next
