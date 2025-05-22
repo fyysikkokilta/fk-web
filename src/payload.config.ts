@@ -14,6 +14,7 @@ import {
   lexicalEditor,
   LinkFeature,
   RelationshipFeature,
+  //TextStateFeature,
   UploadFeature
 } from '@payloadcms/richtext-lexical'
 import { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
@@ -245,8 +246,14 @@ export default buildConfig({
       }),
       FixedToolbarFeature(),
       EXPERIMENTAL_TableFeature()
+      // TODO: Implement TextStateFeature
+      //TextStateFeature()
     ]
   }),
+  // TODO: Implement folders
+  /*folders: {
+
+  },*/
   db: postgresAdapter({
     pool: {
       connectionString: env.DATABASE_URI || ''
@@ -330,6 +337,8 @@ export default buildConfig({
         checkbox: true,
         number: true,
         message: true,
+        // TODO: Implement date field
+        //date: true,
         // Maybe in the future enable this for MobilePay so that we can receive payments for membership automatically
         payment: false
       },

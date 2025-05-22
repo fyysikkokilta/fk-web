@@ -62,12 +62,7 @@ export const RichText = ({ data, locale, extraClassName }: RichTextProps) => {
 
   return (
     <ProseWrapper extraClassName={extraClassName}>
-      <LexicalRichText
-        disableContainer
-        data={data}
-        // inlineBlocks is not typed correctly
-        converters={jsxConverters as JSXConvertersFunction}
-      />
+      <LexicalRichText disableContainer data={data} converters={jsxConverters} />
     </ProseWrapper>
   )
 }
