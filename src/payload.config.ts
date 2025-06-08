@@ -350,8 +350,7 @@ export default buildConfig({
         checkbox: true,
         number: true,
         message: true,
-        // TODO: Implement date field
-        //date: true,
+        date: true,
         // Maybe in the future enable this for MobilePay so that we can receive payments for membership automatically
         payment: false
       },

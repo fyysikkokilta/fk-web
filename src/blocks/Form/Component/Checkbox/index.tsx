@@ -47,10 +47,14 @@ export const Checkbox: React.FC<
               setChecked(!checked)
             }}
             type="button"
-            className={`bg-fk-blue text-fk-white hover:bg-fk-blue-dark focus:ring-fk-black h-7 w-7 rounded border focus:ring-2 focus:outline-none`}
+            className={`focus:ring-fk-yellow h-7 w-7 rounded-lg border-2 transition-colors focus:ring-2 focus:outline-none ${
+              checked
+                ? 'bg-fk-yellow border-fk-yellow text-fk-black hover:bg-fk-yellow-dark'
+                : 'bg-fk-white border-fk-gray-lightest hover:border-fk-yellow text-fk-yellow'
+            }`}
             aria-label={label || 'checkbox'}
           >
-            {checked && <Check size={24} />}
+            {checked && <Check size={20} />}
           </button>
         </div>
         {required && errors[name] && checked === false && <Error />}

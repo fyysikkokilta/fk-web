@@ -6,9 +6,9 @@ import type { Form } from '@/payload-types'
 import { Error } from '../Error'
 import { Width } from '../Width'
 
-type TextField = Extract<NonNullable<Form['fields']>[number], { blockType: 'text' }>
+type DateField = Extract<NonNullable<Form['fields']>[number], { blockType: 'date' }>
 
-export const Text: React.FC<
+export const Date: React.FC<
   {
     errors: Partial<
       FieldErrorsImpl<{
@@ -18,7 +18,7 @@ export const Text: React.FC<
     >
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     register: UseFormRegister<any & FieldValues>
-  } & TextField
+  } & DateField
 > = ({ name, defaultValue, errors, label, register, required, width }) => {
   return (
     <Width width={width ?? 100}>
@@ -29,7 +29,7 @@ export const Text: React.FC<
         </label>
         <input
           id={name}
-          type="text"
+          type="date"
           defaultValue={defaultValue ?? ''}
           className={`focus:ring-fk-yellow focus:border-fk-yellow w-full rounded-lg border px-4 py-3 shadow-sm transition-colors focus:ring-2 focus:outline-none ${
             errors[name] ? 'border-fk-red' : 'border-fk-gray-lightest'

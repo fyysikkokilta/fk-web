@@ -116,7 +116,7 @@ export const FormBlock = ({ block, locale }: FormBlockProps) => {
   }
 
   return (
-    <div className="bg-fk-white mx-auto my-8 w-full max-w-3xl rounded-lg p-6 shadow-md">
+    <div className="bg-fk-white border-fk-gray-lightest mx-auto my-8 w-full max-w-3xl rounded-xl border p-8 shadow-lg">
       {enableIntro && introContent && !hasSubmitted && (
         <div className="mb-6 max-w-none">
           <RichText data={introContent} locale={locale} />
@@ -164,7 +164,7 @@ export const FormBlock = ({ block, locale }: FormBlockProps) => {
           <div className="flex justify-end">
             <button
               type="submit"
-              className="bg-fk-blue text-fk-white hover:bg-fk-blue-dark focus:ring-fk-black rounded-md px-6 py-3 transition-colors focus:ring-2 focus:ring-offset-2 focus:outline-none"
+              className="bg-fk-yellow text-fk-black hover:bg-fk-yellow-dark focus:ring-fk-yellow rounded-lg px-8 py-3 font-semibold shadow-md transition-all duration-200 hover:shadow-lg focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
               disabled={isLoading}
             >
               {submitButtonLabel || 'Submit'}

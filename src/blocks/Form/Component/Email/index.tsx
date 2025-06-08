@@ -31,7 +31,7 @@ export const Email: React.FC<
           id={name}
           placeholder="Email"
           type="email"
-          className={`focus:ring-fk-black w-full rounded-md border px-3 py-2 shadow-sm focus:ring-2 focus:outline-none ${
+          className={`focus:ring-fk-yellow focus:border-fk-yellow w-full rounded-lg border px-4 py-3 shadow-sm transition-colors focus:ring-2 focus:outline-none ${
             errors[name] ? 'border-fk-red' : 'border-fk-gray-lightest'
           }`}
           {...register(name, { pattern: /^\S[^\s@]*@\S+$/, required: required ?? false })}

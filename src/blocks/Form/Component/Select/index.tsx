@@ -45,22 +45,28 @@ export const Select: React.FC<
               styles={{
                 control: (base, state) => ({
                   ...base,
-                  borderColor: errors[name] ? '#ef4444' : state.isFocused ? '#3b82f6' : '#d1d5db',
-                  boxShadow: state.isFocused ? '0 0 0 1px #3b82f6' : 'none',
+                  borderRadius: '0.5rem',
+                  borderWidth: '1px',
+                  padding: '0.25rem 0.5rem',
+                  borderColor: errors[name] ? '#911f2f' : state.isFocused ? '#fbdb1d' : '#bfbaba',
+                  boxShadow: state.isFocused
+                    ? '0 0 0 2px #fbdb1d'
+                    : '0 1px 2px 0 rgb(0 0 0 / 0.05)',
+                  transition: 'border-color 0.2s, box-shadow 0.2s',
                   '&:hover': {
-                    borderColor: errors[name] ? '#ef4444' : '#3b82f6'
+                    borderColor: errors[name] ? '#911f2f' : '#fbdb1d'
                   }
                 }),
                 option: (base, state) => ({
                   ...base,
                   backgroundColor: state.isSelected
-                    ? '#3b82f6'
+                    ? '#fbdb1d'
                     : state.isFocused
-                      ? '#e0f2fe'
+                      ? '#fefcc3'
                       : 'white',
-                  color: state.isSelected ? 'white' : '#374151',
+                  color: state.isSelected ? '#201e1e' : '#201e1e',
                   '&:active': {
-                    backgroundColor: '#3b82f6'
+                    backgroundColor: '#fbdb1d'
                   }
                 })
               }}
