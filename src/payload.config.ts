@@ -307,6 +307,7 @@ export default buildConfig({
         handler: sendNewsletterHandler
       }
     ],
+    // TODO: This should be changed to use a api call
     autoRun: [
       {
         // This is for schedule publishing
