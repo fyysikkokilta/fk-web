@@ -8,6 +8,7 @@ import { signedIn } from '../access/signed-in'
 
 export const Media: CollectionConfig = {
   slug: 'media',
+  folders: true,
   access: {
     read: () => true,
     create: signedIn,
