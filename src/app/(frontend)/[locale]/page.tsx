@@ -10,6 +10,7 @@ import { Partners } from '@/components/Partners'
 import { RefreshRouteOnSave } from '@/components/RefreshRouteOnSave'
 import { RichText } from '@/components/RichText'
 import { env } from '@/env'
+import { routing } from '@/i18n/routing'
 import { getLandingPage } from '@/lib/getLandingPage'
 import { getPartners } from '@/lib/getPartners'
 import { isDraftMode } from '@/utils/draftMode'
@@ -64,6 +65,16 @@ export async function generateMetadata({ params }: LandingPageProps) {
       google: env.GOOGLE_SITE_VERIFICATION
     }
   }
+}
+
+export async function generateStaticParams() {
+  const locales = routing.locales
+
+  return locales.map((locale) => {
+    return {
+      locale: locale
+    }
+  })
 }
 
 export default async function LandingPage({ params }: LandingPageProps) {
