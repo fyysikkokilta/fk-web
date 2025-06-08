@@ -5,9 +5,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      extra_hosts:
+        - "host.docker.internal:host-gateway"
     restart: always
-    depends_on:
-      - postgres
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     volumes:
       - ./public/media:/app/public/media
       - ./public/documents:/app/public/documents
@@ -20,11 +22,3 @@ services:
       options:
         max-size: '10m'
         max-file: '5'
-
-  postgres:
-    restart: always
-    image: postgres:latest
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    ports:
-      - '5432:5432'
