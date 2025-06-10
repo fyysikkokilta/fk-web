@@ -117,6 +117,7 @@ export interface Config {
     tasks: {
       schedulePublish: TaskSchedulePublish;
       sendNewsletter: TaskSendNewsletter;
+      createCollectionExport: TaskCreateCollectionExport;
       inline: {
         input: unknown;
         output: unknown;
@@ -1189,7 +1190,7 @@ export interface PayloadJob {
     | {
         executedAt: string;
         completedAt: string;
-        taskSlug: 'inline' | 'schedulePublish' | 'sendNewsletter';
+        taskSlug: 'inline' | 'schedulePublish' | 'sendNewsletter' | 'createCollectionExport';
         taskID: string;
         input?:
           | {
@@ -1220,13 +1221,13 @@ export interface PayloadJob {
           | boolean
           | null;
         parent?: {
-          taskSlug?: ('inline' | 'schedulePublish' | 'sendNewsletter') | null;
+          taskSlug?: ('inline' | 'schedulePublish' | 'sendNewsletter' | 'createCollectionExport') | null;
           taskID?: string | null;
         };
         id?: string | null;
       }[]
     | null;
-  taskSlug?: ('inline' | 'schedulePublish' | 'sendNewsletter') | null;
+  taskSlug?: ('inline' | 'schedulePublish' | 'sendNewsletter' | 'createCollectionExport') | null;
   queue?: string | null;
   waitUntil?: string | null;
   processing?: boolean | null;
@@ -2276,6 +2277,36 @@ export interface TaskSchedulePublish {
 export interface TaskSendNewsletter {
   input: {
     newsletterId: number;
+  };
+  output?: unknown;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TaskCreateCollectionExport".
+ */
+export interface TaskCreateCollectionExport {
+  input: {
+    name?: string | null;
+    format: 'csv' | 'json';
+    limit?: number | null;
+    sort?: string | null;
+    locale?: ('all' | 'fi' | 'en') | null;
+    drafts?: ('yes' | 'no') | null;
+    selectionToUse?: ('currentSelection' | 'currentFilters' | 'all') | null;
+    fields?: string[] | null;
+    collectionSlug: string;
+    where?:
+      | {
+          [k: string]: unknown;
+        }
+      | unknown[]
+      | string
+      | number
+      | boolean
+      | null;
+    user?: string | null;
+    userCollection?: string | null;
+    exportsCollection?: string | null;
   };
   output?: unknown;
 }

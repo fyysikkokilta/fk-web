@@ -45,6 +45,7 @@ import type {
 } from '@/payload-types'
 
 import { CustomRelationship } from './CustomRelationShip'
+import { CustomText } from './CustomText'
 import { CustomUpload } from './CustomUpload'
 import { internalDocToHref } from './internalDocToHref'
 import ProseWrapper from './ProseWrapper'
@@ -81,8 +82,9 @@ export const RichText = ({ data, locale, extraClassName }: RichTextProps) => {
     ...LinkJSXConverter({
       internalDocToHref: (linkNode) => internalDocToHref(linkNode, locale)
     }),
-    relationship: ({ node }) => CustomRelationship({ node, locale }),
-    upload: CustomUpload,
+    text: ({ node }) => <CustomText node={node} />,
+    relationship: ({ node }) => <CustomRelationship node={node} locale={locale} />,
+    upload: ({ node }) => <CustomUpload node={node} />,
     blocks: {
       ...defaultConverters.blocks,
       align: ({ node }) => <Align block={node.fields} locale={locale} />,
