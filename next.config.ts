@@ -4,10 +4,8 @@ import withPlaiceholder from '@plaiceholder/next'
 import type { NextConfig } from 'next'
 import createNextIntlPlugin from 'next-intl/plugin'
 
-import { env } from '@/env'
-
 const withBundleAnalyzer = bundleAnalyzer({
-  enabled: env.ANALYZE
+  enabled: process.env.ANALYZE === 'true'
 })
 
 const withNextIntl = createNextIntlPlugin()
@@ -20,8 +18,10 @@ const nextConfig: NextConfig = {
   },
   images: {
     remotePatterns: [
-      new URL(`${env.NEXT_PUBLIC_SERVER_URL}/**`),
-      ...(env.NEXT_PUBLIC_S3_PUBLIC_URL ? [new URL(`${env.NEXT_PUBLIC_S3_PUBLIC_URL}/**`)] : [])
+      new URL(`${process.env.NEXT_PUBLIC_SERVER_URL}/**`),
+      ...(process.env.NEXT_PUBLIC_S3_PUBLIC_URL
+        ? [new URL(`${process.env.NEXT_PUBLIC_S3_PUBLIC_URL}/**`)]
+        : [])
     ]
   },
   transpilePackages: ['@t3-oss/env-nextjs', '@t3-oss/env-core'],
