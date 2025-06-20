@@ -1,3 +1,4 @@
+import { compress } from 'compress-pdf'
 import { CollectionConfig } from 'payload'
 
 import { signedIn } from '@/access/signed-in'
@@ -39,6 +40,15 @@ export const Documents: CollectionConfig = {
     }
   ],
   hooks: {
+    beforeOperation: [
+      async ({ req, operation }) => {
+        if (['create', 'update'].includes(operation) && req.file) {
+          const compressedBuffer = await compress(req.file.data)
+          req.file.data = compressedBuffer
+          req.file.size = compressedBuffer.length
+        }
+      }
+    ],
     afterChange: [revalidateCollection('documents')],
     afterDelete: [revalidateDeletedCollection('documents')]
   }
