@@ -15,8 +15,8 @@ export const env = createEnv({
 
     ALLOW_NON_EXISTING_USERS: z
       .string()
-      .transform((val) => val === 'true')
-      .default('false'),
+      .default('false')
+      .transform((val) => val === 'true'),
 
     EMAIL_FROM_NAME: z.string().default('Fyysikkokilta'),
     EMAIL_FROM_ADDRESS: z.string().email().default('web@fyysikkokilta.fi'),
@@ -32,8 +32,8 @@ export const env = createEnv({
 
     ANALYZE: z
       .string()
-      .transform((val) => val === 'true')
-      .default('false'),
+      .default('false')
+      .transform((val) => val === 'true'),
 
     GOOGLE_CLIENT_ID: z.string(),
     GOOGLE_CLIENT_SECRET: z.string(),
@@ -50,5 +50,6 @@ export const env = createEnv({
     NEXT_PUBLIC_SERVER_URL: process.env.NEXT_PUBLIC_SERVER_URL,
     NEXT_PUBLIC_S3_PUBLIC_URL: process.env.NEXT_PUBLIC_S3_PUBLIC_URL
   },
-  emptyStringAsUndefined: true
+  emptyStringAsUndefined: true,
+  skipValidation: process.env.SKIP_ENV_VALIDATION === 'true'
 })

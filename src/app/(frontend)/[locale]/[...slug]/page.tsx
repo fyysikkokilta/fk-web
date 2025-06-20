@@ -1,7 +1,5 @@
-import configPromise from '@payload-config'
 import { Locale } from 'next-intl'
 import { setRequestLocale } from 'next-intl/server'
-import { getPayload } from 'payload'
 
 import { BoardMemberSideBar } from '@/components/BoardMemberSideBar'
 import { DraftModeBanner } from '@/components/DraftModeBanner'
@@ -12,7 +10,6 @@ import { RefreshRouteOnSave } from '@/components/RefreshRouteOnSave'
 import { RichText } from '@/components/RichText'
 import { TableOfContents } from '@/components/TableOfContents'
 import { env } from '@/env'
-import { routing } from '@/i18n/routing'
 import { getPage } from '@/lib/getPage'
 import { getPartners } from '@/lib/getPartners'
 import { isDraftMode } from '@/utils/draftMode'
@@ -27,38 +24,7 @@ interface PageProps {
 // Revalidate at least once per hour
 export const revalidate = 3600
 
-export async function generateStaticParams() {
-  const payload = await getPayload({
-    config: configPromise
-  })
-
-  const pages = await payload.find({
-    collection: 'pages',
-    locale: 'all'
-  })
-
-  const locales = routing.locales
-
-  return pages.docs
-    .map((page) => {
-      // Payload types are f*cked up :D
-      const path = page.path as unknown as Record<string, string>
-      return locales
-        .map((locale) => {
-          const localizedPath = path[locale]
-          if (!localizedPath) {
-            return null
-          }
-
-          return {
-            slug: localizedPath.split('/'),
-            locale: locale
-          }
-        })
-        .filter((item) => item !== null)
-    })
-    .flat()
-}
+export const dynamic = 'force-static'
 
 export async function generateMetadata({ params }: PageProps) {
   const { slug, locale } = await params

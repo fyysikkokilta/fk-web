@@ -10,7 +10,6 @@ import { Partners } from '@/components/Partners'
 import { RefreshRouteOnSave } from '@/components/RefreshRouteOnSave'
 import { RichText } from '@/components/RichText'
 import { env } from '@/env'
-import { routing } from '@/i18n/routing'
 import { getLandingPage } from '@/lib/getLandingPage'
 import { getPartners } from '@/lib/getPartners'
 import { isDraftMode } from '@/utils/draftMode'
@@ -67,15 +66,7 @@ export async function generateMetadata({ params }: LandingPageProps) {
   }
 }
 
-export async function generateStaticParams() {
-  const locales = routing.locales
-
-  return locales.map((locale) => {
-    return {
-      locale: locale
-    }
-  })
-}
+export const dynamic = 'force-static'
 
 export default async function LandingPage({ params }: LandingPageProps) {
   const { locale } = await params

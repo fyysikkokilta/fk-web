@@ -2,14 +2,10 @@ version: '3'
 
 services:
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      extra_hosts:
-        - "host.docker.internal:host-gateway"
+    image: ghcr.io/fyysikkokilta/fk-web:latest
     restart: always
     extra_hosts:
-      - "host.docker.internal:host-gateway"
+      - 'host.docker.internal:host-gateway'
     volumes:
       - ./public/media:/app/public/media
       - ./public/documents:/app/public/documents

@@ -14,6 +14,8 @@ import { routing } from '@/i18n/routing'
 import { getFooter } from '@/lib/getFooter'
 import { getMainNavigation } from '@/lib/getMainNavigation'
 
+export const dynamic = 'force-static'
+
 export default async function RootLayout({
   children,
   params

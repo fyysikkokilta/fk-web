@@ -70,6 +70,7 @@ import schedulePublishHandler from './handlers/schedulePublishHandler'
 import sendNewsletterHandler from './handlers/sendNewsletterHandler'
 import { revalidateCollection } from './hooks/revalidateCollection'
 import { revalidateDeletedCollection } from './hooks/revalidateDeletedCollection'
+import { migrations } from './migrations'
 import { enableCloudStorage } from './utils/enableCloudStorage'
 import { enableOAuth } from './utils/enableOAuth'
 import { textState } from './utils/textState'
@@ -257,6 +258,7 @@ export default buildConfig({
     slug: 'folders'
   },
   db: postgresAdapter({
+    prodMigrations: migrations,
     pool: {
       connectionString: env.DATABASE_URI || ''
     }
@@ -323,7 +325,7 @@ export default buildConfig({
       fileSize: 1024 * 1024 * 8 // 8MB
     }
   },
-  secret: env.PAYLOAD_SECRET || '',
+  secret: env.PAYLOAD_SECRET || 'mock-value-for-ci',
   typescript: {
     outputFile: resolve(__dirname, 'payload-types.ts')
   },
