@@ -36,7 +36,6 @@ export const revalidateDeletedCollection = <T extends TypeWithID>(
         paths.forEach((path) => {
           revalidatePath(path)
         })
-        revalidateTag('sitemap')
       })
     }
 
@@ -50,7 +49,6 @@ export const revalidateDeletedCollection = <T extends TypeWithID>(
       // Same as above.
       after(async () => {
         revalidatePath(path, 'layout')
-        revalidateTag('sitemap')
       })
     }
 

@@ -1,4 +1,4 @@
-import { revalidatePath, revalidateTag } from 'next/cache'
+import { revalidatePath } from 'next/cache'
 import { after } from 'next/server'
 import type { GlobalAfterChangeHook, GlobalSlug } from 'payload'
 
@@ -32,8 +32,6 @@ export const revalidateGlobal = (globalSlug: GlobalSlug): GlobalAfterChangeHook 
         paths.forEach((path) => {
           revalidatePath(path)
         })
-
-        revalidateTag('sitemap')
       })
     }
 
@@ -47,7 +45,6 @@ export const revalidateGlobal = (globalSlug: GlobalSlug): GlobalAfterChangeHook 
       // Same as above.
       after(async () => {
         revalidatePath(path, 'layout')
-        revalidateTag('sitemap')
       })
     }
   }
