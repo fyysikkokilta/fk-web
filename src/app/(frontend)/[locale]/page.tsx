@@ -66,7 +66,9 @@ export async function generateMetadata({ params }: LandingPageProps) {
   }
 }
 
-export const dynamic = 'force-static'
+export const generateStaticParams = async () => {
+  return Promise.resolve([])
+}
 
 export default async function LandingPage({ params }: LandingPageProps) {
   const { locale } = await params

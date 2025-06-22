@@ -24,7 +24,9 @@ interface PageProps {
 // Revalidate at least once per hour
 export const revalidate = 3600
 
-export const dynamic = 'force-static'
+export const generateStaticParams = async () => {
+  return Promise.resolve([])
+}
 
 export async function generateMetadata({ params }: PageProps) {
   const { slug, locale } = await params
