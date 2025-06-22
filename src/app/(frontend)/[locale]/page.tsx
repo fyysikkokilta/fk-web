@@ -91,7 +91,7 @@ export default async function LandingPage({ params }: LandingPageProps) {
       <DraftModeBanner isDraft={isDraft} />
       <RefreshRouteOnSave />
       <FrontPageSlideshow page={landingPage} startingIndex={startingIndex} />
-      <div id="page-content-root" className="mx-auto mb-12 w-full max-w-7xl p-6">
+      <div id="page-content-root" className="mx-auto mb-12 w-full max-w-7xl flex-1 p-6">
         <div id="page-content" className="flex flex-col gap-8">
           <FrontPageAnnouncement page={landingPage} locale={locale} />
           <FrontPageCalendar page={landingPage} />

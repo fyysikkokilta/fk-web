@@ -92,7 +92,7 @@ export default async function Page({ params }: PageProps) {
       <RefreshRouteOnSave />
       <PayloadRedirects url={`/${slug?.join('/')}`} disableNotFound locale={locale} />
       <PageBanner page={page} />
-      <div id="page-content-root" className="mx-auto mb-12 w-full max-w-7xl p-6">
+      <div id="page-content-root" className="mx-auto mb-12 w-full max-w-7xl flex-1 p-6">
         <div className={`${page.showTableOfContents ? 'lg:ml-[20%]' : ''}`}>
           {page.showTitle && (
             <h1 className="mb-8 font-(family-name:--font-lora) text-4xl font-bold italic">
