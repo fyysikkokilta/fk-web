@@ -25,6 +25,7 @@ export interface Config {
     card: CardBlock;
     collapsible: CollapsibleBlock;
     committee: CommitteeBlock;
+    'custom-html': CustomHTMLBlock;
     'embed-video': EmbedVideoBlock;
     form: FormBlock;
     'fuksi-year': FuksiYearBlock;
@@ -476,6 +477,19 @@ export interface Official {
   photo?: (number | null) | Media;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CustomHTMLBlock".
+ */
+export interface CustomHTMLBlock {
+  /**
+   * Enter custom HTML code. Be careful with scripts and ensure the HTML is safe.
+   */
+  html: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'custom-html';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

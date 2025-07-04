@@ -17,6 +17,7 @@ import { Calendar } from '@/blocks/Calendar/Component'
 import { Card } from '@/blocks/Card/Component'
 import { Collapsible } from '@/blocks/Collapsible/Component'
 import { Committee } from '@/blocks/Committee/Component'
+import { CustomHTML } from '@/blocks/CustomHTML/Component'
 import { EmbedVideo } from '@/blocks/EmbedVideo/Component'
 import { FormBlock } from '@/blocks/Form/Component'
 import { FuksiYear } from '@/blocks/FuksiYear/Component'
@@ -33,6 +34,7 @@ import type {
   CardBlock as CardBlockType,
   CollapsibleBlock as CollapsibleBlockType,
   CommitteeBlock as CommitteeBlockType,
+  CustomHTMLBlock as CustomHTMLBlockType,
   EmbedVideoBlock as EmbedVideoBlockType,
   FormBlock as FormBlockType,
   FuksiYearBlock as FuksiYearBlockType,
@@ -65,6 +67,7 @@ type NodeTypes =
       | CardBlockType
       | CollapsibleBlockType
       | CommitteeBlockType
+      | CustomHTMLBlockType
       | EmbedVideoBlockType
       | FormBlockType
       | FuksiYearBlockType
@@ -93,6 +96,7 @@ export const RichText = ({ data, locale, extraClassName }: RichTextProps) => {
       card: ({ node }) => <Card block={node.fields} locale={locale} />,
       collapsible: ({ node }) => <Collapsible block={node.fields} locale={locale} />,
       committee: ({ node }) => <Committee block={node.fields} />,
+      'custom-html': ({ node }) => <CustomHTML block={node.fields} />,
       'embed-video': ({ node }) => <EmbedVideo block={node.fields} />,
       form: ({ node }) => <FormBlock block={node.fields} locale={locale} />,
       'fuksi-year': ({ node }) => <FuksiYear block={node.fields} />,

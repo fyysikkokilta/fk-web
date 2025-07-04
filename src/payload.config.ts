@@ -36,6 +36,7 @@ import { CalendarBlock } from './blocks/Calendar/config'
 import { CardBlock } from './blocks/Card/config'
 import { CollapsibleBlock } from './blocks/Collapsible/config'
 import { CommitteeBlock } from './blocks/Committee/config'
+import { CustomHTMLBlock } from './blocks/CustomHTML/config'
 import { EmbedVideoBlock } from './blocks/EmbedVideo/config'
 import { FormBlock } from './blocks/Form/config'
 import { FuksiYearBlock } from './blocks/FuksiYear/config'
@@ -170,6 +171,7 @@ export default buildConfig({
     CardBlock,
     CollapsibleBlock,
     CommitteeBlock,
+    CustomHTMLBlock,
     EmbedVideoBlock,
     FormBlock,
     FuksiYearBlock,
@@ -209,6 +211,7 @@ export default buildConfig({
           'card',
           'collapsible',
           'committee',
+          'custom-html',
           'embed-video',
           'form',
           'fuksi-year',
