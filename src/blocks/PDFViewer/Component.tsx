@@ -55,7 +55,7 @@ export const PDFViewer = ({ block }: PDFViewerProps) => {
             </div>
           )}
           <iframe
-            src={`${block.document.url || ''}#page=1&view=FitH&toolbar=0`}
+            src={`/api/pdf?url=${encodeURIComponent(block.document.url || '')}#page=1&view=FitH&toolbar=0`}
             className="h-full w-full border-none"
             title={block.document.title}
             onLoad={() => setIsLoading(false)}
