@@ -54,12 +54,20 @@ export const PDFViewer = ({ block }: PDFViewerProps) => {
               </div>
             </div>
           )}
-          <embed
+          <iframe
             src={`${block.document.url || ''}#page=1&view=FitH&toolbar=0`}
-            type="application/pdf"
-            className="h-full w-full"
+            className="h-full w-full border-none"
+            title={block.document.title}
             onLoad={() => setIsLoading(false)}
-          />
+          >
+            <p>
+              {`Your browser does not support embedding PDFs directly. You can`}{' '}
+              <a href={block.document.url || ''} target="_blank" rel="noopener noreferrer">
+                {`download the PDF here`}
+              </a>
+              {`.`}
+            </p>
+          </iframe>
         </div>
 
         {/* Footer */}
