@@ -40,7 +40,7 @@ const fields = (required = false): Field[] => [
     },
     validate: (value: string | null | undefined) => {
       if (!value) return true
-      const regex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/
+      const regex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([^\s]*)\/?$/
       if (!regex.test(value)) {
         return 'Invalid URL'
       }
