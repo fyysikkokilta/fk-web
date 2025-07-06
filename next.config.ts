@@ -18,7 +18,9 @@ const nextConfig: NextConfig = {
   },
   images: {
     remotePatterns: [
-      new URL(`${process.env.NEXT_PUBLIC_SERVER_URL}/**`),
+      ...(process.env.NEXT_PUBLIC_SERVER_URL
+        ? [new URL(`${process.env.NEXT_PUBLIC_SERVER_URL}/**`)]
+        : []),
       ...(process.env.NEXT_PUBLIC_S3_PUBLIC_URL
         ? [new URL(`${process.env.NEXT_PUBLIC_S3_PUBLIC_URL}/**`)]
         : [])
