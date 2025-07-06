@@ -49,10 +49,11 @@ jobs:
       - name: Lint and fix
         run: pnpm lint --fix
 
-      - name: Generate types and importmap
-        run: |
-          pnpm generate:types
-          pnpm generate:importmap
+      # TODO: Uncomment these when we have same env variables in CI as prod
+      #- name: Generate types and importmap
+      #  run: |
+      #    pnpm generate:types
+      #    pnpm generate:importmap
 
       - name: Check for uncommitted changes
         run: |
