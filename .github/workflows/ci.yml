@@ -7,6 +7,10 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  SKIP_ENV_VALIDATION: true
+  NEXT_PUBLIC_SERVER_URL: https://poc.fyysikkokilta.fi
+  NEXT_PUBLIC_S3_PUBLIC_URL: https://files.fyysikkokilta.fi
+  NODE_ENV: production
 
 jobs:
   lint:
