@@ -267,8 +267,8 @@ export default buildConfig({
     }
   }),
   email: nodemailerAdapter({
-    defaultFromName: env.EMAIL_FROM_NAME || 'Fyysikkokilta',
-    defaultFromAddress: env.EMAIL_FROM_ADDRESS || 'aapo.laakkio@fyysikkokilta.fi',
+    defaultFromName: env.EMAIL_FROM_NAME,
+    defaultFromAddress: env.EMAIL_FROM_ADDRESS,
     transportOptions: {
       host: env.SMTP_HOST,
       port: env.SMTP_PORT,
