@@ -4,7 +4,7 @@ import { eachDayOfInterval, endOfMonth, format, getDay, startOfDay, startOfMonth
 import { enUS, fi } from 'date-fns/locale'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { DynamicIcon, IconName } from 'lucide-react/dynamic'
-import { Locale } from 'next-intl'
+import { Locale, useTranslations } from 'next-intl'
 import { useEffect, useState } from 'react'
 
 import type { getCalendarEvents } from '@/lib/getCalendarEvents'
@@ -22,6 +22,7 @@ interface CalendarClientProps {
 }
 
 export const CalendarClient = ({ events, locale }: CalendarClientProps) => {
+  const t = useTranslations()
   const today = startOfDay(new Date())
   const [currentDate, setCurrentDate] = useState(today)
   const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(null)
@@ -109,7 +110,10 @@ export const CalendarClient = ({ events, locale }: CalendarClientProps) => {
     const monthEnd = endOfMonth(currentDate)
     const days = eachDayOfInterval({ start: monthStart, end: monthEnd })
     const startWeekday = getDay(monthStart)
-    const weekDays = ['ma', 'ti', 'ke', 'to', 'pe', 'la', 'su']
+    const weekDays =
+      locale === 'fi'
+        ? ['ma', 'ti', 'ke', 'to', 'pe', 'la', 'su']
+        : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 
     return (
       <div className="grid grid-cols-7 gap-px rounded-xl p-2 shadow-lg">
@@ -179,7 +183,7 @@ export const CalendarClient = ({ events, locale }: CalendarClientProps) => {
         <button
           onClick={() => handleMonthChange(-1)}
           className="bg-fk-yellow text-fk-black hover:bg-fk-yellow-dark border-fk-yellow-dark rounded-full border p-2 shadow transition hover:cursor-pointer"
-          aria-label="Previous month"
+          aria-label={t('calendar.previousMonth')}
         >
           <ChevronLeft className="h-5 w-5" />
         </button>
@@ -189,7 +193,7 @@ export const CalendarClient = ({ events, locale }: CalendarClientProps) => {
         <button
           onClick={() => handleMonthChange(1)}
           className="bg-fk-yellow text-fk-black hover:bg-fk-yellow-dark border-fk-yellow-dark rounded-full border p-2 shadow transition hover:cursor-pointer"
-          aria-label="Next month"
+          aria-label={t('calendar.nextMonth')}
         >
           <ChevronRight className="h-5 w-5" />
         </button>
@@ -218,7 +222,7 @@ export const CalendarClient = ({ events, locale }: CalendarClientProps) => {
           )}
           <div className="mt-2 flex items-center justify-between">
             <a href={selectedEvent.htmlLink ?? undefined} className="text-fk-gray-light text-sm">
-              {'Google'}
+              {t('calendar.google')}
             </a>
             <div>
               {selectedEvent.icon && (

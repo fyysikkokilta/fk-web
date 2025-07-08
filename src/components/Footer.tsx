@@ -1,4 +1,5 @@
 import { Locale } from 'next-intl'
+import { getTranslations } from 'next-intl/server'
 import { SocialIcon } from 'react-social-icons'
 
 import { Footer as FooterType } from '@/payload-types'
@@ -10,7 +11,9 @@ interface FooterProps {
   locale: Locale
 }
 
-export const Footer = ({ footer, locale }: FooterProps) => {
+export const Footer = async ({ footer, locale }: FooterProps) => {
+  const t = await getTranslations()
+
   return (
     <footer className="bg-fk-gray w-full py-12">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -31,7 +34,7 @@ export const Footer = ({ footer, locale }: FooterProps) => {
             ))}
           </div>
           <div className="text-fk-white text-md mt-8">
-            {`© ${new Date().getFullYear()} Fyysikkokilta ry`}
+            {t('footer.copyright', { year: new Date().getFullYear() })}
           </div>
         </div>
       </div>

@@ -2,6 +2,7 @@
 
 import { ChevronDown, ChevronUp, Menu, X } from 'lucide-react'
 import Image from 'next/image'
+import { useTranslations } from 'next-intl'
 import { useEffect, useRef, useState } from 'react'
 
 import { LanguageSwitcher } from '@/components/LanguageSwitcher'
@@ -13,6 +14,7 @@ interface MainNavigationProps {
 }
 
 export function MainNavigation({ navigation }: MainNavigationProps) {
+  const t = useTranslations()
   const pathname = usePathname()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [expandedItems, setExpandedItems] = useState<string[]>([])
@@ -158,7 +160,7 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
       id="main-navigation"
       className="bg-fk-gray text-fk-white relative z-50 w-full font-bold"
       role="navigation"
-      aria-label="Main navigation"
+      aria-label={t('mainNavigation.menu')}
     >
       {/* Desktop Navigation */}
       <div className="mx-auto hidden px-4 md:block lg:px-8 xl:px-12 2xl:container">
@@ -190,6 +192,7 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
                   role="menuitem"
                   aria-haspopup={item.children && item.children.length > 0 ? 'true' : undefined}
                   aria-expanded={focusedSubmenu === item.id ? 'true' : 'false'}
+                  aria-label={item.label}
                   onKeyDown={(e) =>
                     handleDesktopKeyDown(
                       e,
@@ -208,7 +211,7 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
                 >
                   <span>{item.label}</span>
                   {item.children && item.children.length > 0 && (
-                    <span className="sr-only">{', has submenu'}</span>
+                    <span className="sr-only">{t('mainNavigation.hasSubmenu')}</span>
                   )}
                 </Link>
                 {item.children && item.children.length > 0 && (
@@ -218,7 +221,7 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
                     }`}
                     data-submenu={item.id}
                     role="menu"
-                    aria-label={`${item.label} submenu`}
+                    aria-label={`${item.label} ${t('mainNavigation.hasSubmenu')}`}
                   >
                     <ul role="menu">
                       {item.children.map((child) => (
@@ -233,6 +236,7 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
                               child.subchildren && child.subchildren.length > 0 ? 'true' : undefined
                             }
                             aria-expanded={focusedSubsubmenu === child.id ? 'true' : 'false'}
+                            aria-label={child.label}
                             onKeyDown={(e) =>
                               handleSubmenuKeyDown(
                                 e,
@@ -255,7 +259,7 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
                           >
                             <span>{child.label}</span>
                             {child.subchildren && child.subchildren.length > 0 && (
-                              <span className="sr-only">{', has submenu'}</span>
+                              <span className="sr-only">{t('mainNavigation.hasSubmenu')}</span>
                             )}
                           </Link>
                           {child.subchildren && child.subchildren.length > 0 && (
@@ -267,7 +271,7 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
                               }`}
                               data-subsubmenu={child.id}
                               role="menu"
-                              aria-label={`${child.label} submenu`}
+                              aria-label={`${child.label} ${t('mainNavigation.hasSubmenu')}`}
                             >
                               <ul role="menu">
                                 {child.subchildren.map((grandchild) => (
@@ -278,6 +282,7 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
                                         isActive((grandchild.page as Page)?.path) ? 'underline' : ''
                                       }`}
                                       role="menuitem"
+                                      aria-label={grandchild.label}
                                       onKeyDown={handleSubsubmenuKeyDown}
                                       onFocus={() => setFocusedSubsubmenu(child.id || null)}
                                     >
@@ -323,7 +328,9 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
             className="focus:ring-fk-yellow focus:ring-offset-fk-gray p-2 focus:ring-2 focus:ring-offset-2 focus:outline-none"
             aria-expanded={isMobileMenuOpen}
             aria-controls="mobile-menu"
-            aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-label={
+              isMobileMenuOpen ? t('mainNavigation.closeMenu') : t('mainNavigation.openMenu')
+            }
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -336,7 +343,7 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
             id="mobile-menu"
             className="border-fk-gray from-fk-gray via-fk-gray-light to-fk-gray-lightest absolute top-full right-0 left-0 border-t bg-gradient-to-b shadow-lg"
             role="menu"
-            aria-label="Mobile navigation menu"
+            aria-label={t('mainNavigation.menu')}
           >
             <div className="space-y-1 px-2 pt-4 pb-4">
               {navigation.items.map((item, idx) => (
@@ -354,10 +361,11 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
                         !item.children || item.children.length === 0 ? 'w-full' : 'flex-grow'
                       } ${isActive((item.page as Page)?.path) ? 'underline' : ''}`}
                       role="menuitem"
+                      aria-label={item.label}
                     >
                       <span>{item.label}</span>
                       {item.children && item.children.length > 0 && (
-                        <span className="sr-only">{', has submenu'}</span>
+                        <span className="sr-only">{t('mainNavigation.hasSubmenu')}</span>
                       )}
                     </Link>
                     {item.children && item.children.length > 0 && (
@@ -366,8 +374,8 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
                         className="focus:ring-fk-yellow p-2 focus:ring-2 focus:outline-none focus:ring-inset"
                         aria-label={
                           isExpanded(item.id || '')
-                            ? `Collapse ${item.label} submenu`
-                            : `Expand ${item.label} submenu`
+                            ? t('mainNavigation.closeMenu')
+                            : t('mainNavigation.openMenu')
                         }
                         aria-expanded={isExpanded(item.id || '')}
                         aria-controls={`submenu-${item.id}`}
@@ -385,7 +393,7 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
                       id={`submenu-${item.id}`}
                       className="mt-1 ml-4 space-y-1"
                       role="menu"
-                      aria-label={`${item.label} submenu`}
+                      aria-label={`${item.label} ${t('mainNavigation.hasSubmenu')}`}
                     >
                       {item.children.map((child) => (
                         <div key={child.id}>
@@ -404,10 +412,11 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
                                   : 'flex-grow'
                               } ${isActive((child.page as Page)?.path) ? 'underline' : ''}`}
                               role="menuitem"
+                              aria-label={child.label}
                             >
                               <span>{child.label}</span>
                               {child.subchildren && child.subchildren.length > 0 && (
-                                <span className="sr-only">{', has submenu'}</span>
+                                <span className="sr-only">{t('mainNavigation.hasSubmenu')}</span>
                               )}
                             </Link>
                             {child.subchildren && child.subchildren.length > 0 && (
@@ -416,8 +425,8 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
                                 className="focus:ring-fk-yellow p-2 focus:ring-2 focus:outline-none focus:ring-inset"
                                 aria-label={
                                   isExpanded(child.id || '')
-                                    ? `Collapse ${child.label} submenu`
-                                    : `Expand ${child.label} submenu`
+                                    ? t('mainNavigation.closeMenu')
+                                    : t('mainNavigation.openMenu')
                                 }
                                 aria-expanded={isExpanded(child.id || '')}
                                 aria-controls={`subsubmenu-${child.id}`}
@@ -437,7 +446,7 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
                                 id={`subsubmenu-${child.id}`}
                                 className="mt-1 ml-4 space-y-1"
                                 role="menu"
-                                aria-label={`${child.label} submenu`}
+                                aria-label={`${child.label} ${t('mainNavigation.hasSubmenu')}`}
                               >
                                 {child.subchildren?.map((grandchild) => (
                                   <Link
@@ -449,6 +458,7 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
                                         : 'hover:bg-fk-gray-light/70'
                                     }`}
                                     role="menuitem"
+                                    aria-label={grandchild.label}
                                   >
                                     <span>{grandchild.label}</span>
                                   </Link>

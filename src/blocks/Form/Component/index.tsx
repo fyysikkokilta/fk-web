@@ -1,7 +1,7 @@
 'use client'
 
 import { LoaderCircle } from 'lucide-react'
-import { Locale } from 'next-intl'
+import { Locale, useTranslations } from 'next-intl'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
@@ -28,6 +28,7 @@ interface FormBlockProps {
 }
 
 export const FormBlock = ({ block, locale }: FormBlockProps) => {
+  const t = useTranslations()
   const { enableIntro, form, introContent } = block
 
   const formMethods = useForm({
@@ -86,7 +87,7 @@ export const FormBlock = ({ block, locale }: FormBlockProps) => {
           setIsLoading(false)
 
           setError({
-            message: res.errors?.[0]?.message || 'Internal Server Error',
+            message: res.errors?.[0]?.message || t('form.error'),
             status: res.status
           })
 
@@ -107,7 +108,7 @@ export const FormBlock = ({ block, locale }: FormBlockProps) => {
         console.warn(err)
         setIsLoading(false)
         setError({
-          message: 'Something went wrong.'
+          message: t('form.error')
         })
       }
     }
@@ -130,7 +131,7 @@ export const FormBlock = ({ block, locale }: FormBlockProps) => {
       {isLoading && !hasSubmitted && (
         <div className="bg-fk-blue-light text-fk-black mb-6 flex items-center justify-center rounded-md p-4">
           <LoaderCircle className="mr-2 h-5 w-5 animate-spin" />
-          <span>{'Loading, please wait...'}</span>
+          <span>{t('form.loading')}</span>
         </div>
       )}
       {error && (
@@ -167,7 +168,7 @@ export const FormBlock = ({ block, locale }: FormBlockProps) => {
               className="bg-fk-yellow text-fk-black hover:bg-fk-yellow-dark focus:ring-fk-yellow rounded-lg px-8 py-3 font-semibold shadow-md transition-all duration-200 hover:shadow-lg focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
               disabled={isLoading}
             >
-              {submitButtonLabel || 'Submit'}
+              {submitButtonLabel || t('form.submit')}
             </button>
           </div>
         </form>

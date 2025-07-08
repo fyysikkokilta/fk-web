@@ -1,6 +1,7 @@
 'use client'
 
 import { ExternalLink, FileText } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 
 import { BlockLink } from '@/components/BlockLink'
@@ -11,6 +12,7 @@ interface PDFViewerProps {
 }
 
 export const PDFViewer = ({ block }: PDFViewerProps) => {
+  const t = useTranslations()
   const [isLoading, setIsLoading] = useState(true)
 
   if (typeof block.document === 'number') {
@@ -37,7 +39,7 @@ export const PDFViewer = ({ block }: PDFViewerProps) => {
               className="flex items-center gap-1 text-sm"
             >
               <ExternalLink size={24} />
-              {'Open in new tab'}
+              {t('pdfViewer.openInNewTab')}
             </a>
           </div>
         </div>
@@ -61,11 +63,18 @@ export const PDFViewer = ({ block }: PDFViewerProps) => {
             onLoad={() => setIsLoading(false)}
           >
             <p>
-              {`Your browser does not support embedding PDFs directly. You can`}{' '}
-              <a href={block.document.url || ''} target="_blank" rel="noopener noreferrer">
-                {`download the PDF here`}
-              </a>
-              {`.`}
+              {t.rich('pdfViewer.fallbackMessage', {
+                downloadLink: (chunks) => {
+                  if (typeof block.document === 'number') {
+                    return null
+                  }
+                  return (
+                    <a href={block.document.url || ''} target="_blank" rel="noopener noreferrer">
+                      {chunks}
+                    </a>
+                  )
+                }
+              })}
             </p>
           </iframe>
         </div>

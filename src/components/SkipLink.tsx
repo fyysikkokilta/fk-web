@@ -1,10 +1,14 @@
-export const SkipLink = () => {
+import { getTranslations } from 'next-intl/server'
+
+export const SkipLink = async () => {
+  const t = await getTranslations()
+
   return (
     <a
-      href="#page-content"
-      className="bg-fk-white sr-only z-[1000] block focus-visible:not-sr-only focus-visible:fixed focus-visible:top-0 focus-visible:left-0 focus-visible:size-fit focus-visible:p-2 focus-visible:font-semibold"
+      href="#main-content"
+      className="bg-fk-yellow text-fk-black sr-only z-50 rounded p-2 focus:not-sr-only focus:absolute focus:top-0 focus:left-0"
     >
-      {'Skip to main content'}
+      {t('skipLink')}
     </a>
   )
 }

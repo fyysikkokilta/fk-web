@@ -1,1 +1,64 @@
-{}
+{
+  "mainNavigation": {
+    "home": "Etusivu",
+    "menu": "Valikko",
+    "closeMenu": "Sulje valikko",
+    "openMenu": "Avaa valikko",
+    "hasSubmenu": ", alavalikko",
+    "previousMonth": "Edellinen kuukausi",
+    "nextMonth": "Seuraava kuukausi"
+  },
+  "footer": {
+    "copyright": "© {year} Fyysikkokilta ry"
+  },
+  "calendar": {
+    "google": "Google",
+    "previousMonth": "Edellinen kuukausi",
+    "nextMonth": "Seuraava kuukausi",
+    "today": "Tänään",
+    "noEvents": "Ei tapahtumia"
+  },
+  "form": {
+    "submit": "Lähetä",
+    "reset": "Tyhjennä",
+    "loading": "Ladataan, odota hetki...",
+    "required": "Tämä kenttä on pakollinen.",
+    "invalidEmail": "Virheellinen sähköpostiosoite.",
+    "success": "Lomake lähetetty onnistuneesti!",
+    "error": "Lomakkeen lähetys epäonnistui."
+  },
+  "pdfViewer": {
+    "openInNewTab": "Avaa uudessa välilehdessä",
+    "fallbackMessage": "Selaimesi ei tue PDF-tiedostojen upottamista. Voit <downloadLink>ladata PDF-tiedoston tästä</downloadLink>."
+  },
+  "draftMode": {
+    "preview": "Tämä on luonnoksen esikatselu",
+    "hidden": "Tämä sivu on piilotettu"
+  },
+  "common": {
+    "noImage": "Ei kuvaa",
+    "defaultImage": "Oletuskuva"
+  },
+  "notFound": {
+    "logoAlt": "Fyysikkokillan logo",
+    "title": "Herra, on vaikea olla nöyrä...",
+    "description": "Kun on täydellinen kaikin puolin. En voi odottaa pääseväni katsomaan peiliin, koska näytän joka päivä paremmalta. Tuntea minut on rakastaa minua, olen varmasti helvetin mies. Herra, on vaikea olla nöyrä, mutta teen parhaani.",
+    "subtitle": "Mutta tämä sivu? Ei löydy. Jopa täydellisyydellä on rajansa!",
+    "goHome": "Mene kotiin ja ihaile itseäsi"
+  },
+  "partners": {
+    "title": "Yhteistyökumppanit"
+  },
+  "frontPage": {
+    "announcement": "Tiedote",
+    "calendar": "Kalenteri",
+    "slideshow": "Kuvakaruselli",
+    "news": "Uutiset",
+    "events": "Tapahtumat",
+    "more": "Lisää"
+  },
+  "languageSwitcher": {
+    "label": "Kieli"
+  },
+  "skipLink": "Siirry pääsisältöön"
+}

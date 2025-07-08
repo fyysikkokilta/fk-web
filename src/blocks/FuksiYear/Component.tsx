@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { getTranslations } from 'next-intl/server'
 
 import type { FuksiYearBlock as FuksiYearBlockType, Media } from '@/payload-types'
 
@@ -6,7 +7,9 @@ interface FuksiYearProps {
   block: FuksiYearBlockType
 }
 
-export const FuksiYear = ({ block }: FuksiYearProps) => {
+export const FuksiYear = async ({ block }: FuksiYearProps) => {
+  const t = await getTranslations()
+
   if (!block.fuksiGroups) {
     return null
   }
@@ -41,7 +44,7 @@ export const FuksiYear = ({ block }: FuksiYearProps) => {
                       ) : block.defaultImage ? (
                         <Image
                           src={(block.defaultImage as Media).url || ''}
-                          alt={(block.defaultImage as Media).alt || 'Default image'}
+                          alt={(block.defaultImage as Media).alt || t('common.defaultImage')}
                           blurDataURL={(block.defaultImage as Media).blurDataUrl}
                           placeholder="blur"
                           fill
@@ -50,7 +53,7 @@ export const FuksiYear = ({ block }: FuksiYearProps) => {
                         />
                       ) : (
                         <div className="bg-fk-gray-lightest flex h-full w-full items-center justify-center rounded-lg">
-                          <span className="text-fk-gray-light">{'No image'}</span>
+                          <span className="text-fk-gray-light">{t('common.noImage')}</span>
                         </div>
                       )}
                     </div>

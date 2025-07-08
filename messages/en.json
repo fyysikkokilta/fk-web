@@ -1,1 +1,64 @@
-{}
+{
+  "mainNavigation": {
+    "home": "Home",
+    "menu": "Menu",
+    "closeMenu": "Close menu",
+    "openMenu": "Open menu",
+    "hasSubmenu": ", has submenu",
+    "previousMonth": "Previous month",
+    "nextMonth": "Next month"
+  },
+  "footer": {
+    "copyright": "© {year} Fyysikkokilta ry"
+  },
+  "calendar": {
+    "google": "Google",
+    "previousMonth": "Previous month",
+    "nextMonth": "Next month",
+    "today": "Today",
+    "noEvents": "No events"
+  },
+  "form": {
+    "submit": "Submit",
+    "reset": "Reset",
+    "loading": "Loading, please wait...",
+    "required": "This field is required.",
+    "invalidEmail": "Invalid email address.",
+    "success": "Form submitted successfully!",
+    "error": "There was an error submitting the form."
+  },
+  "pdfViewer": {
+    "openInNewTab": "Open in new tab",
+    "fallbackMessage": "Your browser does not support embedding PDFs directly. You can <downloadLink>download the PDF here</downloadLink>."
+  },
+  "draftMode": {
+    "preview": "This is a draft preview",
+    "hidden": "This page is hidden"
+  },
+  "common": {
+    "noImage": "No image",
+    "defaultImage": "Default image"
+  },
+  "notFound": {
+    "logoAlt": "Guild of Physics Logo",
+    "title": "Oh Lord, it's hard to be humble...",
+    "description": "When you're perfect in every way. I can't wait to look in the mirror, cause I get better lookin' each day. To know me is to love me, I must be a hell of a man. Oh Lord, it's hard to be humble, but I'm doin' the best that I can.",
+    "subtitle": "But this page? Not found. Even perfection has its limits!",
+    "goHome": "Go Home & Admire Yourself"
+  },
+  "partners": {
+    "title": "Partners"
+  },
+  "frontPage": {
+    "announcement": "Announcement",
+    "calendar": "Calendar",
+    "slideshow": "Slideshow",
+    "news": "News",
+    "events": "Events",
+    "more": "More"
+  },
+  "languageSwitcher": {
+    "label": "Language"
+  },
+  "skipLink": "Skip to main content"
+}

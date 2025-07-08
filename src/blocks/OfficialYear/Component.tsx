@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { getTranslations } from 'next-intl/server'
 
 import type {
   Division as DivisionType,
@@ -18,7 +19,9 @@ interface OfficialWithRoles {
   roles: OfficialRoleType[]
 }
 
-export const OfficialYear = ({ block }: OfficialYearProps) => {
+export const OfficialYear = async ({ block }: OfficialYearProps) => {
+  const t = await getTranslations()
+
   const getOfficialsWithRoles = (division: DivisionType) => {
     const officialsMap = new Map<number, OfficialWithRoles>()
 
@@ -101,7 +104,7 @@ export const OfficialYear = ({ block }: OfficialYearProps) => {
                 ) : block.defaultImage ? (
                   <Image
                     src={(block.defaultImage as Media).url || ''}
-                    alt={(block.defaultImage as Media).alt || 'Default image'}
+                    alt={(block.defaultImage as Media).alt || t('common.defaultImage')}
                     blurDataURL={(block.defaultImage as Media).blurDataUrl}
                     placeholder="blur"
                     fill
@@ -110,7 +113,7 @@ export const OfficialYear = ({ block }: OfficialYearProps) => {
                   />
                 ) : (
                   <div className="bg-fk-gray-lightest flex h-full w-full items-center justify-center">
-                    <span className="text-fk-gray-light">{'No image'}</span>
+                    <span className="text-fk-gray-light">{t('common.noImage')}</span>
                   </div>
                 )}
               </div>
