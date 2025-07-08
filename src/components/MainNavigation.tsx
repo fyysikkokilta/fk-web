@@ -183,7 +183,20 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
 
           <ul className="ml-auto flex" role="menubar">
             {navigation.items.map((item) => (
-              <li key={item.id} className="group/menu relative" role="none">
+              <li
+                key={item.id}
+                className="group/menu relative"
+                role="none"
+                onMouseEnter={() => {
+                  if (item.children && item.children.length > 0) {
+                    setFocusedSubmenu(item.id || null)
+                  }
+                }}
+                onMouseLeave={() => {
+                  setFocusedSubmenu(null)
+                  setFocusedSubsubmenu(null)
+                }}
+              >
                 <Link
                   href={getPath(item)}
                   className={`flex items-center gap-1 px-1 py-4 tracking-wide whitespace-nowrap uppercase transition-colors hover:no-underline hover:opacity-70 focus:opacity-70 focus:outline-none ${
@@ -225,7 +238,19 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
                   >
                     <ul role="menu">
                       {item.children.map((child) => (
-                        <li key={child.id} className="group/submenu relative" role="none">
+                        <li
+                          key={child.id}
+                          className="group/submenu relative"
+                          role="none"
+                          onMouseEnter={() => {
+                            if (child.subchildren && child.subchildren.length > 0) {
+                              setFocusedSubsubmenu(child.id || null)
+                            }
+                          }}
+                          onMouseLeave={() => {
+                            setFocusedSubsubmenu(null)
+                          }}
+                        >
                           <Link
                             href={getPath(child)}
                             className={`block p-2 whitespace-nowrap uppercase transition-colors hover:no-underline hover:opacity-70 focus:opacity-70 focus:outline-none ${
