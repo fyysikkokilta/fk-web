@@ -18,14 +18,34 @@ import { Page } from '@/payload-types'
 export const revalidateCollection = <T extends TypeWithID>(
   collectionSlug: CollectionSlug
 ): CollectionAfterChangeHook<T> => {
-  return async ({ doc, previousDoc, req: { payload }, operation }) => {
+  return async ({ doc, req: { payload }, operation }) => {
     const isPage = collectionSlug === 'pages'
-    const isPublished = '_status' in doc && doc._status === 'published'
-    const wasPublished = '_status' in previousDoc && previousDoc._status === 'published'
 
-    if (isPublished && isPage) {
+    if (isPage) {
       const page = doc as unknown as Page
-      const paths = routing.locales.map((locale) => `/${locale}/${page.path}`)
+      let paths: string[] = []
+
+      if (operation === 'create') {
+        // If the page is created now, we only have one locale created here
+        // so we can just use the path from the doc.
+        paths = routing.locales.map((locale) => `/${locale}/${page.path}`)
+      } else {
+        // Get the page with all locales
+        // This is needed to construct all paths for all locales.
+        const pageWithAllLocales = await payload.findByID({
+          collection: 'pages',
+          id: page.id,
+          depth: 1,
+          locale: 'all'
+        })
+        const localizedPaths = pageWithAllLocales.path as unknown as Record<string, string>
+        const pathValues = Object.values(localizedPaths)
+        paths = routing.locales
+          .map((locale) => {
+            return pathValues.map((path) => `/${locale}/${path}`)
+          })
+          .flat()
+      }
 
       payload.logger.info(`[Page changed] Revalidating page at paths: ${paths.join(', ')}`)
 
@@ -36,21 +56,6 @@ export const revalidateCollection = <T extends TypeWithID>(
       // See more info here: https://nextjs.org/docs/app/building-your-application/rendering/static-and-dynamic#dynamic-rendering
       after(async () => {
         paths.forEach((path) => {
-          revalidatePath(path)
-        })
-      })
-    }
-
-    // If the page was previously published, we need to revalidate the old path
-    if (wasPublished && !isPublished && isPage) {
-      const page = previousDoc as unknown as Page
-      const oldPaths = routing.locales.map((locale) => `/${locale}/${page.path}`)
-
-      payload.logger.info(`[Page changed] Revalidating old page at paths: ${oldPaths.join(', ')}`)
-
-      // Same as the above revalidation.
-      after(async () => {
-        oldPaths.forEach((path) => {
           revalidatePath(path)
         })
       })

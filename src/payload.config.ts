@@ -120,8 +120,18 @@ export default buildConfig({
         if (collectionConfig) {
           switch (collectionConfig.slug) {
             case Pages.slug:
+              if (!data) {
+                // There is no data (nor path) for new pages
+                // Since the live preview is mounted for also new pages, we need to return an empty string
+                return ''
+              }
               return `${baseUrl}/api/draft?slug=/${locale}/${data.path}`
             case Newsletters.slug:
+              if (!data) {
+                // There is no data (nor id) for new newsletters
+                // Since the live preview is mounted for also new newsletters, we need to return an empty string
+                return ''
+              }
               return `${baseUrl}/api/draft?slug=/newsletters/${locale}/${data.id}`
           }
         } else if (globalConfig) {
