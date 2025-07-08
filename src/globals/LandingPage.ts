@@ -48,6 +48,14 @@ export const LandingPage: GlobalConfig = {
               },
               fields: [
                 {
+                  name: 'enabled',
+                  type: 'checkbox',
+                  defaultValue: false,
+                  admin: {
+                    description: 'Enable the announcement'
+                  }
+                },
+                {
                   name: 'content',
                   type: 'richText',
                   editor: lexicalEditor({
@@ -150,7 +158,7 @@ export const LandingPage: GlobalConfig = {
     }
   ],
   versions: {
-    max: env.NODE_ENV === 'production' ? 20 : 2,
+    max: env.NODE_ENV === 'production' ? 5 : 2,
     drafts: {
       autosave: {
         interval: 200

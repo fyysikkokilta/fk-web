@@ -1,6 +1,7 @@
 import type { Field, GlobalConfig } from 'payload'
 
 import { signedIn } from '@/access/signed-in'
+import { env } from '@/env'
 import { revalidateGlobal } from '@/hooks/revalidateGlobal'
 
 const fields = (required = false): Field[] => [
@@ -33,6 +34,7 @@ const fields = (required = false): Field[] => [
     name: 'url',
     type: 'text',
     required,
+    localized: true,
     admin: {
       condition: (_data, siblingData) => {
         return siblingData.type === 'external'
@@ -76,7 +78,6 @@ export const MainNavigation: GlobalConfig = {
       name: 'items',
       type: 'array',
       required: true,
-      localized: true,
       fields: [
         ...fields(false),
         {
@@ -94,6 +95,15 @@ export const MainNavigation: GlobalConfig = {
       ]
     }
   ],
+  versions: {
+    max: env.NODE_ENV === 'production' ? 20 : 2,
+    drafts: {
+      autosave: {
+        interval: 200
+      },
+      validate: true
+    }
+  },
   hooks: {
     afterChange: [revalidateGlobal('main-navigation')]
   }

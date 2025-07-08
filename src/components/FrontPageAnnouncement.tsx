@@ -10,7 +10,7 @@ interface FrontPageAnnouncementProps {
 }
 
 export const FrontPageAnnouncement = async ({ page, locale }: FrontPageAnnouncementProps) => {
-  if (!page.announcement?.content) {
+  if (!page.announcement?.enabled || !page.announcement?.content) {
     return null
   }
 
@@ -18,7 +18,8 @@ export const FrontPageAnnouncement = async ({ page, locale }: FrontPageAnnouncem
     <div
       className="mx-auto my-8 rounded-lg px-4 py-6 shadow-lg transition-all duration-300 hover:shadow-2xl sm:px-6 lg:px-8"
       style={{
-        backgroundColor: page.announcement?.color
+        backgroundColor: page.announcement?.color,
+        color: page.announcement?.textColor
       }}
     >
       <div className="max-w-none">

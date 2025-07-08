@@ -1901,6 +1901,7 @@ export interface MainNavigation {
       | null;
     id?: string | null;
   }[];
+  _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1953,6 +1954,10 @@ export interface LandingPage {
    * Announcement for the landing page
    */
   announcement: {
+    /**
+     * Enable the announcement
+     */
+    enabled?: boolean | null;
     /**
      * Content of the announcement
      */
@@ -2167,6 +2172,7 @@ export interface MainNavigationSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  _status?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -2191,6 +2197,7 @@ export interface LandingPageSelect<T extends boolean = true> {
   announcement?:
     | T
     | {
+        enabled?: T;
         content?: T;
         color?: T;
         textColor?: T;
