@@ -59,8 +59,17 @@ export const FrontPageCalendar = async ({ page }: FrontPageCalendarProps) => {
                 {format(new Date(event.start?.dateTime || event.start?.date || ''), 'd.M.')}
               </div>
               {event.start?.dateTime && (
-                <div>{format(new Date(event.start?.dateTime), 'HH:mm', { locale: fi })}</div>
+                <div>
+                  {format(new Date(event.start?.dateTime), 'HH:mm', { locale: fi })}
+                  {event.end?.dateTime && (
+                    <span>
+                      {' - '}
+                      {format(new Date(event.end?.dateTime), 'HH:mm', { locale: fi })}
+                    </span>
+                  )}
+                </div>
               )}
+              {event.location && <div className="text-lg">{event.location.split(',')[0]}</div>}
             </div>
             <div>{event.icon && <DynamicIcon name={event.icon as IconName} size={72} />}</div>
           </div>
