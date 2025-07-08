@@ -11,6 +11,7 @@ import { RefreshRouteOnSave } from '@/components/RefreshRouteOnSave'
 import { RichText } from '@/components/RichText'
 import { env } from '@/env'
 import { getLandingPage } from '@/lib/getLandingPage'
+import { getMainNavigation } from '@/lib/getMainNavigation'
 import { getPartners } from '@/lib/getPartners'
 import { isDraftMode } from '@/utils/draftMode'
 
@@ -26,6 +27,8 @@ export const revalidate = 3600
 export async function generateMetadata({ params }: LandingPageProps) {
   const { locale } = await params
   const page = await getLandingPage(locale)
+  const mainNavigation = await getMainNavigation(locale)
+  const siteName = mainNavigation.title
 
   const images = page?.bannerImages
     ?.map((image) => {
@@ -41,7 +44,6 @@ export async function generateMetadata({ params }: LandingPageProps) {
     })
     .filter(Boolean)
 
-  const siteName = locale === 'fi' ? env.SITE_NAME : env.SITE_NAME_EN
   return {
     title: page?.meta?.title || siteName,
     description: page?.meta?.description,

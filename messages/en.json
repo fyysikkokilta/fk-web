@@ -40,6 +40,10 @@
     "defaultImage": "Default image"
   },
   "notFound": {
+    "meta": {
+      "title": "Page Not Found",
+      "description": "The page you're looking for doesn't exist. Navigate back to our homepage to explore the Guild of Physics."
+    },
     "logoAlt": "Guild of Physics Logo",
     "title": "Oh Lord, it's hard to be humble...",
     "description": "When you're perfect in every way. I can't wait to look in the mirror, cause I get better lookin' each day. To know me is to love me, I must be a hell of a man. Oh Lord, it's hard to be humble, but I'm doin' the best that I can.",

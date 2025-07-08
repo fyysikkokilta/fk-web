@@ -40,6 +40,10 @@
     "defaultImage": "Oletuskuva"
   },
   "notFound": {
+    "meta": {
+      "title": "Sivua ei löydy",
+      "description": "Etsimääsi sivua ei ole olemassa. Palaa takaisin etusivullemme tutustuaksesi Fyysikkokiltaan."
+    },
     "logoAlt": "Fyysikkokillan logo",
     "title": "Herra, on vaikea olla nöyrä...",
     "description": "Kun on täydellinen kaikin puolin. En voi odottaa pääseväni katsomaan peiliin, koska näytän joka päivä paremmalta. Tuntea minut on rakastaa minua, olen varmasti helvetin mies. Herra, on vaikea olla nöyrä, mutta teen parhaani.",

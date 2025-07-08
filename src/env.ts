@@ -10,9 +10,6 @@ export const env = createEnv({
     DATABASE_URI: z.string(),
     PAYLOAD_SECRET: z.string(),
 
-    SITE_NAME: z.string().default('Fyysikkokilta'),
-    SITE_NAME_EN: z.string().default('Guild of Physics'),
-
     ALLOW_NON_EXISTING_USERS: z
       .string()
       .default('false')

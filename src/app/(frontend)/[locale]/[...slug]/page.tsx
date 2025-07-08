@@ -1,5 +1,5 @@
 import { Locale } from 'next-intl'
-import { setRequestLocale } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 
 import { BoardMemberSideBar } from '@/components/BoardMemberSideBar'
 import { DraftModeBanner } from '@/components/DraftModeBanner'
@@ -10,6 +10,7 @@ import { RefreshRouteOnSave } from '@/components/RefreshRouteOnSave'
 import { RichText } from '@/components/RichText'
 import { TableOfContents } from '@/components/TableOfContents'
 import { env } from '@/env'
+import { getMainNavigation } from '@/lib/getMainNavigation'
 import { getPage } from '@/lib/getPage'
 import { getPartners } from '@/lib/getPartners'
 import { isDraftMode } from '@/utils/draftMode'
@@ -31,6 +32,21 @@ export const generateStaticParams = async () => {
 export async function generateMetadata({ params }: PageProps) {
   const { slug, locale } = await params
   const page = await getPage(slug.join('/'), locale)
+  const mainNavigation = await getMainNavigation(locale)
+  const siteName = mainNavigation.title
+
+  if (!page) {
+    const t = await getTranslations()
+
+    return {
+      title: `${t('notFound.meta.title')} - ${siteName}`,
+      description: t('notFound.meta.description'),
+      robots: {
+        index: false,
+        follow: false
+      }
+    }
+  }
 
   const images =
     page?.bannerImage && typeof page?.bannerImage === 'object'
@@ -42,7 +58,6 @@ export async function generateMetadata({ params }: PageProps) {
         }
       : null
 
-  const siteName = locale === 'fi' ? env.SITE_NAME : env.SITE_NAME_EN
   return {
     title: page?.meta?.title || `${page?.title} - ${siteName}`,
     description: page?.meta?.description,

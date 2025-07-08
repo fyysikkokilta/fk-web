@@ -11,7 +11,7 @@ export default async function NotFound() {
     <div className="relative flex h-screen min-h-dvh w-full items-center justify-center overflow-hidden">
       {/* Background logo */}
       <Image
-        src="../fii_2.svg"
+        src="/fii_2.svg"
         alt={t('notFound.logoAlt')}
         className="pointer-events-none absolute inset-0 h-full w-full object-contain opacity-30 select-none"
         fill

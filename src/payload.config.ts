@@ -23,6 +23,7 @@ import {
   PlaintextConverters
 } from '@payloadcms/richtext-lexical/plaintext'
 import { s3Storage } from '@payloadcms/storage-s3'
+import { Locale } from 'next-intl'
 import { dirname, resolve } from 'path'
 import { buildConfig, GroupField, PayloadRequest } from 'payload'
 import { OAuth2Plugin } from 'payload-oauth2'
@@ -71,6 +72,7 @@ import schedulePublishHandler from './handlers/schedulePublishHandler'
 import sendNewsletterHandler from './handlers/sendNewsletterHandler'
 import { revalidateCollection } from './hooks/revalidateCollection'
 import { revalidateDeletedCollection } from './hooks/revalidateDeletedCollection'
+import { getMainNavigation } from './lib/getMainNavigation'
 import { migrations } from './migrations'
 import { enableCloudStorage } from './utils/enableCloudStorage'
 import { enableOAuth } from './utils/enableOAuth'
@@ -443,12 +445,14 @@ export default buildConfig({
       collections: [Pages.slug],
       globals: [LandingPage.slug],
       uploadsCollection: 'media',
-      generateTitle: ({ doc, locale }) => {
+      generateTitle: async ({ doc, locale }) => {
+        const mainNavigation = await getMainNavigation(locale as Locale)
+        const siteName = mainNavigation.title
         if ('title' in doc) {
           const title = doc.title as string
-          return locale === 'fi' ? `${title} - ${env.SITE_NAME}` : `${title} - ${env.SITE_NAME_EN}`
+          return `${title} - ${siteName}`
         } else {
-          return locale === 'fi' ? env.SITE_NAME : env.SITE_NAME_EN
+          return siteName
         }
       },
       generateDescription: ({ doc }) => {
