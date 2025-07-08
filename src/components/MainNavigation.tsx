@@ -2,7 +2,7 @@
 
 import { ChevronDown, ChevronUp, Menu, X } from 'lucide-react'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { LanguageSwitcher } from '@/components/LanguageSwitcher'
 import { Link, usePathname } from '@/i18n/navigation'
@@ -16,6 +16,11 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
   const pathname = usePathname()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [expandedItems, setExpandedItems] = useState<string[]>([])
+  const [focusedSubmenu, setFocusedSubmenu] = useState<string | null>(null)
+  const [focusedSubsubmenu, setFocusedSubsubmenu] = useState<string | null>(null)
+
+  const mobileMenuRef = useRef<HTMLDivElement>(null)
+  const menuButtonRef = useRef<HTMLButtonElement>(null)
 
   const isActive = (path: string | null | undefined) => {
     if (!path) return false
@@ -40,8 +45,121 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
 
   const isExpanded = (id: string) => expandedItems.includes(id)
 
+  // Close mobile menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        mobileMenuRef.current &&
+        !mobileMenuRef.current.contains(event.target as Node) &&
+        menuButtonRef.current &&
+        !menuButtonRef.current.contains(event.target as Node)
+      ) {
+        setIsMobileMenuOpen(false)
+      }
+    }
+
+    if (isMobileMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [isMobileMenuOpen])
+
+  // Handle escape key to close mobile menu
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsMobileMenuOpen(false)
+        setFocusedSubmenu(null)
+        setFocusedSubsubmenu(null)
+        menuButtonRef.current?.focus()
+      }
+    }
+
+    if (isMobileMenuOpen) {
+      document.addEventListener('keydown', handleEscape)
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape)
+    }
+  }, [isMobileMenuOpen])
+
+  const handleDesktopKeyDown = (
+    event: React.KeyboardEvent,
+    itemId: string,
+    hasChildren: boolean
+  ) => {
+    switch (event.key) {
+      case 'Enter':
+      case ' ':
+        event.preventDefault()
+        if (hasChildren) {
+          setFocusedSubmenu(focusedSubmenu === itemId ? null : itemId)
+        }
+        break
+      case 'ArrowDown':
+        event.preventDefault()
+        if (hasChildren) {
+          setFocusedSubmenu(itemId)
+        }
+        break
+      case 'ArrowRight':
+        event.preventDefault()
+        if (hasChildren) {
+          setFocusedSubmenu(itemId)
+        }
+        break
+      case 'Escape':
+        setFocusedSubmenu(null)
+        setFocusedSubsubmenu(null)
+        break
+    }
+  }
+
+  const handleSubmenuKeyDown = (
+    event: React.KeyboardEvent,
+    itemId: string,
+    hasSubchildren: boolean
+  ) => {
+    switch (event.key) {
+      case 'ArrowRight':
+        event.preventDefault()
+        if (hasSubchildren) {
+          setFocusedSubsubmenu(itemId)
+        }
+        break
+      case 'ArrowLeft':
+        event.preventDefault()
+        setFocusedSubmenu(null)
+        break
+      case 'Escape':
+        setFocusedSubmenu(null)
+        break
+    }
+  }
+
+  const handleSubsubmenuKeyDown = (event: React.KeyboardEvent) => {
+    switch (event.key) {
+      case 'ArrowLeft':
+        event.preventDefault()
+        setFocusedSubsubmenu(null)
+        break
+      case 'Escape':
+        setFocusedSubsubmenu(null)
+        break
+    }
+  }
+
   return (
-    <nav id="main-navigation" className="bg-fk-gray text-fk-white relative z-50 w-full font-bold">
+    <nav
+      id="main-navigation"
+      className="bg-fk-gray text-fk-white relative z-50 w-full font-bold"
+      role="navigation"
+      aria-label="Main navigation"
+    >
       {/* Desktop Navigation */}
       <div className="mx-auto hidden px-4 md:block lg:px-8 xl:px-12 2xl:container">
         <div className="flex items-center gap-4">
@@ -61,57 +179,123 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
             <LanguageSwitcher />
           </div>
 
-          <div className="ml-auto flex">
+          <ul className="ml-auto flex" role="menubar">
             {navigation.items.map((item) => (
-              <div key={item.id} className="group/menu relative">
+              <li key={item.id} className="group/menu relative" role="none">
                 <Link
                   href={getPath(item)}
-                  className={`flex items-center gap-1 px-1 py-4 tracking-wide whitespace-nowrap uppercase transition-colors hover:no-underline hover:opacity-70 ${
+                  className={`flex items-center gap-1 px-1 py-4 tracking-wide whitespace-nowrap uppercase transition-colors hover:no-underline hover:opacity-70 focus:opacity-70 focus:outline-none ${
                     isActive((item.page as Page)?.path) ? 'underline' : ''
                   } ${item.children && item.children.length > 0 ? 'border-fk-yellow border-b-4' : ''}`}
+                  role="menuitem"
+                  aria-haspopup={item.children && item.children.length > 0 ? 'true' : undefined}
+                  aria-expanded={focusedSubmenu === item.id ? 'true' : 'false'}
+                  onKeyDown={(e) =>
+                    handleDesktopKeyDown(
+                      e,
+                      item.id || '',
+                      !!(item.children && item.children.length > 0)
+                    )
+                  }
+                  onBlur={() => {
+                    // Delay to allow focus to move to submenu
+                    setTimeout(() => {
+                      if (!document.activeElement?.closest(`[data-submenu="${item.id}"]`)) {
+                        setFocusedSubmenu(null)
+                      }
+                    }, 100)
+                  }}
                 >
                   <span>{item.label}</span>
+                  {item.children && item.children.length > 0 && (
+                    <span className="sr-only">{', has submenu'}</span>
+                  )}
                 </Link>
                 {item.children && item.children.length > 0 && (
-                  <div className="bg-fk-gray invisible absolute top-15 left-0 mt-0 w-fit opacity-0 shadow-lg transition-all duration-200 group-hover/menu:visible group-hover/menu:opacity-100">
-                    <div role="menu">
+                  <div
+                    className={`bg-fk-gray absolute top-15 left-0 mt-0 w-fit shadow-lg transition-all duration-200 ${
+                      focusedSubmenu === item.id ? 'visible opacity-100' : 'invisible opacity-0'
+                    }`}
+                    data-submenu={item.id}
+                    role="menu"
+                    aria-label={`${item.label} submenu`}
+                  >
+                    <ul role="menu">
                       {item.children.map((child) => (
-                        <div key={child.id} className="group/submenu relative">
+                        <li key={child.id} className="group/submenu relative" role="none">
                           <Link
                             href={getPath(child)}
-                            className={`block p-2 whitespace-nowrap uppercase transition-colors hover:no-underline hover:opacity-70 ${
+                            className={`block p-2 whitespace-nowrap uppercase transition-colors hover:no-underline hover:opacity-70 focus:opacity-70 focus:outline-none ${
                               isActive((child.page as Page)?.path) ? 'underline' : ''
                             } ${child.subchildren && child.subchildren.length > 0 ? 'border-fk-yellow border-r-4' : ''}`}
                             role="menuitem"
+                            aria-haspopup={
+                              child.subchildren && child.subchildren.length > 0 ? 'true' : undefined
+                            }
+                            aria-expanded={focusedSubsubmenu === child.id ? 'true' : 'false'}
+                            onKeyDown={(e) =>
+                              handleSubmenuKeyDown(
+                                e,
+                                child.id || '',
+                                !!(child.subchildren && child.subchildren.length > 0)
+                              )
+                            }
+                            onFocus={() => setFocusedSubmenu(item.id || null)}
+                            onBlur={() => {
+                              setTimeout(() => {
+                                if (
+                                  !document.activeElement?.closest(
+                                    `[data-subsubmenu="${child.id}"]`
+                                  )
+                                ) {
+                                  setFocusedSubsubmenu(null)
+                                }
+                              }, 100)
+                            }}
                           >
                             <span>{child.label}</span>
+                            {child.subchildren && child.subchildren.length > 0 && (
+                              <span className="sr-only">{', has submenu'}</span>
+                            )}
                           </Link>
                           {child.subchildren && child.subchildren.length > 0 && (
-                            <div className="bg-fk-gray invisible absolute top-0 left-full w-fit opacity-0 shadow-lg transition-all duration-200 group-hover/submenu:visible group-hover/submenu:opacity-100">
-                              <div role="menu">
+                            <div
+                              className={`bg-fk-gray absolute top-0 left-full w-fit shadow-lg transition-all duration-200 ${
+                                focusedSubsubmenu === child.id
+                                  ? 'visible opacity-100'
+                                  : 'invisible opacity-0'
+                              }`}
+                              data-subsubmenu={child.id}
+                              role="menu"
+                              aria-label={`${child.label} submenu`}
+                            >
+                              <ul role="menu">
                                 {child.subchildren.map((grandchild) => (
-                                  <Link
-                                    key={grandchild.id}
-                                    href={getPath(grandchild)}
-                                    className={`block p-2 whitespace-nowrap uppercase transition-colors hover:no-underline hover:opacity-70 ${
-                                      isActive((grandchild.page as Page)?.path) ? 'underline' : ''
-                                    }`}
-                                    role="menuitem"
-                                  >
-                                    <span>{grandchild.label}</span>
-                                  </Link>
+                                  <li key={grandchild.id} role="none">
+                                    <Link
+                                      href={getPath(grandchild)}
+                                      className={`block p-2 whitespace-nowrap uppercase transition-colors hover:no-underline hover:opacity-70 focus:opacity-70 focus:outline-none ${
+                                        isActive((grandchild.page as Page)?.path) ? 'underline' : ''
+                                      }`}
+                                      role="menuitem"
+                                      onKeyDown={handleSubsubmenuKeyDown}
+                                      onFocus={() => setFocusedSubsubmenu(child.id || null)}
+                                    >
+                                      <span>{grandchild.label}</span>
+                                    </Link>
+                                  </li>
                                 ))}
-                              </div>
+                              </ul>
                             </div>
                           )}
-                        </div>
+                        </li>
                       ))}
-                    </div>
+                    </ul>
                   </div>
                 )}
-              </div>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </div>
 
@@ -133,14 +317,27 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
             </Link>
             <LanguageSwitcher />
           </div>
-          <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="p-2">
+          <button
+            ref={menuButtonRef}
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="focus:ring-fk-yellow focus:ring-offset-fk-gray p-2 focus:ring-2 focus:ring-offset-2 focus:outline-none"
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-menu"
+            aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
+          >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="border-fk-gray from-fk-gray-dark via-fk-gray to-fk-gray-light mt-2 border-t bg-gradient-to-b shadow-lg">
+          <div
+            ref={mobileMenuRef}
+            id="mobile-menu"
+            className="border-fk-gray from-fk-gray via-fk-gray-light to-fk-gray-lightest absolute top-full right-0 left-0 border-t bg-gradient-to-b shadow-lg"
+            role="menu"
+            aria-label="Mobile navigation menu"
+          >
             <div className="space-y-1 px-2 pt-4 pb-4">
               {navigation.items.map((item, idx) => (
                 <div key={item.id}>
@@ -153,17 +350,27 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
                   >
                     <Link
                       href={getPath(item)}
-                      className={`block px-3 py-2 text-base whitespace-nowrap no-underline ${
+                      className={`focus:ring-fk-yellow block px-3 py-2 text-base whitespace-nowrap no-underline focus:ring-2 focus:outline-none focus:ring-inset ${
                         !item.children || item.children.length === 0 ? 'w-full' : 'flex-grow'
                       } ${isActive((item.page as Page)?.path) ? 'underline' : ''}`}
+                      role="menuitem"
                     >
                       <span>{item.label}</span>
+                      {item.children && item.children.length > 0 && (
+                        <span className="sr-only">{', has submenu'}</span>
+                      )}
                     </Link>
                     {item.children && item.children.length > 0 && (
                       <button
                         onClick={() => toggleExpanded(item.id || '')}
-                        className="p-2 focus:outline-none"
-                        aria-label={isExpanded(item.id || '') ? 'Collapse' : 'Expand'}
+                        className="focus:ring-fk-yellow p-2 focus:ring-2 focus:outline-none focus:ring-inset"
+                        aria-label={
+                          isExpanded(item.id || '')
+                            ? `Collapse ${item.label} submenu`
+                            : `Expand ${item.label} submenu`
+                        }
+                        aria-expanded={isExpanded(item.id || '')}
+                        aria-controls={`submenu-${item.id}`}
                       >
                         {isExpanded(item.id || '') ? (
                           <ChevronUp size={24} color="#FFD600" />
@@ -174,7 +381,12 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
                     )}
                   </div>
                   {item.children && item.children.length > 0 && isExpanded(item.id || '') && (
-                    <div className="mt-1 ml-4 space-y-1">
+                    <div
+                      id={`submenu-${item.id}`}
+                      className="mt-1 ml-4 space-y-1"
+                      role="menu"
+                      aria-label={`${item.label} submenu`}
+                    >
                       {item.children.map((child) => (
                         <div key={child.id}>
                           <div
@@ -186,19 +398,29 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
                           >
                             <Link
                               href={getPath(child)}
-                              className={`block px-3 py-2 whitespace-nowrap no-underline ${
+                              className={`focus:ring-fk-yellow block px-3 py-2 whitespace-nowrap no-underline focus:ring-2 focus:outline-none focus:ring-inset ${
                                 !child.subchildren || child.subchildren.length === 0
                                   ? 'w-full'
                                   : 'flex-grow'
                               } ${isActive((child.page as Page)?.path) ? 'underline' : ''}`}
+                              role="menuitem"
                             >
                               <span>{child.label}</span>
+                              {child.subchildren && child.subchildren.length > 0 && (
+                                <span className="sr-only">{', has submenu'}</span>
+                              )}
                             </Link>
                             {child.subchildren && child.subchildren.length > 0 && (
                               <button
                                 onClick={() => toggleExpanded(child.id || '')}
-                                className="p-2 focus:outline-none"
-                                aria-label={isExpanded(child.id || '') ? 'Collapse' : 'Expand'}
+                                className="focus:ring-fk-yellow p-2 focus:ring-2 focus:outline-none focus:ring-inset"
+                                aria-label={
+                                  isExpanded(child.id || '')
+                                    ? `Collapse ${child.label} submenu`
+                                    : `Expand ${child.label} submenu`
+                                }
+                                aria-expanded={isExpanded(child.id || '')}
+                                aria-controls={`subsubmenu-${child.id}`}
                               >
                                 {isExpanded(child.id || '') ? (
                                   <ChevronUp size={24} color="#FFD600" />
@@ -211,16 +433,22 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
                           {child.subchildren &&
                             child.subchildren.length > 0 &&
                             isExpanded(child.id || '') && (
-                              <div className="mt-1 ml-4 space-y-1">
+                              <div
+                                id={`subsubmenu-${child.id}`}
+                                className="mt-1 ml-4 space-y-1"
+                                role="menu"
+                                aria-label={`${child.label} submenu`}
+                              >
                                 {child.subchildren?.map((grandchild) => (
                                   <Link
                                     key={grandchild.id}
                                     href={getPath(grandchild)}
-                                    className={`block w-full rounded-lg px-3 py-2 whitespace-nowrap no-underline transition-colors duration-150 ${
+                                    className={`focus:ring-fk-yellow block w-full rounded-lg px-3 py-2 whitespace-nowrap no-underline transition-colors duration-150 focus:ring-2 focus:outline-none focus:ring-inset ${
                                       isActive((grandchild.page as Page)?.path)
                                         ? 'bg-fk-gray-dark/50 border-fk-yellow border-l-4 underline'
                                         : 'hover:bg-fk-gray-light/70'
                                     }`}
+                                    role="menuitem"
                                   >
                                     <span>{grandchild.label}</span>
                                   </Link>
