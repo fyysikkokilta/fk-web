@@ -1,8 +1,8 @@
 import type { Block } from 'payload'
 
-export const BoardMemberGridBlock: Block = {
-  slug: 'board-member-grid',
-  interfaceName: 'BoardMemberGridBlock',
+export const BoardBlock: Block = {
+  slug: 'board',
+  interfaceName: 'BoardBlock',
   fields: [
     {
       name: 'members',

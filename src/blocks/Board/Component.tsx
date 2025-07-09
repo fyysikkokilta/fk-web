@@ -1,11 +1,11 @@
 import { BoardMember } from '@/components/BoardMember'
-import type { BoardMemberGridBlock as BoardMemberGridBlockType } from '@/payload-types'
+import type { BoardBlock as BoardBlockType } from '@/payload-types'
 
-interface BoardMemberGridProps {
-  block: BoardMemberGridBlockType
+interface BoardProps {
+  block: BoardBlockType
 }
 
-export const BoardMemberGrid = ({ block }: BoardMemberGridProps) => {
+export const Board = ({ block }: BoardProps) => {
   if (typeof block.members === 'number') {
     return null
   }

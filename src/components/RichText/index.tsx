@@ -12,7 +12,7 @@ import {
 import { Locale } from 'next-intl'
 
 import { Align } from '@/blocks/Align/Component'
-import { BoardMemberGrid } from '@/blocks/BoardMemberGrid/Component'
+import { Board } from '@/blocks/Board/Component'
 import { Calendar } from '@/blocks/Calendar/Component'
 import { Card } from '@/blocks/Card/Component'
 import { Collapsible } from '@/blocks/Collapsible/Component'
@@ -29,7 +29,7 @@ import { PDFViewer } from '@/blocks/PDFViewer/Component'
 import { TwoColumns } from '@/blocks/TwoColumns/Component'
 import type {
   AlignBlock as AlignBlockType,
-  BoardMemberGridBlock as BoardMembersBlockType,
+  BoardBlock as BoardBlockType,
   CalendarBlock as CalendarBlockType,
   CardBlock as CardBlockType,
   CollapsibleBlock as CollapsibleBlockType,
@@ -62,7 +62,7 @@ type NodeTypes =
   | DefaultNodeTypes
   | SerializedBlockNode<
       | AlignBlockType
-      | BoardMembersBlockType
+      | BoardBlockType
       | CalendarBlockType
       | CardBlockType
       | CollapsibleBlockType
@@ -91,7 +91,7 @@ export const RichText = ({ data, locale, extraClassName }: RichTextProps) => {
     blocks: {
       ...defaultConverters.blocks,
       align: ({ node }) => <Align block={node.fields} locale={locale} />,
-      'board-member-grid': ({ node }) => <BoardMemberGrid block={node.fields} />,
+      board: ({ node }) => <Board block={node.fields} />,
       calendar: ({ node }) => <Calendar block={node.fields} locale={locale} />,
       card: ({ node }) => <Card block={node.fields} locale={locale} />,
       collapsible: ({ node }) => <Collapsible block={node.fields} locale={locale} />,

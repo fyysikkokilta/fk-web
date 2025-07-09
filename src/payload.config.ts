@@ -32,7 +32,7 @@ import { fileURLToPath } from 'url'
 
 import { signedIn } from './access/signed-in'
 import { AlignBlock } from './blocks/Align/config'
-import { BoardMemberGridBlock } from './blocks/BoardMemberGrid/config'
+import { BoardBlock } from './blocks/Board/config'
 import { CalendarBlock } from './blocks/Calendar/config'
 import { CardBlock } from './blocks/Card/config'
 import { CollapsibleBlock } from './blocks/Collapsible/config'
@@ -178,7 +178,7 @@ export default buildConfig({
   },
   blocks: [
     AlignBlock,
-    BoardMemberGridBlock,
+    BoardBlock,
     CalendarBlock,
     CardBlock,
     CollapsibleBlock,
@@ -218,7 +218,7 @@ export default buildConfig({
       BlocksFeature({
         blocks: [
           'align',
-          'board-member-grid',
+          'board',
           'calendar',
           'card',
           'collapsible',

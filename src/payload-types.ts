@@ -20,7 +20,7 @@ export interface Config {
   };
   blocks: {
     align: AlignBlock;
-    'board-member-grid': BoardMemberGridBlock;
+    board: BoardBlock;
     calendar: CalendarBlock;
     card: CardBlock;
     collapsible: CollapsibleBlock;
@@ -176,13 +176,13 @@ export interface AlignBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "BoardMemberGridBlock".
+ * via the `definition` "BoardBlock".
  */
-export interface BoardMemberGridBlock {
+export interface BoardBlock {
   members: (number | BoardMember)[];
   id?: string | null;
   blockName?: string | null;
-  blockType: 'board-member-grid';
+  blockType: 'board';
 }
 /**
  * Manage board members
