@@ -29,7 +29,6 @@
     "@payloadcms/plugin-import-export": "^3.47.0",
     "@payloadcms/plugin-redirects": "^3.47.0",
     "@payloadcms/plugin-seo": "^3.47.0",
-    "@payloadcms/plugin-stripe": "^3.47.0",
     "@payloadcms/richtext-lexical": "^3.47.0",
     "@payloadcms/storage-s3": "^3.47.0",
     "@payloadcms/ui": "^3.47.0",
