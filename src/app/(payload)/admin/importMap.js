@@ -36,9 +36,9 @@ import { MetaDescriptionComponent as MetaDescriptionComponent_a8a977ebc872c5d5ea
 import { MetaImageComponent as MetaImageComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { PreviewComponent as PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { SortBy as SortBy_cdf7e044479f899a31f804427d568b36 } from '@payloadcms/plugin-import-export/rsc'
+import { SelectionToUseField as SelectionToUseField_cdf7e044479f899a31f804427d568b36 } from '@payloadcms/plugin-import-export/rsc'
 import { FieldsToExport as FieldsToExport_cdf7e044479f899a31f804427d568b36 } from '@payloadcms/plugin-import-export/rsc'
 import { CollectionField as CollectionField_cdf7e044479f899a31f804427d568b36 } from '@payloadcms/plugin-import-export/rsc'
-import { WhereField as WhereField_cdf7e044479f899a31f804427d568b36 } from '@payloadcms/plugin-import-export/rsc'
 import { Preview as Preview_cdf7e044479f899a31f804427d568b36 } from '@payloadcms/plugin-import-export/rsc'
 import { ExportSaveButton as ExportSaveButton_cdf7e044479f899a31f804427d568b36 } from '@payloadcms/plugin-import-export/rsc'
 import { ActionsLink as ActionsLink_2eba76e5eb0028b8eb0bf09f56520825 } from '@/views/actions/ActionsLink'
@@ -86,9 +86,9 @@ export const importMap = {
   "@payloadcms/plugin-seo/client#MetaImageComponent": MetaImageComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@payloadcms/plugin-seo/client#PreviewComponent": PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@payloadcms/plugin-import-export/rsc#SortBy": SortBy_cdf7e044479f899a31f804427d568b36,
+  "@payloadcms/plugin-import-export/rsc#SelectionToUseField": SelectionToUseField_cdf7e044479f899a31f804427d568b36,
   "@payloadcms/plugin-import-export/rsc#FieldsToExport": FieldsToExport_cdf7e044479f899a31f804427d568b36,
   "@payloadcms/plugin-import-export/rsc#CollectionField": CollectionField_cdf7e044479f899a31f804427d568b36,
-  "@payloadcms/plugin-import-export/rsc#WhereField": WhereField_cdf7e044479f899a31f804427d568b36,
   "@payloadcms/plugin-import-export/rsc#Preview": Preview_cdf7e044479f899a31f804427d568b36,
   "@payloadcms/plugin-import-export/rsc#ExportSaveButton": ExportSaveButton_cdf7e044479f899a31f804427d568b36,
   "@/views/actions/ActionsLink#ActionsLink": ActionsLink_2eba76e5eb0028b8eb0bf09f56520825,
