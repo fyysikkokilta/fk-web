@@ -1,7 +1,6 @@
 import Image from 'next/image'
 
 import type { CommitteeBlock as CommitteeBlockType, Media } from '@/payload-types'
-import { getCMSTranslation } from '@/utils/getCMSTranslation'
 
 interface CommitteeProps {
   block: CommitteeBlockType
@@ -17,7 +16,7 @@ export const Committee = ({ block }: CommitteeProps) => {
   return (
     <div className="space-y-8">
       {/* Role title */}
-      <h2 className="text-center text-2xl font-bold">{getCMSTranslation(officialRole.name)}</h2>
+      <h2 className="text-center text-2xl font-bold">{officialRole.name}</h2>
 
       {/* Officials grid */}
       <div className="grid grid-cols-2 items-baseline justify-center gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">

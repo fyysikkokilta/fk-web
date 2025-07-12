@@ -13,35 +13,27 @@ export const Divisions: CollectionConfig = {
     delete: signedIn
   },
   admin: {
-    useAsTitle: 'title',
+    useAsTitle: 'name',
     group: 'Officials',
     description: 'Manage divisions',
     defaultColumns: ['name', 'year', 'officialRoles']
   },
   fields: [
-    // We need to explicitly populate the title field to show it in the admin selects
-    {
-      name: 'title',
-      type: 'text',
-      virtual: 'name.translation',
-      admin: {
-        hidden: true
-      }
-    },
     {
       name: 'name',
-      type: 'relationship',
-      relationTo: 'translations',
-      filterOptions: () => ({
-        type: {
-          equals: 'division'
-        }
-      }),
+      type: 'text',
+      localized: true,
+      admin: {
+        description: 'The name of the division'
+      },
       required: true
     },
     {
       name: 'year',
       type: 'number',
+      admin: {
+        description: 'For which year the officials roles below are'
+      },
       required: true
     },
     {
@@ -53,11 +45,6 @@ export const Divisions: CollectionConfig = {
           equals: data.year
         }
       }),
-      // Select appearance doesn't select the relationship field, which causes the admin not to show the name of the official roles
-      // In drawer appearance, this isn't the case
-      admin: {
-        appearance: 'drawer'
-      },
       hasMany: true
     }
   ],

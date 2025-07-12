@@ -8,7 +8,6 @@ import type {
   OfficialRole as OfficialRoleType,
   OfficialYearBlock as OfficialYearBlockType
 } from '@/payload-types'
-import { getCMSTranslation } from '@/utils/getCMSTranslation'
 
 interface OfficialYearProps {
   block: OfficialYearBlockType
@@ -124,9 +123,9 @@ export const OfficialYear = async ({ block }: OfficialYearProps) => {
                 <div className="px-2 text-sm opacity-90" style={{ color: cell.textColor }}>
                   {roles
                     .sort((a, b) => {
-                      return getCMSTranslation(a.name).localeCompare(getCMSTranslation(b.name))
+                      return a.name.localeCompare(b.name)
                     })
-                    .map((role) => getCMSTranslation(role.name) || '')
+                    .map((role) => role.name || '')
                     .filter(Boolean)
                     .join(', ')}
                 </div>
@@ -136,16 +135,12 @@ export const OfficialYear = async ({ block }: OfficialYearProps) => {
         }
 
         return (
-          <div
-            key={getCMSTranslation(cell.title)}
-            className="p-4"
-            style={{ backgroundColor: cell.backgroundColor }}
-          >
+          <div key={cell.title} className="p-4" style={{ backgroundColor: cell.backgroundColor }}>
             <h2
               className="flex h-full items-center text-xl font-bold"
               style={{ color: cell.textColor }}
             >
-              {getCMSTranslation(cell.title)}
+              {cell.title}
             </h2>
           </div>
         )

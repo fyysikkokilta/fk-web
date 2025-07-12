@@ -50,7 +50,6 @@ export interface Config {
     officials: Official;
     pages: Page;
     'page-navigations': PageNavigation;
-    translations: Translation;
     forms: Form;
     'form-submissions': FormSubmission;
     redirects: Redirect;
@@ -81,7 +80,6 @@ export interface Config {
     officials: OfficialsSelect<false> | OfficialsSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
     'page-navigations': PageNavigationsSelect<false> | PageNavigationsSelect<true>;
-    translations: TranslationsSelect<false> | TranslationsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
@@ -443,24 +441,15 @@ export interface CommitteeBlock {
  */
 export interface OfficialRole {
   id: number;
-  title?: string | null;
-  name: number | Translation;
+  /**
+   * The name of the official role
+   */
+  name: string;
+  /**
+   * For which year the officials below are
+   */
   year: number;
   officials?: (number | Official)[] | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "translations".
- */
-export interface Translation {
-  id: number;
-  /**
-   * Translation for official roles and divisions for example. Take in account that changing this will change every other document using this translation. If you want to keep the others, create a new translation.
-   */
-  translation: string;
-  type: 'division' | 'officialRole';
   updatedAt: string;
   createdAt: string;
 }
@@ -953,8 +942,13 @@ export interface OfficialYearBlock {
  */
 export interface Division {
   id: number;
-  title?: string | null;
-  name: number | Translation;
+  /**
+   * The name of the division
+   */
+  name: string;
+  /**
+   * For which year the officials roles below are
+   */
   year: number;
   officialRoles?: (number | OfficialRole)[] | null;
   updatedAt: string;
@@ -1308,10 +1302,6 @@ export interface PayloadLockedDocument {
         value: number | PageNavigation;
       } | null)
     | ({
-        relationTo: 'translations';
-        value: number | Translation;
-      } | null)
-    | ({
         relationTo: 'forms';
         value: number | Form;
       } | null)
@@ -1400,7 +1390,6 @@ export interface BoardMembersSelect<T extends boolean = true> {
  * via the `definition` "divisions_select".
  */
 export interface DivisionsSelect<T extends boolean = true> {
-  title?: T;
   name?: T;
   year?: T;
   officialRoles?: T;
@@ -1518,7 +1507,6 @@ export interface NewslettersSelect<T extends boolean = true> {
  * via the `definition` "official-roles_select".
  */
 export interface OfficialRolesSelect<T extends boolean = true> {
-  title?: T;
   name?: T;
   year?: T;
   officials?: T;
@@ -1575,16 +1563,6 @@ export interface PageNavigationsSelect<T extends boolean = true> {
         page?: T;
         id?: T;
       };
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "translations_select".
- */
-export interface TranslationsSelect<T extends boolean = true> {
-  translation?: T;
-  type?: T;
   updatedAt?: T;
   createdAt?: T;
 }

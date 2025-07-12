@@ -81,28 +81,10 @@ export const officialImportController: PayloadHandler = async (req: PayloadReque
     divisions.forEach(async (division) => {
       const createdOfficialRoles = await Promise.all(
         division.officialRoles.map(async (officialRole) => {
-          const translationResult = await req.payload.find({
-            collection: 'translations',
-            where: { translation: { equals: officialRole.name }, type: { equals: 'officialRole' } },
-            locale: 'fi',
-            req
-          })
-
-          let translation = translationResult.docs[0]
-
-          if (!translation) {
-            translation = await req.payload.create({
-              collection: 'translations',
-              data: { translation: officialRole.name, type: 'officialRole' },
-              locale: 'fi',
-              req
-            })
-          }
-
           return req.payload.create({
             collection: 'official-roles',
             data: {
-              name: translation,
+              name: officialRole.name,
               year,
               officials: officialRole.officials.map(
                 (official) => createdOfficials.find((o) => o.name === official)!
@@ -114,28 +96,10 @@ export const officialImportController: PayloadHandler = async (req: PayloadReque
         })
       )
 
-      const translationResult = await req.payload.find({
-        collection: 'translations',
-        where: { translation: { equals: division.name }, type: { equals: 'division' } },
-        locale: 'fi',
-        req
-      })
-
-      let translation = translationResult.docs[0]
-
-      if (!translation) {
-        translation = await req.payload.create({
-          collection: 'translations',
-          data: { translation: division.name, type: 'division' },
-          locale: 'fi',
-          req
-        })
-      }
-
       await req.payload.create({
         collection: 'divisions',
         data: {
-          name: translation,
+          name: division.name,
           year,
           officialRoles: createdOfficialRoles
         },

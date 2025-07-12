@@ -60,7 +60,6 @@ import { OfficialRoles } from './collections/OfficialRoles'
 import { Officials } from './collections/Officials'
 import { PageNavigations } from './collections/PageNavigations'
 import { Pages } from './collections/Pages'
-import { Translations } from './collections/Translations'
 import { Users } from './collections/Users'
 import { env } from './env'
 import { Footer } from './globals/Footer'
@@ -208,7 +207,6 @@ export default buildConfig({
     Officials,
     Pages,
     PageNavigations,
-    Translations,
     Users
   ],
   globals: [MainNavigation, Footer, LandingPage, PartnerSection, NewsletterSettings],
@@ -409,6 +407,9 @@ export default buildConfig({
           create: signedIn,
           update: signedIn,
           delete: signedIn
+        },
+        admin: {
+          group: 'Pages'
         },
         // @ts-expect-error - This is a valid override, mapped fields don't resolve to the same type
         fields: ({ defaultFields }) => {

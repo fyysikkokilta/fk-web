@@ -7,7 +7,7 @@ import { revalidateDeletedCollection } from '@/hooks/revalidateDeletedCollection
 export const OfficialRoles: CollectionConfig = {
   slug: 'official-roles',
   admin: {
-    useAsTitle: 'title',
+    useAsTitle: 'name',
     group: 'Officials',
     description: 'Manage official roles',
     defaultColumns: ['name', 'year', 'officials']
@@ -19,29 +19,21 @@ export const OfficialRoles: CollectionConfig = {
     delete: signedIn
   },
   fields: [
-    // We need to explicitly populate the title field to show it in the admin selects
-    {
-      name: 'title',
-      type: 'text',
-      virtual: 'name.translation',
-      admin: {
-        hidden: true
-      }
-    },
     {
       name: 'name',
-      type: 'relationship',
-      relationTo: 'translations',
-      filterOptions: () => ({
-        type: {
-          equals: 'officialRole'
-        }
-      }),
+      type: 'text',
+      localized: true,
+      admin: {
+        description: 'The name of the official role'
+      },
       required: true
     },
     {
       name: 'year',
       type: 'number',
+      admin: {
+        description: 'For which year the officials below are'
+      },
       required: true
     },
     {
