@@ -1,4 +1,4 @@
-import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
+import { MigrateDownArgs, MigrateUpArgs, sql } from '@payloadcms/db-postgres'
 
 export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
@@ -21,11 +21,11 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "translations_locales" DISABLE ROW LEVEL SECURITY;
   DROP TABLE "translations" CASCADE;
   DROP TABLE "translations_locales" CASCADE;
-  ALTER TABLE "divisions" DROP CONSTRAINT "divisions_name_id_translations_id_fk";
+  ALTER TABLE "divisions" DROP CONSTRAINT IF EXISTS "divisions_name_id_translations_id_fk";
   
-  ALTER TABLE "official_roles" DROP CONSTRAINT "official_roles_name_id_translations_id_fk";
-  
-  ALTER TABLE "payload_locked_documents_rels" DROP CONSTRAINT "payload_locked_documents_rels_translations_fk";
+  ALTER TABLE "official_roles" DROP CONSTRAINT IF EXISTS "official_roles_name_id_translations_id_fk";
+
+  ALTER TABLE "payload_locked_documents_rels" DROP CONSTRAINT IF EXISTS "payload_locked_documents_rels_translations_fk";
   
   DROP INDEX "divisions_name_idx";
   DROP INDEX "official_roles_name_idx";
