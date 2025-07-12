@@ -16,7 +16,7 @@ export const Divisions: CollectionConfig = {
     useAsTitle: 'name',
     group: 'Officials',
     description: 'Manage divisions',
-    defaultColumns: ['name', 'year', 'officialRoles']
+    defaultColumns: ['name', 'officialRoles']
   },
   fields: [
     {
@@ -29,22 +29,9 @@ export const Divisions: CollectionConfig = {
       required: true
     },
     {
-      name: 'year',
-      type: 'number',
-      admin: {
-        description: 'For which year the officials roles below are'
-      },
-      required: true
-    },
-    {
       name: 'officialRoles',
       type: 'relationship',
       relationTo: 'official-roles',
-      filterOptions: ({ data }) => ({
-        year: {
-          equals: data.year
-        }
-      }),
       hasMany: true
     }
   ],

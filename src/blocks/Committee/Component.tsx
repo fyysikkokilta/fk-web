@@ -48,9 +48,6 @@ export const Committee = ({ block }: CommitteeProps) => {
 
               {/* Name */}
               <span className="mb-2 text-lg font-semibold">{official.name}</span>
-
-              {/* Year */}
-              <span className="text-fk-gray-light text-sm">{official.year}</span>
             </div>
           )
         })}

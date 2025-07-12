@@ -6,7 +6,6 @@ export const ImportForms = () => {
   const [resultMessage, setResultMessage] = useState<string>('')
 
   const importOfficials = async (
-    year: number,
     divisions: {
       name: string
       nameEn: string
@@ -18,7 +17,7 @@ export const ImportForms = () => {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ year, divisions })
+      body: JSON.stringify({ divisions })
     })
 
   const importFuksiYear = async (
@@ -220,12 +219,6 @@ export const ImportForms = () => {
 
     const formData = new FormData(e.currentTarget)
 
-    const year: number = parseInt(formData.get('year') as string)
-    if (Number.isNaN(year)) {
-      alert('Invalid year')
-      return
-    }
-
     const officialsFile = formData.get('officials')
     if (!(officialsFile instanceof File)) {
       alert('Invalid file')
@@ -240,7 +233,7 @@ export const ImportForms = () => {
       return
     }
 
-    const result = await importOfficials(year, parseResult.data)
+    const result = await importOfficials(parseResult.data)
     if (result.ok) {
       setResultMessage('Official import successful!')
     } else {
@@ -295,10 +288,6 @@ export const ImportForms = () => {
         onSubmit={(e: FormEvent<HTMLFormElement>) => void handleSubmitImportOfficials(e)}
       >
         <h2>{'Import Officials'}</h2>
-        <label htmlFor="year" className="sr-only">
-          {'Choose a year'}
-        </label>
-        <input id="year" name="year" type="number" />
         <label htmlFor="officials" className="sr-only">
           {'Choose a toimarit.csv file'}
         </label>

@@ -7,14 +7,6 @@ export const OfficialYearBlock: Block = {
   interfaceName: 'OfficialYearBlock',
   fields: [
     {
-      name: 'year',
-      type: 'number',
-      required: true,
-      admin: {
-        description: 'The year to display. Purely to filter divisions from correct year.'
-      }
-    },
-    {
       name: 'divisions',
       type: 'array',
       required: true,
@@ -28,11 +20,6 @@ export const OfficialYearBlock: Block = {
           type: 'relationship',
           relationTo: 'divisions',
           required: true,
-          filterOptions: ({ blockData }) => ({
-            year: {
-              equals: blockData?.year
-            }
-          }),
           // Select appearance doesn't select the relationship field, which causes the admin not to show the name of the official roles
           // In drawer appearance, this isn't the case
           admin: {

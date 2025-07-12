@@ -11,7 +11,7 @@ export const Officials: CollectionConfig = {
     useAsTitle: 'name',
     group: 'Officials',
     description: 'Manage officials',
-    defaultColumns: ['name', 'year', 'photo']
+    defaultColumns: ['name', 'photo']
   },
   access: {
     read: () => true,
@@ -23,11 +23,6 @@ export const Officials: CollectionConfig = {
     {
       name: 'name',
       type: 'text',
-      required: true
-    },
-    {
-      name: 'year',
-      type: 'number',
       required: true
     },
     {

@@ -10,7 +10,7 @@ export const OfficialRoles: CollectionConfig = {
     useAsTitle: 'name',
     group: 'Officials',
     description: 'Manage official roles',
-    defaultColumns: ['name', 'year', 'officials']
+    defaultColumns: ['name', 'officials']
   },
   access: {
     read: () => true,
@@ -29,22 +29,9 @@ export const OfficialRoles: CollectionConfig = {
       required: true
     },
     {
-      name: 'year',
-      type: 'number',
-      admin: {
-        description: 'For which year the officials below are'
-      },
-      required: true
-    },
-    {
       name: 'officials',
       type: 'relationship',
       relationTo: 'officials',
-      filterOptions: ({ data }) => ({
-        year: {
-          equals: data.year
-        }
-      }),
       hasMany: true
     }
   ],

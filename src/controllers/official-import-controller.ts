@@ -7,8 +7,7 @@ export const officialImportController: PayloadHandler = async (req: PayloadReque
     return Response.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
-  const { year, divisions } = (await req.json?.()) as {
-    year: number
+  const { divisions } = (await req.json?.()) as {
     divisions: {
       name: string
       nameEn: string
@@ -21,22 +20,22 @@ export const officialImportController: PayloadHandler = async (req: PayloadReque
   }
 
   try {
-    // Delete etnries from the year that is being imported
+    // Delete previous entries
     await req.payload.delete({
       collection: 'officials',
-      where: { year: { equals: year } },
+      where: {},
       req
     })
 
     await req.payload.delete({
       collection: 'official-roles',
-      where: { year: { equals: year } },
+      where: {},
       req
     })
 
     await req.payload.delete({
       collection: 'divisions',
-      where: { year: { equals: year } },
+      where: {},
       req
     })
 
@@ -70,7 +69,6 @@ export const officialImportController: PayloadHandler = async (req: PayloadReque
         collection: 'officials',
         data: {
           name,
-          year,
           photo
         },
         locale: 'fi',
@@ -87,7 +85,6 @@ export const officialImportController: PayloadHandler = async (req: PayloadReque
             collection: 'official-roles',
             data: {
               name: officialRole.name,
-              year,
               officials: officialRole.officials.map(
                 (official) => createdOfficials.find((o) => o.name === official)!
               )
@@ -114,7 +111,6 @@ export const officialImportController: PayloadHandler = async (req: PayloadReque
         collection: 'divisions',
         data: {
           name: division.name,
-          year,
           officialRoles: createdOfficialRoles
         },
         locale: 'fi',

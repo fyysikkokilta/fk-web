@@ -445,10 +445,6 @@ export interface OfficialRole {
    * The name of the official role
    */
   name: string;
-  /**
-   * For which year the officials below are
-   */
-  year: number;
   officials?: (number | Official)[] | null;
   updatedAt: string;
   createdAt: string;
@@ -462,7 +458,6 @@ export interface OfficialRole {
 export interface Official {
   id: number;
   name: string;
-  year: number;
   photo?: (number | null) | Media;
   updatedAt: string;
   createdAt: string;
@@ -905,10 +900,6 @@ export interface NewsItemType {
  */
 export interface OfficialYearBlock {
   /**
-   * The year to display. Purely to filter divisions from correct year.
-   */
-  year: number;
-  /**
    * Show officials from a specified divisions
    */
   divisions: {
@@ -946,10 +937,6 @@ export interface Division {
    * The name of the division
    */
   name: string;
-  /**
-   * For which year the officials roles below are
-   */
-  year: number;
   officialRoles?: (number | OfficialRole)[] | null;
   updatedAt: string;
   createdAt: string;
@@ -1391,7 +1378,6 @@ export interface BoardMembersSelect<T extends boolean = true> {
  */
 export interface DivisionsSelect<T extends boolean = true> {
   name?: T;
-  year?: T;
   officialRoles?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -1508,7 +1494,6 @@ export interface NewslettersSelect<T extends boolean = true> {
  */
 export interface OfficialRolesSelect<T extends boolean = true> {
   name?: T;
-  year?: T;
   officials?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -1519,7 +1504,6 @@ export interface OfficialRolesSelect<T extends boolean = true> {
  */
 export interface OfficialsSelect<T extends boolean = true> {
   name?: T;
-  year?: T;
   photo?: T;
   updatedAt?: T;
   createdAt?: T;
