@@ -11,8 +11,10 @@ export const officialImportController: PayloadHandler = async (req: PayloadReque
     year: number
     divisions: {
       name: string
+      nameEn: string
       officialRoles: {
         name: string
+        nameEn: string
         officials: string[]
       }[]
     }[]
@@ -81,7 +83,7 @@ export const officialImportController: PayloadHandler = async (req: PayloadReque
     divisions.forEach(async (division) => {
       const createdOfficialRoles = await Promise.all(
         division.officialRoles.map(async (officialRole) => {
-          return req.payload.create({
+          const createdOfficialRole = await req.payload.create({
             collection: 'official-roles',
             data: {
               name: officialRole.name,
@@ -93,10 +95,22 @@ export const officialImportController: PayloadHandler = async (req: PayloadReque
             locale: 'fi',
             req
           })
+
+          await req.payload.update({
+            collection: 'official-roles',
+            id: createdOfficialRole.id,
+            data: {
+              name: officialRole.nameEn
+            },
+            locale: 'en',
+            req
+          })
+
+          return createdOfficialRole
         })
       )
 
-      await req.payload.create({
+      const createdDivision = await req.payload.create({
         collection: 'divisions',
         data: {
           name: division.name,
@@ -104,6 +118,16 @@ export const officialImportController: PayloadHandler = async (req: PayloadReque
           officialRoles: createdOfficialRoles
         },
         locale: 'fi',
+        req
+      })
+
+      await req.payload.update({
+        collection: 'divisions',
+        id: createdDivision.id,
+        data: {
+          name: division.nameEn
+        },
+        locale: 'en',
         req
       })
     })

@@ -7,8 +7,12 @@ export const ImportForms = () => {
 
   const importOfficials = async (
     year: number,
-    divisions: { name: string; officialRoles: { name: string; officials: string[] }[] }[]
-  ): Promise<Response> =>
+    divisions: {
+      name: string
+      nameEn: string
+      officialRoles: { name: string; nameEn: string; officials: string[] }[]
+    }[]
+  ) =>
     await fetch('/api/officials/import', {
       method: 'POST',
       headers: {
@@ -23,7 +27,7 @@ export const ImportForms = () => {
       name: string
       fuksis: string[]
     }[]
-  ): Promise<Response> =>
+  ) =>
     await fetch('/api/fuksis/import', {
       method: 'POST',
       headers: {
@@ -32,26 +36,185 @@ export const ImportForms = () => {
       body: JSON.stringify({ year, groups })
     })
 
-  const transformOfficials = (
-    divisionsContent: Record<string, string[]>,
-    officialsContent: Record<string, string[]>
-  ) => {
-    const divisions = Object.entries(divisionsContent).map(([name, officialRoles]) => ({
-      name,
-      officialRoles: officialRoles.map((officialRole) => ({
-        name: officialRole,
-        officials: Object.entries(officialsContent)
-          .filter(([_name, officialRoles]) => officialRoles.includes(officialRole))
-          .map(([name, _officialRoles]) => name)
-      }))
-    }))
+  const parseOfficialCSV = (csvText: string) => {
+    if (!csvText || csvText.trim().length === 0) {
+      return { success: false as const, error: 'CSV file is empty' }
+    }
 
-    return { divisions }
+    const lines = csvText.trim().split('\n')
+    if (lines.length === 0) {
+      return { success: false as const, error: 'No data found in CSV file' }
+    }
+
+    const divisionsMap = new Map<
+      string,
+      {
+        name: string
+        nameEn: string
+        officialRoles: { name: string; nameEn: string; officials: string[] }[]
+      }
+    >()
+
+    for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
+      const line = lines[lineIndex]
+      const lineNumber = lineIndex + 1
+
+      if (!line || line.trim().length === 0) {
+        continue // Skip empty lines
+      }
+
+      let columns = line.split(';').map((col) => col.trim())
+      if (columns.length === 1) {
+        columns = line.split(',').map((col) => col.trim())
+      }
+
+      // Validate minimum required columns
+      if (columns.length < 5) {
+        return {
+          success: false as const,
+          error: `Line ${lineNumber}: Insufficient columns. Expected at least 5 columns (division FI, division EN, role FI, role EN, official name), got ${columns.length}`
+        }
+      }
+
+      // Validate required fields
+      if (!columns[0]) {
+        return {
+          success: false as const,
+          error: `Line ${lineNumber}: Division name (Finnish) is required`
+        }
+      }
+
+      if (!columns[1]) {
+        return {
+          success: false as const,
+          error: `Line ${lineNumber}: Division name (English) is required`
+        }
+      }
+
+      if (!columns[2]) {
+        return {
+          success: false as const,
+          error: `Line ${lineNumber}: Role name (Finnish) is required`
+        }
+      }
+
+      if (!columns[3]) {
+        return {
+          success: false as const,
+          error: `Line ${lineNumber}: Role name (English) is required`
+        }
+      }
+
+      const divisionNameFi = columns[0]
+      const divisionNameEn = columns[1]
+      const roleNameFi = columns[2]
+      const roleNameEn = columns[3]
+      const officials = columns.slice(4).filter((official) => official)
+
+      // Validate that at least one official is provided
+      if (officials.length === 0) {
+        return {
+          success: false as const,
+          error: `Line ${lineNumber}: At least one official name is required for role "${roleNameFi}"`
+        }
+      }
+
+      // Use Finnish names as primary keys
+      const divisionKey = divisionNameFi
+      const roleKey = roleNameFi
+
+      if (!divisionsMap.has(divisionKey)) {
+        divisionsMap.set(divisionKey, {
+          name: divisionNameFi,
+          nameEn: divisionNameEn,
+          officialRoles: []
+        })
+      }
+
+      const division = divisionsMap.get(divisionKey)!
+      const existingRole = division.officialRoles.find((role) => role.name === roleKey)
+
+      if (existingRole) {
+        // Add officials to existing role
+        existingRole.officials.push(...officials)
+      } else {
+        // Create new role
+        division.officialRoles.push({
+          name: roleKey,
+          nameEn: roleNameEn,
+          officials
+        })
+      }
+    }
+
+    const result = Array.from(divisionsMap.values())
+    if (result.length === 0) {
+      return { success: false as const, error: 'No valid data found in CSV file' }
+    }
+
+    return { success: true as const, data: result }
   }
 
-  const handleSubmitImportOfficials = async (
-    e: React.FormEvent<HTMLFormElement>
-  ): Promise<void> => {
+  const parseFuksiCSV = (csvText: string) => {
+    if (!csvText || csvText.trim().length === 0) {
+      return { success: false as const, error: 'CSV file is empty' }
+    }
+
+    const lines = csvText.trim().split('\n')
+    if (lines.length === 0) {
+      return { success: false as const, error: 'No data found in CSV file' }
+    }
+
+    const groups: { name: string; fuksis: string[] }[] = []
+
+    for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
+      const line = lines[lineIndex]
+      const lineNumber = lineIndex + 1
+
+      if (!line || line.trim().length === 0) {
+        continue // Skip empty lines
+      }
+
+      let columns = line.split(';').map((col) => col.trim())
+      if (columns.length === 1) {
+        columns = line.split(',').map((col) => col.trim())
+      }
+
+      // Validate minimum required columns
+      if (columns.length < 2) {
+        return {
+          success: false as const,
+          error: `Line ${lineNumber}: Insufficient columns. Expected at least 2 columns (group name, fuksi name), got ${columns.length}`
+        }
+      }
+
+      // Validate required fields
+      if (!columns[0]) {
+        return { success: false as const, error: `Line ${lineNumber}: Group name is required` }
+      }
+
+      const groupName = columns[0]
+      const fuksis = columns.slice(1).filter((fuksi) => fuksi)
+
+      // Validate that at least one fuksi is provided
+      if (fuksis.length === 0) {
+        return {
+          success: false as const,
+          error: `Line ${lineNumber}: At least one fuksi name is required for group "${groupName}"`
+        }
+      }
+
+      groups.push({ name: groupName, fuksis })
+    }
+
+    if (groups.length === 0) {
+      return { success: false as const, error: 'No valid data found in CSV file' }
+    }
+
+    return { success: true as const, data: groups }
+  }
+
+  const handleSubmitImportOfficials = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     e.stopPropagation()
 
@@ -63,24 +226,21 @@ export const ImportForms = () => {
       return
     }
 
-    const divisionsFile = formData.get('divisions')
-    if (!(divisionsFile instanceof File)) {
-      alert('Invalid file')
-      return
-    }
-    const divisionsContent = JSON.parse(await divisionsFile.text())
-
     const officialsFile = formData.get('officials')
     if (!(officialsFile instanceof File)) {
       alert('Invalid file')
       return
     }
-    const officialsContent = JSON.parse(await officialsFile.text())
 
-    // Backwards compatibility to old Wordpress format
-    const { divisions } = transformOfficials(divisionsContent, officialsContent)
+    const csvText = await officialsFile.text()
+    const parseResult = parseOfficialCSV(csvText)
 
-    const result = await importOfficials(year, divisions)
+    if (!parseResult.success) {
+      setResultMessage(`Official import failed: ${parseResult.error}`)
+      return
+    }
+
+    const result = await importOfficials(year, parseResult.data)
     if (result.ok) {
       setResultMessage('Official import successful!')
     } else {
@@ -88,9 +248,7 @@ export const ImportForms = () => {
     }
   }
 
-  const handleSubmitImportFuksiYear = async (
-    e: React.FormEvent<HTMLFormElement>
-  ): Promise<void> => {
+  const handleSubmitImportFuksiYear = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     e.stopPropagation()
 
@@ -107,9 +265,16 @@ export const ImportForms = () => {
       alert('Invalid file')
       return
     }
-    const groupsContent = JSON.parse(await groupsFile.text())
 
-    const result = await importFuksiYear(year, groupsContent)
+    const csvText = await groupsFile.text()
+    const parseResult = parseFuksiCSV(csvText)
+
+    if (!parseResult.success) {
+      setResultMessage(`Fuksi import failed: ${parseResult.error}`)
+      return
+    }
+
+    const result = await importFuksiYear(year, parseResult.data)
     if (result.ok) {
       setResultMessage('Fuksi import successful!')
     } else {
@@ -134,14 +299,10 @@ export const ImportForms = () => {
           {'Choose a year'}
         </label>
         <input id="year" name="year" type="number" />
-        <label htmlFor="divisions" className="sr-only">
-          {'Choose a jaokset.json file'}
-        </label>
-        <input id="divisions" name="divisions" type="file" />
         <label htmlFor="officials" className="sr-only">
-          {'Choose a toimarit.json file'}
+          {'Choose a toimarit.csv file'}
         </label>
-        <input id="officials" name="officials" type="file" />
+        <input id="officials" name="officials" type="file" accept=".csv" />
         <button type="submit">{'Upload Officials'}</button>
       </form>
 
@@ -160,9 +321,9 @@ export const ImportForms = () => {
         </label>
         <input id="year" name="year" type="number" />
         <label htmlFor="groups" className="sr-only">
-          {'Choose a fuksit.json file'}
+          {'Choose a fuksit.csv file'}
         </label>
-        <input id="groups" name="groups" type="file" />
+        <input id="groups" name="groups" type="file" accept=".csv" />
         <button type="submit">{'Upload Fuksis'}</button>
       </form>
     </>
