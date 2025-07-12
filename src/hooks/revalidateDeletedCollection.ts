@@ -39,7 +39,7 @@ export const revalidateDeletedCollection = <T extends TypeWithID>(
       })
     }
 
-    // TODO: This is a hack to revalidate all pages when a non-page collection is deleted.
+    // This is a hack to revalidate all pages when a non-page collection is deleted.
     // This should be improved in the future.
     if (!isPage) {
       const path = '/(frontend)/[locale]'

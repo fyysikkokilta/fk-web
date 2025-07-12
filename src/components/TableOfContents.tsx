@@ -9,7 +9,6 @@ interface Heading {
   level: number
 }
 
-// TODO: Try to make a solution to generate the table of contents from the page content
 export const TableOfContents = () => {
   const [headings, setHeadings] = useState<Heading[]>([])
   const [activeId, setActiveId] = useState<string>('')

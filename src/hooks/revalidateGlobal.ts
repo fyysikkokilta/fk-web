@@ -35,7 +35,7 @@ export const revalidateGlobal = (globalSlug: GlobalSlug): GlobalAfterChangeHook 
       })
     }
 
-    // TODO: This is a hack to revalidate all pages when a non-landing page global is updated.
+    // This is a hack to revalidate all pages when a non-landing page global is updated.
     // This should be improved in the future.
     if (!isLandingPage) {
       const path = '/(frontend)/[locale]'

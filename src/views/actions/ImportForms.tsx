@@ -78,7 +78,6 @@ export const ImportForms = () => {
     const officialsContent = JSON.parse(await officialsFile.text())
 
     // Backwards compatibility to old Wordpress format
-    // TODO: Remove this once the old format is no longer needed
     const { divisions } = transformOfficials(divisionsContent, officialsContent)
 
     const result = await importOfficials(year, divisions)

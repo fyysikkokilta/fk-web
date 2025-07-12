@@ -63,7 +63,6 @@ const updateReadyToSend: CollectionBeforeChangeHook<NewsletterType> = async ({
   return data
 }
 
-// TODO: Support career newsletter in Newsletter block
 export const Newsletters: CollectionConfig = {
   slug: 'newsletters',
   admin: {

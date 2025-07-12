@@ -61,7 +61,7 @@ export const revalidateCollection = <T extends TypeWithID>(
       })
     }
 
-    // TODO: This is a hack to revalidate all pages when a non-page collection is updated.
+    // This is a hack to revalidate all pages when a non-page collection is updated.
     // This should be improved in the future.
     // Pages don't need to be revalidated when a non-page collection is created.
     if (!isPage && operation !== 'create') {

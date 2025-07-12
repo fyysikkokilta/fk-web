@@ -4,7 +4,6 @@ import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
 import { importExportPlugin } from '@payloadcms/plugin-import-export'
 import { redirectsPlugin } from '@payloadcms/plugin-redirects'
 import { seoPlugin } from '@payloadcms/plugin-seo'
-//import { stripePlugin } from '@payloadcms/plugin-stripe'
 import {
   BlocksFeature,
   DefaultNodeTypes,
@@ -312,7 +311,6 @@ export default buildConfig({
         handler: sendNewsletterHandler
       }
     ],
-    // TODO: This should be changed to use a api call
     autoRun: [
       {
         // This is for schedule publishing
@@ -501,12 +499,6 @@ export default buildConfig({
       tabbedUI: true
     }),
     importExportPlugin({}),
-    // TODO: Set up Stripe plugin
-    /*stripePlugin({
-      secretKey: env.STRIPE_SECRET_KEY,
-      publishableKey: env.STRIPE_PUBLISHABLE_KEY,
-      webhookSecret: env.STRIPE_WEBHOOK_SECRET
-    }),*/
     OAuth2Plugin({
       enabled: enableOAuth(),
       strategyName: 'google',

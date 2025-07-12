@@ -19,7 +19,6 @@ const sendNewsletterHandler: TaskHandler<'sendNewsletter'> = async ({ input, req
     }
 
     // Career newsletter is only sent in English
-    // TODO: Remove this if we decide to send the career newsletter in Finnish as well
     if (newsletter.type === 'career' && locale === 'fi') {
       return
     }
