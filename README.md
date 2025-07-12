@@ -61,11 +61,6 @@ GOOGLE_SITE_VERIFICATION=your-google-site-verification
 # OAuth
 ALLOW_NON_EXISTING_USERS=false
 
-# Stripe (if using payments)
-STRIPE_SECRET_KEY=...
-STRIPE_PUBLISHABLE_KEY=...
-STRIPE_WEBHOOK_SECRET=...
-
 # S3
 S3_BUCKET=...
 S3_ACCESS_KEY_ID=...
@@ -151,12 +146,11 @@ src/
 - **date-fns** (date utilities)
 - **lucide-react** (icon set)
 - **next-intl** (internationalization)
-- **Stripe** (payments, optional)
 - **S3 (Cloudflare)** (cloud storage, optional)
 - **Plaiceholder** (image placeholders)
 - **React Hook Form** (forms)
 - **Nodemailer** (email via Payload plugin)
-- **Payload Plugins**: SEO, Redirects, Form Builder, Import/Export, Stripe, Storage, etc.
+- **Payload Plugins**: SEO, Redirects, Form Builder, Import/Export, Storage, etc.
 
 ---
 
