@@ -116,7 +116,7 @@ export default async function Page({ params }: PageProps) {
           )}
         </div>
         <div className="flex flex-col gap-8 lg:flex-row">
-          {page.showTableOfContents && <TableOfContents />}
+          {page.showTableOfContents && <TableOfContents richText={page.content} />}
           <div
             id="page-content"
             className={`${page.showTableOfContents && page.boardMember?.length ? 'lg:w-[60%]' : page.showTableOfContents || page.boardMember?.length ? 'lg:w-[80%]' : 'lg:w-[100%]'}`}

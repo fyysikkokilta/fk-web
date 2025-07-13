@@ -1,15 +1,9 @@
 import { SerializedRelationshipNode } from '@payloadcms/richtext-lexical'
-import { Locale } from 'next-intl'
+import { JSXConverter } from '@payloadcms/richtext-lexical/react'
 
 import { BlockLink } from '../BlockLink'
 
-export const CustomRelationship = ({
-  node,
-  locale
-}: {
-  node: SerializedRelationshipNode
-  locale: Locale
-}) => {
+export const renderCustomRelationship: JSXConverter<SerializedRelationshipNode> = ({ node }) => {
   const { relationTo, value } = node
 
   switch (relationTo) {
@@ -17,7 +11,7 @@ export const CustomRelationship = ({
       if (typeof value !== 'object') {
         return null
       }
-      return <BlockLink type="page" document={value} locale={locale} />
+      return <BlockLink type="page" document={value} />
     default:
       return null
   }

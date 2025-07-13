@@ -1,4 +1,5 @@
 import { SerializedTextNode } from '@payloadcms/richtext-lexical'
+import { JSXConverter } from '@payloadcms/richtext-lexical/react'
 import React from 'react'
 
 import { ColorStateKeys, textState } from '@/utils/textState'
@@ -11,7 +12,7 @@ const IS_CODE = 16
 const IS_SUBSCRIPT = 32
 const IS_SUPERSCRIPT = 64
 
-export const CustomText = ({ node }: { node: SerializedTextNode }) => {
+export const renderCustomText: JSXConverter<SerializedTextNode> = ({ node }) => {
   const styles: React.CSSProperties = {}
 
   if (node.$) {

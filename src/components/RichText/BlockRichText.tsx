@@ -22,11 +22,12 @@ import type {
   IconBlock as IconBlockType
 } from '@/payload-types'
 
-import { CustomRelationship } from './CustomRelationShip'
-import { CustomText } from './CustomText'
-import { CustomUpload } from './CustomUpload'
 import { internalDocToHref } from './internalDocToHref'
 import ProseWrapper from './ProseWrapper'
+import { renderCustomHeading } from './renderCustomHeading'
+import { renderCustomRelationship } from './renderCustomRelationship'
+import { renderCustomText } from './renderCustomText'
+import { renderCustomUpload } from './renderCustomUpload'
 
 interface RichTextProps {
   data: SerializedEditorState
@@ -47,9 +48,10 @@ export const RichText = ({ data, locale, extraClassName }: RichTextProps) => {
     ...LinkJSXConverter({
       internalDocToHref: (linkNode) => internalDocToHref(linkNode, locale)
     }),
-    text: ({ node }) => <CustomText node={node} />,
-    relationship: ({ node }) => <CustomRelationship node={node} locale={locale} />,
-    upload: ({ node }) => <CustomUpload node={node} />,
+    heading: renderCustomHeading,
+    text: renderCustomText,
+    relationship: renderCustomRelationship,
+    upload: renderCustomUpload,
     blocks: {
       ...defaultConverters.blocks,
       align: ({ node }) => <Align block={node.fields} locale={locale} />,

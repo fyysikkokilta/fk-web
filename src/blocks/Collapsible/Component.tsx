@@ -21,7 +21,7 @@ export const Collapsible = ({ block, locale }: CollapsibleBlockProps) => {
         onClick={() => setIsOpen((prev) => !prev)}
         className="flex w-full items-center justify-between"
       >
-        <h2 className="text-left">{block.title}</h2>
+        <span className="text-left">{block.title}</span>
         <div className="flex h-7 w-7 items-center justify-center">
           <ChevronDown
             size={24}

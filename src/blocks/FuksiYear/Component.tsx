@@ -23,7 +23,7 @@ export const FuksiYear = async ({ block }: FuksiYearProps) => {
 
         return (
           <div key={group.id} className="bg-fk-white rounded-lg">
-            <h3 className="mb-6 text-2xl font-bold">{group.name}</h3>
+            <span className="mb-6 text-2xl font-bold">{group.name}</span>
             <div className="grid grid-cols-2 gap-12 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
               {group.fuksis.map((fuksi) => {
                 if (typeof fuksi === 'number') return null

@@ -136,12 +136,12 @@ export const OfficialYear = async ({ block }: OfficialYearProps) => {
 
         return (
           <div key={cell.title} className="p-4" style={{ backgroundColor: cell.backgroundColor }}>
-            <h2
+            <span
               className="flex h-full items-center text-xl font-bold"
               style={{ color: cell.textColor }}
             >
               {cell.title}
-            </h2>
+            </span>
           </div>
         )
       })}

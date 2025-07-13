@@ -1,6 +1,6 @@
 import { ExternalLink, FileText, Folder } from 'lucide-react'
-import { Locale } from 'next-intl'
 
+import { Link } from '@/i18n/navigation'
 import type { Document, Page } from '@/payload-types'
 
 type LinkType = 'file' | 'page'
@@ -9,7 +9,6 @@ interface BlockLinkProps {
   document: Document | Page
   type?: LinkType
   className?: string
-  locale?: Locale
 }
 
 const getIcon = (type: LinkType) => {
@@ -30,26 +29,21 @@ const getLabel = (type: LinkType) => {
   }
 }
 
-const getUrl = (document: Document | Page, type: LinkType, locale: Locale): string => {
+const getUrl = (document: Document | Page, type: LinkType): string => {
   if (type === 'file' && 'url' in document) {
     return document.url || ''
   }
   if (type === 'page' && 'path' in document) {
-    return `/${locale}/${document.path}`
+    return `/${document.path}`
   }
   return '#'
 }
 
-export const BlockLink = ({
-  document,
-  type = 'file',
-  className = '',
-  locale = 'fi'
-}: BlockLinkProps) => {
-  const url = getUrl(document, type, locale)
+export const BlockLink = ({ document, type = 'file', className = '' }: BlockLinkProps) => {
+  const url = getUrl(document, type)
 
   return (
-    <a
+    <Link
       href={url}
       target="_blank"
       rel="noopener noreferrer"
@@ -61,6 +55,6 @@ export const BlockLink = ({
         <p className="text-fk-gray-light text-xs">{getLabel(type)}</p>
       </div>
       <ExternalLink size={24} />
-    </a>
+    </Link>
   )
 }

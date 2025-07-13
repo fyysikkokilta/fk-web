@@ -1,9 +1,10 @@
 import { SerializedUploadNode } from '@payloadcms/richtext-lexical'
+import { JSXConverter } from '@payloadcms/richtext-lexical/react'
 import Image from 'next/image'
 
 import { BlockLink } from '../BlockLink'
 
-export const CustomUpload = ({ node }: { node: SerializedUploadNode }) => {
+export const renderCustomUpload: JSXConverter<SerializedUploadNode> = ({ node }) => {
   if (node.relationTo === 'media') {
     const uploadDoc = node.value
     if (typeof uploadDoc !== 'object') {
