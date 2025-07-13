@@ -1,14 +1,5 @@
 import { BlocksFeature, HeadingFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
-import {
-  addDays,
-  addHours,
-  getISOWeek,
-  getYear,
-  isAfter,
-  parse,
-  parseISO,
-  startOfHour
-} from 'date-fns'
+import { addHours, isAfter, parse, parseISO, startOfHour } from 'date-fns'
 import type { CollectionBeforeChangeHook, CollectionConfig } from 'payload'
 
 import { publishedOrSignedIn } from '@/access/published-or-signed-in'
@@ -17,6 +8,7 @@ import { env } from '@/env'
 import { revalidateCollection } from '@/hooks/revalidateCollection'
 import { revalidateDeletedCollection } from '@/hooks/revalidateDeletedCollection'
 import type { Newsletter as NewsletterType } from '@/payload-types'
+import { getNextNewsletterNumber } from '@/utils/getNewsletterNumber'
 
 const getNextClockHour = () => {
   return startOfHour(addHours(new Date(), 1))
@@ -131,13 +123,7 @@ export const Newsletters: CollectionConfig = {
       name: 'newsletterNumber',
       type: 'text',
       unique: true,
-      defaultValue: () => {
-        const date = new Date()
-        const sixDaysFromNow = addDays(date, 6)
-        const weekNumber = getISOWeek(sixDaysFromNow)
-        const year = getYear(sixDaysFromNow)
-        return `${weekNumber}/${year}`
-      },
+      defaultValue: getNextNewsletterNumber,
       required: true,
       admin: {
         description: 'Newsletter week number and year in format "1/25"'
