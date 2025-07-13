@@ -3,6 +3,8 @@
 import { ChevronDown, ChevronUp } from 'lucide-react'
 import { RefObject, useEffect, useRef, useState } from 'react'
 
+import { slugify } from '@/utils/slugify'
+
 interface Heading {
   id: string
   text: string
@@ -31,7 +33,7 @@ export const TableOfContents = () => {
     const extractedHeadings: Heading[] = Array.from(headingElements).map((element) => {
       const level = parseInt(element.tagName[1])
       const text = element.textContent || ''
-      const id = element.id || text.toLowerCase().replace(/[^a-z0-9]+/g, '-')
+      const id = element.id || slugify(text)
 
       // Ensure the element has an ID for scrolling
       if (!element.id) {
