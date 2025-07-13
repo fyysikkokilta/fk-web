@@ -1,3 +1,4 @@
+import { draftMode } from 'next/headers'
 import type { CollectionConfig } from 'payload'
 
 export const Users: CollectionConfig = {
@@ -10,5 +11,15 @@ export const Users: CollectionConfig = {
     disableLocalStrategy: true,
     useAPIKey: true
   },
-  fields: []
+  fields: [],
+  hooks: {
+    afterLogout: [
+      async () => {
+        const draft = await draftMode()
+        if (draft.isEnabled) {
+          draft.disable()
+        }
+      }
+    ]
+  }
 }
