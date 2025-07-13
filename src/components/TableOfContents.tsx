@@ -230,7 +230,11 @@ export const TableOfContents = ({ richText }: TableOfContentsProps) => {
                       marginLeft: `${(heading.level - 1) * 0.75}rem`
                     }}
                   >
-                    <a href={`#${heading.id}`} className="block rounded-md py-1.5 pl-2 text-sm">
+                    <a
+                      href={`#${heading.id}`}
+                      className="block rounded-md py-1.5 pl-2 text-sm"
+                      onClick={() => setIsDrawerOpen(false)}
+                    >
                       {heading.text}
                     </a>
                   </li>
