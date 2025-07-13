@@ -19,7 +19,7 @@ export const Collapsible = ({ block, locale }: CollapsibleBlockProps) => {
     <div className="prose-h2:my-3 w-full">
       <button
         onClick={() => setIsOpen((prev) => !prev)}
-        className="flex w-full items-center justify-between"
+        className="flex w-full cursor-pointer items-center justify-between"
       >
         <span className="text-left">{block.title}</span>
         <div className="flex h-7 w-7 items-center justify-center">

@@ -182,7 +182,7 @@ export const CalendarClient = ({ events, locale }: CalendarClientProps) => {
       <div className="mb-4 flex items-center justify-between">
         <button
           onClick={() => handleMonthChange(-1)}
-          className="bg-fk-yellow text-fk-black hover:bg-fk-yellow-dark border-fk-yellow-dark rounded-full border p-2 shadow transition hover:cursor-pointer"
+          className="bg-fk-yellow text-fk-black hover:bg-fk-yellow-dark border-fk-yellow-dark cursor-pointer rounded-full border p-2 shadow transition"
           aria-label={t('calendar.previousMonth')}
         >
           <ChevronLeft className="h-5 w-5" />
@@ -192,7 +192,7 @@ export const CalendarClient = ({ events, locale }: CalendarClientProps) => {
         </span>
         <button
           onClick={() => handleMonthChange(1)}
-          className="bg-fk-yellow text-fk-black hover:bg-fk-yellow-dark border-fk-yellow-dark rounded-full border p-2 shadow transition hover:cursor-pointer"
+          className="bg-fk-yellow text-fk-black hover:bg-fk-yellow-dark border-fk-yellow-dark cursor-pointer rounded-full border p-2 shadow transition"
           aria-label={t('calendar.nextMonth')}
         >
           <ChevronRight className="h-5 w-5" />

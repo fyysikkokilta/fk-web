@@ -165,7 +165,7 @@ export const FormBlock = ({ block, locale }: FormBlockProps) => {
           <div className="flex justify-end">
             <button
               type="submit"
-              className="bg-fk-yellow text-fk-black hover:bg-fk-yellow-dark focus:ring-fk-yellow rounded-lg px-8 py-3 font-semibold shadow-md transition-all duration-200 hover:shadow-lg focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+              className="bg-fk-yellow text-fk-black hover:bg-fk-yellow-dark focus:ring-fk-yellow cursor-pointer rounded-lg px-8 py-3 font-semibold shadow-md transition-all duration-200 hover:shadow-lg focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
               disabled={isLoading}
             >
               {submitButtonLabel || t('form.submit')}
