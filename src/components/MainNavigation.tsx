@@ -39,6 +39,15 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
     return item.url || '#'
   }
 
+  const handleMobileNavigation = () => {
+    setIsMobileMenuOpen(false)
+  }
+
+  const handleDesktopKeyboardNavigation = () => {
+    setFocusedSubmenu(null)
+    setFocusedSubsubmenu(null)
+  }
+
   const toggleExpanded = (id: string) => {
     setExpandedItems((prev) =>
       prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
@@ -97,9 +106,11 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
     switch (event.key) {
       case 'Enter':
       case ' ':
-        event.preventDefault()
         if (hasChildren) {
+          event.preventDefault()
           setFocusedSubmenu(focusedSubmenu === itemId ? null : itemId)
+        } else {
+          handleDesktopKeyboardNavigation()
         }
         break
       case 'ArrowDown':
@@ -127,6 +138,15 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
     hasSubchildren: boolean
   ) => {
     switch (event.key) {
+      case 'Enter':
+      case ' ':
+        if (hasSubchildren) {
+          event.preventDefault()
+          setFocusedSubsubmenu(itemId)
+        } else {
+          handleDesktopKeyboardNavigation()
+        }
+        break
       case 'ArrowRight':
         event.preventDefault()
         if (hasSubchildren) {
@@ -145,6 +165,10 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
 
   const handleSubsubmenuKeyDown = (event: React.KeyboardEvent) => {
     switch (event.key) {
+      case 'Enter':
+      case ' ':
+        handleDesktopKeyboardNavigation()
+        break
       case 'ArrowLeft':
         event.preventDefault()
         setFocusedSubsubmenu(null)
@@ -382,6 +406,7 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
                   >
                     <Link
                       href={getPath(item)}
+                      onClick={handleMobileNavigation}
                       className={`focus:ring-fk-yellow block px-3 py-2 text-base whitespace-nowrap no-underline focus:ring-2 focus:outline-none focus:ring-inset ${
                         !item.children || item.children.length === 0 ? 'w-full' : 'flex-grow'
                       } ${isActive((item.page as Page)?.path) ? 'underline' : ''}`}
@@ -431,6 +456,7 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
                           >
                             <Link
                               href={getPath(child)}
+                              onClick={handleMobileNavigation}
                               className={`focus:ring-fk-yellow block px-3 py-2 whitespace-nowrap no-underline focus:ring-2 focus:outline-none focus:ring-inset ${
                                 !child.subchildren || child.subchildren.length === 0
                                   ? 'w-full'
@@ -477,6 +503,7 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
                                   <Link
                                     key={grandchild.id}
                                     href={getPath(grandchild)}
+                                    onClick={handleMobileNavigation}
                                     className={`focus:ring-fk-yellow block w-full rounded-lg px-3 py-2 whitespace-nowrap no-underline transition-colors duration-150 focus:ring-2 focus:outline-none focus:ring-inset ${
                                       isActive((grandchild.page as Page)?.path)
                                         ? 'bg-fk-gray-dark/50 border-fk-yellow border-l-4 underline'
