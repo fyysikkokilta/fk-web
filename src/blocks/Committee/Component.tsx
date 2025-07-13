@@ -16,7 +16,7 @@ export const Committee = ({ block }: CommitteeProps) => {
   return (
     <div className="space-y-8">
       {/* Role title */}
-      <span className="text-center text-2xl font-bold">{officialRole.name}</span>
+      <div className="text-center text-2xl font-bold">{officialRole.name}</div>
 
       {/* Officials grid */}
       <div className="grid grid-cols-2 items-baseline justify-center gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">

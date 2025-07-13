@@ -11,7 +11,7 @@ export const Partners = ({ partnerData }: PartnersProps) => {
   return (
     <section className="bg-fk-gray text-fk-white w-full py-8">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <span className="mb-12 text-center text-5xl font-bold">{partnerData.title}</span>
+        <div className="mb-12 text-center text-5xl font-bold">{partnerData.title}</div>
         <div className="grid grid-cols-1 items-center justify-items-center gap-y-12 sm:grid-cols-2 md:grid-cols-3">
           {partnerData.partners?.map(({ name, link, logo, id }) => (
             <Link
