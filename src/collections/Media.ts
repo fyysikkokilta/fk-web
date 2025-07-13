@@ -30,7 +30,7 @@ export const Media: CollectionConfig = {
       minLength: 5,
       admin: {
         description:
-          'Alternative text for the image for accessibility. Should be provided in most cases. A good alt text is short, describes the image, and is not redundant.'
+          'Alternative text for the image for accessibility. Should be provided when the image provides additional information for the page reader or acts as an interactive element. For example, an image with info about an event or a button with an image should have an alt text. In these cases, the alt text should give the same information as the image or tell the action of the button, respectively.'
       }
     },
     {
