@@ -28,7 +28,7 @@ export const Committee = ({ block }: CommitteeProps) => {
           return (
             <div key={official.id} className="flex flex-col overflow-hidden p-4 text-center">
               {/* Oval-shaped image container */}
-              <div className="prose-img:my-0 relative mb-4 aspect-[2/3] overflow-hidden rounded-[50%]">
+              <div className="not-prose relative mb-4 aspect-[2/3] overflow-hidden rounded-[50%]">
                 {official.photo ? (
                   <Image
                     src={(official.photo as Media).url!}

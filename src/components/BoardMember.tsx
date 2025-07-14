@@ -8,7 +8,7 @@ interface BoardMemberProps {
 export const BoardMember = ({ member }: BoardMemberProps) => (
   <div className="flex flex-col overflow-hidden p-4 text-center">
     {/* Oval-shaped image container */}
-    <div className="relative mb-4 aspect-[2/3] overflow-hidden rounded-[50%]">
+    <div className="not-prose relative mb-4 aspect-[2/3] overflow-hidden rounded-[50%]">
       <Image
         src={(member.image as Media).url!}
         alt={(member.image as Media).alt || member.name}
