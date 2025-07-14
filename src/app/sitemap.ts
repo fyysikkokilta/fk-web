@@ -42,7 +42,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       const path = page.path as unknown as Record<string, string>
       return routing.locales
         .map((locale) => {
-          const localizedPath = path[locale]
+          const localizedPath = path[locale] ?? path[routing.defaultLocale]
           if (!localizedPath) {
             return null
           }
@@ -54,10 +54,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             priority: 0.7,
             alternates: {
               languages: Object.fromEntries(
-                routing.locales.map((innerLocale) => [
-                  innerLocale,
-                  `${env.NEXT_PUBLIC_SERVER_URL}/${innerLocale}/${localizedPath}`
-                ])
+                routing.locales
+                  .map((innerLocale) => {
+                    const innerLocalizedPath = path[innerLocale] ?? path[routing.defaultLocale]
+
+                    if (!innerLocalizedPath) {
+                      return null
+                    }
+
+                    return [
+                      innerLocale,
+                      `${env.NEXT_PUBLIC_SERVER_URL}/${innerLocale}/${innerLocalizedPath}`
+                    ]
+                  })
+                  .filter((item) => item !== null)
               )
             }
           }
@@ -66,8 +76,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })
     .flat()
 
-  const landingPageEntry = {
-    url: `${env.NEXT_PUBLIC_SERVER_URL}`,
+  const landingPageEntries = routing.locales.map((locale) => ({
+    url: `${env.NEXT_PUBLIC_SERVER_URL}/${locale}`,
     lastModified: landingPage.updatedAt ?? new Date(),
     changeFrequency: 'daily' as const,
     priority: 1,
@@ -76,7 +86,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         routing.locales.map((locale) => [locale, `${env.NEXT_PUBLIC_SERVER_URL}/${locale}`])
       )
     }
-  }
+  }))
 
-  return [...pageEntries, landingPageEntry]
+  return [...pageEntries, ...landingPageEntries]
 }
