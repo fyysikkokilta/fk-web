@@ -1,3 +1,4 @@
+import { TZDate } from '@date-fns/tz'
 import { format, startOfDay } from 'date-fns'
 import { fi } from 'date-fns/locale'
 import { DynamicIcon, IconName } from 'lucide-react/dynamic'
@@ -56,15 +57,22 @@ export const FrontPageCalendar = async ({ page }: FrontPageCalendarProps) => {
           >
             <div>
               <div className="text-lg">
-                {format(new Date(event.start?.dateTime || event.start?.date || ''), 'd.M.')}
+                {format(
+                  new TZDate(event.start?.dateTime || event.start?.date || '', 'Europe/Helsinki'),
+                  'd.M.'
+                )}
               </div>
               {event.start?.dateTime && (
                 <div>
-                  {format(new Date(event.start?.dateTime), 'HH:mm', { locale: fi })}
+                  {format(new TZDate(event.start?.dateTime, 'Europe/Helsinki'), 'HH:mm', {
+                    locale: fi
+                  })}
                   {event.end?.dateTime && (
                     <span>
                       {' - '}
-                      {format(new Date(event.end?.dateTime), 'HH:mm', { locale: fi })}
+                      {format(new TZDate(event.end?.dateTime, 'Europe/Helsinki'), 'HH:mm', {
+                        locale: fi
+                      })}
                     </span>
                   )}
                 </div>

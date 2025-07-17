@@ -1,7 +1,8 @@
 'use client'
 
+import { TZDate } from '@date-fns/tz'
 import { eachDayOfInterval, endOfMonth, format, getDay, startOfDay, startOfMonth } from 'date-fns'
-import { enUS, fi } from 'date-fns/locale'
+import { fi } from 'date-fns/locale'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { DynamicIcon, IconName } from 'lucide-react/dynamic'
 import { Locale, useTranslations } from 'next-intl'
@@ -46,8 +47,8 @@ export const CalendarClient = ({ events, locale }: CalendarClientProps) => {
 
   const getEventsForDay = (date: Date) => {
     return events.filter((event) => {
-      const start = new Date(event.start?.dateTime || event.start?.date || '')
-      const end = new Date(event.end?.dateTime || event.end?.date || '')
+      const start = new TZDate(event.start?.dateTime || event.start?.date || '', 'Europe/Helsinki')
+      const end = new TZDate(event.end?.dateTime || event.end?.date || '', 'Europe/Helsinki')
       // If end is not valid, fallback to start (single-day event)
       const eventEnd = isNaN(end.getTime()) ? start : end
       // Check if the date is between start and end (inclusive)
@@ -93,8 +94,11 @@ export const CalendarClient = ({ events, locale }: CalendarClientProps) => {
   }
 
   const formatDateRange = (event: CalendarEvent) => {
-    const startDate = new Date(event.start?.dateTime || event.start?.date || '')
-    const endDate = new Date(event.end?.dateTime || event.end?.date || '')
+    const startDate = new TZDate(
+      event.start?.dateTime || event.start?.date || '',
+      'Europe/Helsinki'
+    )
+    const endDate = new TZDate(event.end?.dateTime || event.end?.date || '', 'Europe/Helsinki')
 
     if (format(startDate, 'yyyy-MM-dd') === format(endDate, 'yyyy-MM-dd')) {
       return `${format(startDate, 'd.M.yyyy')} ${event.start?.dateTime ? format(startDate, 'HH:mm') : ''} - ${
@@ -152,7 +156,8 @@ export const CalendarClient = ({ events, locale }: CalendarClientProps) => {
                       onMouseEnter={(e) => handleEventHover(event, e)}
                       onMouseLeave={handleEventLeave}
                     >
-                      {event.start?.dateTime && format(new Date(event.start.dateTime), 'HH:mm')}{' '}
+                      {event.start?.dateTime &&
+                        format(new TZDate(event.start.dateTime, 'Europe/Helsinki'), 'HH:mm')}{' '}
                       {event.summary}
                     </div>
                   ))}
@@ -188,7 +193,7 @@ export const CalendarClient = ({ events, locale }: CalendarClientProps) => {
           <ChevronLeft className="h-5 w-5" />
         </button>
         <span className="text-fk-black text-3xl font-extrabold tracking-tight">
-          {format(currentDate, 'LLLL yyyy', { locale: locale === 'fi' ? fi : enUS })}
+          {format(currentDate, 'LLLL yyyy', { locale: fi })}
         </span>
         <button
           onClick={() => handleMonthChange(1)}

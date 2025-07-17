@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@date-fns/tz':
+        specifier: ^1.2.0
+        version: 1.2.0
       '@next/bundle-analyzer':
         specifier: ^15.4.2-canary.4
         version: 15.4.2-canary.4
