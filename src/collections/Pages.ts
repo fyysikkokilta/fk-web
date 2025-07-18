@@ -31,7 +31,6 @@ const formatPath: FieldHook = async ({ value, data, req: { payload } }: FieldHoo
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
-  folders: true,
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'path', 'hidden'],

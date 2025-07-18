@@ -7,7 +7,6 @@ import { revalidateDeletedCollection } from '@/hooks/revalidateDeletedCollection
 
 export const Documents: CollectionConfig = {
   slug: 'documents',
-  folders: true,
   admin: {
     useAsTitle: 'filename',
     group: 'Files',

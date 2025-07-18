@@ -265,10 +265,6 @@ export default buildConfig({
       })
     ]
   }),
-  folders: {
-    fieldName: 'folder',
-    slug: 'folders'
-  },
   db: postgresAdapter({
     prodMigrations: migrations,
     pool: {

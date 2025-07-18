@@ -56,16 +56,11 @@ export interface Config {
     exports: Export;
     users: User;
     'payload-jobs': PayloadJob;
-    folders: FolderInterface;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {
-    folders: {
-      documentsAndFolders: 'folders' | 'documents' | 'media' | 'pages';
-    };
-  };
+  collectionsJoins: {};
   collectionsSelect: {
     'board-members': BoardMembersSelect<false> | BoardMembersSelect<true>;
     divisions: DivisionsSelect<false> | DivisionsSelect<true>;
@@ -86,7 +81,6 @@ export interface Config {
     exports: ExportsSelect<false> | ExportsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-jobs': PayloadJobsSelect<false> | PayloadJobsSelect<true>;
-    folders: FoldersSelect<false> | FoldersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -213,7 +207,6 @@ export interface Media {
   alt?: string | null;
   blurDataUrl: string;
   prefix?: string | null;
-  folder?: (number | null) | FolderInterface;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -225,117 +218,6 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "folders".
- */
-export interface FolderInterface {
-  id: number;
-  name: string;
-  folder?: (number | null) | FolderInterface;
-  documentsAndFolders?: {
-    docs?: (
-      | {
-          relationTo?: 'folders';
-          value: number | FolderInterface;
-        }
-      | {
-          relationTo?: 'documents';
-          value: number | Document;
-        }
-      | {
-          relationTo?: 'media';
-          value: number | Media;
-        }
-      | {
-          relationTo?: 'pages';
-          value: number | Page;
-        }
-    )[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  folderType?: ('documents' | 'media' | 'pages')[] | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * Upload and manage PDF files
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "documents".
- */
-export interface Document {
-  id: number;
-  title: string;
-  /**
-   * Upload a thumbnail image for the document
-   */
-  thumbnail?: (number | null) | Media;
-  prefix?: string | null;
-  folder?: (number | null) | FolderInterface;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-}
-/**
- * Manage website pages
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "pages".
- */
-export interface Page {
-  id: number;
-  title: string;
-  /**
-   * Banner image of the page
-   */
-  bannerImage?: (number | null) | Media;
-  content: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  meta?: {
-    title?: string | null;
-    description?: string | null;
-    /**
-     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-     */
-    image?: (number | null) | Media;
-  };
-  /**
-   * The URL path for this page. Will be auto-generated from the title if left empty.
-   */
-  path: string;
-  showTitle?: boolean | null;
-  showTableOfContents?: boolean | null;
-  showPartners?: boolean | null;
-  hidden?: boolean | null;
-  boardMember?: (number | BoardMember)[] | null;
-  folder?: (number | null) | FolderInterface;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -688,6 +570,55 @@ export interface Form {
   createdAt: string;
 }
 /**
+ * Manage website pages
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages".
+ */
+export interface Page {
+  id: number;
+  title: string;
+  /**
+   * Banner image of the page
+   */
+  bannerImage?: (number | null) | Media;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+  };
+  /**
+   * The URL path for this page. Will be auto-generated from the title if left empty.
+   */
+  path: string;
+  showTitle?: boolean | null;
+  showTableOfContents?: boolean | null;
+  showPartners?: boolean | null;
+  hidden?: boolean | null;
+  boardMember?: (number | BoardMember)[] | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "FuksiYearBlock".
  */
@@ -954,6 +885,32 @@ export interface PDFViewerBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'pdf-viewer';
+}
+/**
+ * Upload and manage PDF files
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "documents".
+ */
+export interface Document {
+  id: number;
+  title: string;
+  /**
+   * Upload a thumbnail image for the document
+   */
+  thumbnail?: (number | null) | Media;
+  prefix?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1312,10 +1269,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'payload-jobs';
         value: number | PayloadJob;
-      } | null)
-    | ({
-        relationTo: 'folders';
-        value: number | FolderInterface;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -1391,7 +1344,6 @@ export interface DocumentsSelect<T extends boolean = true> {
   title?: T;
   thumbnail?: T;
   prefix?: T;
-  folder?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -1434,7 +1386,6 @@ export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   blurDataUrl?: T;
   prefix?: T;
-  folder?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -1530,7 +1481,6 @@ export interface PagesSelect<T extends boolean = true> {
   showPartners?: T;
   hidden?: T;
   boardMember?: T;
-  folder?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -1783,18 +1733,6 @@ export interface PayloadJobsSelect<T extends boolean = true> {
   queue?: T;
   waitUntil?: T;
   processing?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "folders_select".
- */
-export interface FoldersSelect<T extends boolean = true> {
-  name?: T;
-  folder?: T;
-  documentsAndFolders?: T;
-  folderType?: T;
   updatedAt?: T;
   createdAt?: T;
 }
