@@ -39,8 +39,10 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
     return item.url || '#'
   }
 
-  const handleMobileNavigation = () => {
-    setIsMobileMenuOpen(false)
+  const handleMobileNavigation = (item: MainNavigationType['items'][number]) => {
+    if (item.page || item.url) {
+      setIsMobileMenuOpen(false)
+    }
   }
 
   const handleDesktopKeyboardNavigation = () => {
@@ -400,13 +402,13 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
                   <div
                     className={`flex items-center rounded-lg px-1 transition-colors duration-150 ${
                       isActive((item.page as Page)?.path) || isExpanded(item.id || '')
-                        ? 'bg-fk-gray-dark/70 border-fk-yellow border-l-4'
-                        : 'hover:bg-fk-gray-light/70'
+                        ? 'border-fk-yellow border-l-4'
+                        : ''
                     }`}
                   >
                     <Link
                       href={getPath(item)}
-                      onClick={handleMobileNavigation}
+                      onClick={() => handleMobileNavigation(item)}
                       className={`focus:ring-fk-yellow block px-3 py-2 text-base whitespace-nowrap no-underline focus:ring-2 focus:outline-none focus:ring-inset ${
                         !item.children || item.children.length === 0 ? 'w-full' : 'flex-grow'
                       } ${isActive((item.page as Page)?.path) ? 'underline' : ''}`}
@@ -450,13 +452,13 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
                           <div
                             className={`flex items-center rounded-lg px-1 transition-colors duration-150 ${
                               isActive((child.page as Page)?.path) || isExpanded(child.id || '')
-                                ? 'bg-fk-gray-dark/60 border-fk-yellow border-l-4'
-                                : 'hover:bg-fk-gray-light/70'
+                                ? 'border-fk-yellow border-l-4'
+                                : ''
                             }`}
                           >
                             <Link
                               href={getPath(child)}
-                              onClick={handleMobileNavigation}
+                              onClick={() => handleMobileNavigation(child)}
                               className={`focus:ring-fk-yellow block px-3 py-2 whitespace-nowrap no-underline focus:ring-2 focus:outline-none focus:ring-inset ${
                                 !child.subchildren || child.subchildren.length === 0
                                   ? 'w-full'
@@ -503,11 +505,11 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
                                   <Link
                                     key={grandchild.id}
                                     href={getPath(grandchild)}
-                                    onClick={handleMobileNavigation}
+                                    onClick={() => handleMobileNavigation(grandchild)}
                                     className={`focus:ring-fk-yellow block w-full rounded-lg px-3 py-2 whitespace-nowrap no-underline transition-colors duration-150 focus:ring-2 focus:outline-none focus:ring-inset ${
                                       isActive((grandchild.page as Page)?.path)
-                                        ? 'bg-fk-gray-dark/50 border-fk-yellow border-l-4 underline'
-                                        : 'hover:bg-fk-gray-light/70'
+                                        ? 'border-fk-yellow border-l-4 underline'
+                                        : ''
                                     }`}
                                     role="menuitem"
                                     aria-label={grandchild.label}
