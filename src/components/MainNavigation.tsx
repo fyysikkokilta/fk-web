@@ -138,7 +138,7 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
 
   const handleKeyDown = useCallback(
     (
-      event: React.KeyboardEvent,
+      event: React.KeyboardEvent<HTMLAnchorElement>,
       itemId: string,
       hasChildren: boolean,
       level: 'main' | 'sub' | 'subsub' = 'main'
@@ -146,14 +146,15 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
       switch (event.key) {
         case 'Enter':
         case ' ':
+          event.preventDefault()
           if (hasChildren) {
-            event.preventDefault()
             if (level === 'main') {
               setFocusedSubmenu(focusedSubmenu === itemId ? null : itemId)
             } else if (level === 'sub') {
               setFocusedSubsubmenu(focusedSubsubmenu === itemId ? null : itemId)
             }
           } else {
+            event.currentTarget.click()
             closeAllMenus()
           }
           break
@@ -200,13 +201,14 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
           ('children' in item && item.children && item.children.length > 0) ||
             ('subchildren' in item && item.subchildren && item.subchildren.length > 0)
         )
-      const submenuId = `${level}-submenu-${item.id || index}`
-      const menuitemId = `${level}-menuitem-${item.id || index}`
+      const id = item.id || index.toString()
+      const submenuId = `${level}-submenu-${id}`
+      const menuitemId = `${level}-menuitem-${id}`
       const isOpen =
         level === 'main'
-          ? focusedSubmenu === (item.id || index.toString())
+          ? focusedSubmenu === id
           : level === 'sub'
-            ? focusedSubsubmenu === (item.id || index.toString())
+            ? focusedSubsubmenu === id
             : false
 
       const borderIndicator =
@@ -224,15 +226,15 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
 
       return (
         <li
-          key={item.id || `desktop-${level}-${index}`}
+          key={id}
           className="relative"
           role="none"
           onMouseEnter={() => {
             if (hasChildren) {
               if (level === 'main') {
-                setFocusedSubmenu(item.id || index.toString())
+                setFocusedSubmenu(id)
               } else if (level === 'sub') {
-                setFocusedSubsubmenu(item.id || index.toString())
+                setFocusedSubsubmenu(id)
               }
             }
           }}
@@ -263,10 +265,7 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
             onKeyDown={(e) => handleKeyDown(e, item.id || index.toString(), hasChildren, level)}
             onBlur={(e) => {
               const relatedTarget = e.relatedTarget as HTMLElement | null
-              if (
-                !relatedTarget ||
-                !relatedTarget.closest(`[data-submenu="${item.id || index}"]`)
-              ) {
+              if (!relatedTarget || !relatedTarget.closest(`[data-submenu="${id}"]`)) {
                 if (level === 'main') {
                   setFocusedSubmenu(null)
                 } else if (level === 'sub') {
@@ -284,7 +283,7 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
               className={`bg-fk-gray absolute w-fit shadow-lg ${
                 level === 'main' ? 'top-full left-0' : 'top-0 left-full'
               }`}
-              data-submenu={item.id || index}
+              data-submenu={id}
               role="menu"
               aria-labelledby={menuitemId}
             >
@@ -321,8 +320,9 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
       const children =
         ('children' in item ? item.children : 'subchildren' in item ? item.subchildren : null) || []
       const hasChildren = children.length > 0
-      const submenuId = `mobile-submenu-${item.id || idx}-${level}`
-      const itemKey = item.id || `mobile-${level}-${idx}`
+      const id = item.id || idx.toString()
+      const submenuId = `mobile-submenu-${id}-${level}`
+      const itemKey = `mobile-${level}-${id}`
       const isItemExpanded = isExpanded(itemKey)
 
       return (
