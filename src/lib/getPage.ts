@@ -11,6 +11,27 @@ export async function getPage(path: string, locale: Locale, req?: PayloadRequest
 
   const isDraft = await isDraftMode()
 
+  const { docs: pathDocs } = await payload.find({
+    collection: 'pages',
+    select: {
+      path: true
+    },
+    where: {
+      path: { equals: path },
+      ...(isDraft ? {} : { hidden: { equals: false } })
+    },
+    draft: isDraft,
+    locale: 'all',
+    req
+  })
+
+  if (pathDocs.length === 0) {
+    return null
+  }
+
+  const paths = pathDocs[0].path as unknown as Record<string, string | null>
+  const isPageAvailableForLocale = paths[locale]
+
   try {
     const { docs } = await payload.find({
       collection: 'pages',
@@ -20,7 +41,7 @@ export async function getPage(path: string, locale: Locale, req?: PayloadRequest
       },
       depth: 5,
       draft: isDraft,
-      locale,
+      locale: isPageAvailableForLocale ? locale : locale === 'fi' ? 'en' : 'fi',
       fallbackLocale: locale === 'fi' ? 'en' : 'fi',
       req
     })
