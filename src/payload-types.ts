@@ -1780,19 +1780,19 @@ export interface MainNavigation {
   logo: number | Media;
   items: {
     label: string;
-    type: 'page' | 'external';
+    type: 'page' | 'external' | 'menu';
     page?: (number | null) | Page;
     url?: string | null;
     children?:
       | {
           label: string;
-          type: 'page' | 'external';
+          type: 'page' | 'external' | 'menu';
           page?: (number | null) | Page;
           url?: string | null;
           subchildren?:
             | {
                 label: string;
-                type: 'page' | 'external';
+                type: 'page' | 'external' | 'menu';
                 page?: (number | null) | Page;
                 url?: string | null;
                 id?: string | null;

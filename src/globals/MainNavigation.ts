@@ -4,7 +4,7 @@ import { signedIn } from '@/access/signed-in'
 import { env } from '@/env'
 import { revalidateGlobal } from '@/hooks/revalidateGlobal'
 
-const fields = (required = false): Field[] => [
+const fields: Field[] = [
   {
     name: 'label',
     type: 'text',
@@ -14,7 +14,7 @@ const fields = (required = false): Field[] => [
   {
     name: 'type',
     type: 'select',
-    options: ['page', 'external'],
+    options: ['page', 'external', 'menu'],
     required: true,
     defaultValue: 'page'
   },
@@ -22,7 +22,7 @@ const fields = (required = false): Field[] => [
     name: 'page',
     type: 'relationship',
     relationTo: 'pages',
-    required,
+    required: true,
     hasMany: false,
     admin: {
       condition: (_data, siblingData) => {
@@ -33,7 +33,7 @@ const fields = (required = false): Field[] => [
   {
     name: 'url',
     type: 'text',
-    required,
+    required: true,
     localized: true,
     admin: {
       condition: (_data, siblingData) => {
@@ -79,16 +79,26 @@ export const MainNavigation: GlobalConfig = {
       type: 'array',
       required: true,
       fields: [
-        ...fields(false),
+        ...fields,
         {
           name: 'children',
           type: 'array',
+          admin: {
+            condition: (_data, siblingData) => {
+              return siblingData.type === 'menu'
+            }
+          },
           fields: [
-            ...fields(false),
+            ...fields,
             {
               name: 'subchildren',
               type: 'array',
-              fields: fields(true)
+              admin: {
+                condition: (_data, siblingData) => {
+                  return siblingData.type === 'menu'
+                }
+              },
+              fields: fields
             }
           ]
         }

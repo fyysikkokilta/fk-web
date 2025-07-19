@@ -8,7 +8,7 @@ import React from 'react'
 
 import { lora, sourceSans3 } from '@/app/fonts'
 import { Footer } from '@/components/Footer'
-import { MainNavigation } from '@/components/MainNavigation'
+import { MainNavigation } from '@/components/Navigation'
 import { SkipLink } from '@/components/SkipLink'
 import { routing } from '@/i18n/routing'
 import { getFooter } from '@/lib/getFooter'
