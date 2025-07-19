@@ -287,7 +287,6 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
               data-submenu={item.id || index}
               role="menu"
               aria-labelledby={menuitemId}
-              aria-level={level === 'main' ? 1 : level === 'sub' ? 2 : 3}
             >
               {children.map((child: MainNavigationType['items'][number], childIndex) =>
                 renderDesktopMenuItem(child, level === 'main' ? 'sub' : 'subsub', childIndex)
@@ -317,7 +316,7 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
       level: number = 0,
       idx: number = 0
     ) => {
-      const itemPath = getPath(item as any)
+      const itemPath = getPath(item)
       const itemDisabled = isDisabled(itemPath)
       const children =
         ('children' in item ? item.children : 'subchildren' in item ? item.subchildren : null) || []
@@ -329,12 +328,12 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
       return (
         <div key={itemKey}>
           <div
-            className={`flex items-center rounded-lg px-1 transition-colors duration-150 ${isActive((item as any).page?.path) || isItemExpanded ? 'border-fk-yellow border-l-4' : ''}`}
+            className={`flex items-center rounded-lg px-1 transition-colors duration-150 ${isActive(itemPath) || isItemExpanded ? 'border-fk-yellow border-l-4' : ''}`}
           >
             <Link
               href={itemPath}
-              onClick={() => handleMobileNavigation(item as any)}
-              className={`${getMenuItemClasses(isActive((item as any).page?.path), false, itemDisabled, 'mobile')} ${!hasChildren ? 'w-full' : 'flex-grow'}`}
+              onClick={() => handleMobileNavigation(item)}
+              className={`${getMenuItemClasses(isActive(itemPath), false, itemDisabled, 'mobile')} ${!hasChildren ? 'w-full' : 'flex-grow'}`}
               role="menuitem"
               aria-disabled={itemDisabled || undefined}
             >
@@ -357,10 +356,8 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
             )}
           </div>
           {hasChildren && isItemExpanded && (
-            <div id={submenuId} className="mt-1 ml-4 space-y-1" role="menu" aria-level={level + 1}>
-              {children.map((child, childIdx) =>
-                renderMobileItem(child as any, level + 1, childIdx)
-              )}
+            <div id={submenuId} className="mt-1 ml-4 space-y-1" role="menu">
+              {children.map((child, childIdx) => renderMobileItem(child, level + 1, childIdx))}
             </div>
           )}
           {idx < (level === 0 ? navigation.items.length - 1 : children.length - 1) && (
@@ -392,7 +389,7 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
         <div className="flex items-center justify-between">
           <NavbarBrand logo={navigation.logo} title={navigation.title} variant="desktop" />
 
-          <ul className="flex" role="menubar" aria-level={1}>
+          <ul className="flex" role="menubar">
             {navigation.items.map((item, index) => renderDesktopMenuItem(item, 'main', index))}
           </ul>
         </div>
@@ -421,7 +418,6 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
             className="border-fk-gray from-fk-gray via-fk-gray-light to-fk-gray-lightest absolute top-full right-0 left-0 border-t bg-gradient-to-b shadow-lg"
             role="menu"
             aria-label={t('mainNavigation.menu')}
-            aria-level={1}
           >
             <div className="space-y-1 px-2 pt-4 pb-4">
               {navigation.items.map((item, idx) => renderMobileItem(item, 0, idx))}
