@@ -16,7 +16,7 @@ export function LanguageSwitcher() {
     <Link
       href={pathname}
       locale={alternativeLocale}
-      className="text-fk-white cursor-pointer text-xl font-semibold tracking-wide uppercase"
+      className="text-fk-white cursor-pointer px-3 py-2 text-xl font-semibold tracking-wide uppercase"
     >
       {alternativeLabel}
     </Link>

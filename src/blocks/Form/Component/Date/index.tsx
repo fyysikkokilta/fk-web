@@ -31,7 +31,7 @@ export const Date: React.FC<
           id={name}
           type="date"
           defaultValue={defaultValue ?? ''}
-          className={`focus:ring-fk-yellow focus:border-fk-yellow w-full rounded-lg border px-4 py-3 shadow-sm transition-colors focus:ring-2 focus:outline-none ${
+          className={`w-full rounded-lg border px-4 py-3 shadow-sm transition-colors ${
             errors[name] ? 'border-fk-red' : 'border-fk-gray-lightest'
           }`}
           {...register(name, { required: required ?? false })}

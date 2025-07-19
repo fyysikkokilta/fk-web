@@ -1,12 +1,14 @@
 {
   "mainNavigation": {
     "home": "Etusivu",
-    "menu": "Valikko",
+    "menu": "Päävalikko",
     "closeMenu": "Sulje valikko",
     "openMenu": "Avaa valikko",
     "hasSubmenu": ", alavalikko",
     "previousMonth": "Edellinen kuukausi",
-    "nextMonth": "Seuraava kuukausi"
+    "nextMonth": "Seuraava kuukausi",
+    "submenu": "alavalikko",
+    "disabled": "poistettu käytöstä"
   },
   "footer": {
     "copyright": "© {year} Fyysikkokilta ry"

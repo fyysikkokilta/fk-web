@@ -1,12 +1,14 @@
 {
   "mainNavigation": {
     "home": "Home",
-    "menu": "Menu",
+    "menu": "Main navigation menu",
     "closeMenu": "Close menu",
     "openMenu": "Open menu",
     "hasSubmenu": ", has submenu",
     "previousMonth": "Previous month",
-    "nextMonth": "Next month"
+    "nextMonth": "Next month",
+    "submenu": "submenu",
+    "disabled": "disabled"
   },
   "footer": {
     "copyright": "© {year} Fyysikkokilta ry"

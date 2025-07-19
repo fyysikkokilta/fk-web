@@ -47,7 +47,7 @@ export const Checkbox: React.FC<
               setChecked(!checked)
             }}
             type="button"
-            className={`focus:ring-fk-yellow h-7 w-7 cursor-pointer rounded-lg border-2 transition-colors focus:ring-2 focus:outline-none ${
+            className={`h-7 w-7 cursor-pointer rounded-lg border-2 transition-colors ${
               checked
                 ? 'bg-fk-yellow border-fk-yellow text-fk-black hover:bg-fk-yellow-dark'
                 : 'bg-fk-white border-fk-gray-lightest hover:border-fk-yellow text-fk-yellow'
