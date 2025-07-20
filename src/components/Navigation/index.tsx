@@ -20,7 +20,6 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
       className="bg-fk-gray text-fk-white relative z-50 w-full px-2 py-1 font-bold"
       aria-label={t('mainNavigation.menu')}
     >
-      {/* Desktop Navigation */}
       <div className="mx-auto hidden items-center justify-between px-4 md:flex lg:px-8 xl:px-12 2xl:container">
         <NavbarBrand logo={navigation.logo} title={navigation.title} variant="desktop" />
         <div className="flex" role="menubar">
@@ -30,7 +29,6 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
         </div>
       </div>
 
-      {/* Mobile Navigation */}
       <div className="flex items-center justify-between px-2 md:hidden">
         <NavbarBrand logo={navigation.logo} title={navigation.title} variant="mobile" />
         <Menu
@@ -40,10 +38,7 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
             </MenuButton>
           )}
           transition={true}
-          menuClassName="w-screen bg-fk-gray border-t !mt-2 shadow-lg text-fk-white space-y-1 p-4"
-          direction="bottom"
-          arrow={false}
-          unmountOnClose={true}
+          menuClassName="w-screen bg-fk-gray border-t !mt-2 shadow-lg text-fk-white space-y-2 p-2"
         >
           {navigation.items.map((item, idx) => (
             <MobileMenuItem key={item.id || idx} item={item} level="main" />
