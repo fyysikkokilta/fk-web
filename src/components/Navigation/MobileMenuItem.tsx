@@ -23,7 +23,7 @@ export function MobileMenuItem({ item, level = 'main' }: MenuItemProps) {
   }
   const marginClass = getMarginClass()
 
-  if (!hasChildren) {
+  if (!hasChildren || children.length === 0) {
     return (
       <MenuItem
         href={itemPath}
