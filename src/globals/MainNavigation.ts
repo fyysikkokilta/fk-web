@@ -83,6 +83,7 @@ export const MainNavigation: GlobalConfig = {
         {
           name: 'children',
           type: 'array',
+          required: true,
           admin: {
             condition: (_data, siblingData) => {
               return siblingData.type === 'menu'
@@ -93,6 +94,7 @@ export const MainNavigation: GlobalConfig = {
             {
               name: 'subchildren',
               type: 'array',
+              required: true,
               admin: {
                 condition: (_data, siblingData) => {
                   return siblingData.type === 'menu'
