@@ -1,5 +1,7 @@
 'use client'
 
+import '@szhsin/react-menu/dist/transitions/slide.css'
+
 import { Menu, MenuButton } from '@szhsin/react-menu'
 import { Menu as LucideMenu, X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
