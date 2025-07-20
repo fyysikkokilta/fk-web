@@ -1,7 +1,9 @@
 'use client'
 
-import { MenuItem, SubMenu } from '@szhsin/react-menu'
+import { FocusableItem, SubMenu } from '@szhsin/react-menu'
 import { ChevronDown, ChevronUp } from 'lucide-react'
+
+import { Link } from '@/i18n/navigation'
 
 import type { MenuItemProps } from './types'
 import { getChildrenArray, useGetPath, useIsActive } from './utils'
@@ -19,13 +21,20 @@ export function MobileMenuItem({ item, level = 'main' }: MenuItemProps) {
 
   if (!hasChildren || children.length === 0) {
     return (
-      <MenuItem
-        href={itemPath}
+      <FocusableItem
         aria-label={item.label}
-        className={`text-fk-white w-full p-2 text-base font-bold uppercase ${isActiveItem ? 'border-fk-yellow border-l-4' : ''} ${marginClass}`}
+        className={`text-fk-white w-full px-2 text-base font-bold uppercase ${isActiveItem ? 'border-fk-yellow border-l-4' : ''} ${marginClass}`}
       >
-        {item.label}
-      </MenuItem>
+        {({ ref, closeMenu }) => (
+          <Link
+            ref={ref}
+            href={itemPath}
+            onClick={({ detail }) => closeMenu(detail === 0 ? 'Enter' : undefined)}
+          >
+            {item.label}
+          </Link>
+        )}
+      </FocusableItem>
     )
   }
 
