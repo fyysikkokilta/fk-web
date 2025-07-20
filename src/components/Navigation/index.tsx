@@ -38,6 +38,7 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
             </MenuButton>
           )}
           transition={true}
+          unmountOnClose={true}
           menuClassName="w-screen bg-fk-gray border-t !mt-2 shadow-lg text-fk-white space-y-2 p-2"
         >
           {navigation.items.map((item, idx) => (
