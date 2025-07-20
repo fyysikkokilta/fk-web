@@ -1,92 +1,63 @@
+'use client'
+
+import { MenuItem, SubMenu } from '@szhsin/react-menu'
 import { ChevronDown, ChevronUp } from 'lucide-react'
-import { useTranslations } from 'next-intl'
-import { useState } from 'react'
 
-import { Link } from '@/i18n/navigation'
+import type { MenuItemProps } from './types'
+import { getChildrenArray, useGetPath, useIsActive } from './utils'
 
-import type { MobileMenuItemProps } from './types'
-import { getChildrenArray, useNavigationUtils } from './utils'
-
-export function MobileMenuItem({
-  item,
-  level = 0,
-  idx = 0,
-  isExpanded,
-  onToggle,
-  onNavigate
-}: MobileMenuItemProps) {
-  const t = useTranslations()
-  const { isActive, getPath } = useNavigationUtils()
-
-  // Manage child expansion state independently
-  const [childExpandedItems, setChildExpandedItems] = useState<string[]>([])
+export function MobileMenuItem({ item, level = 'main' }: MenuItemProps) {
+  const isActive = useIsActive()
+  const getPath = useGetPath()
 
   const itemPath = getPath(item)
   const hasChildren = item.type === 'menu'
-
-  // Get children with proper type checking
   const children = getChildrenArray(item, level, hasChildren)
+  const isActiveItem = isActive(itemPath)
 
-  const id = item.id || idx.toString()
+  // Get margin based on level
+  const getMarginClass = () => {
+    if (level === 'sub') return 'ml-6'
+    if (level === 'subsub') return 'ml-12'
+    return ''
+  }
+  const marginClass = getMarginClass()
 
-  // Toggle function for child items
-  const toggleChildItem = (childId: string) => {
-    setChildExpandedItems((prev) =>
-      prev.includes(childId) ? prev.filter((item) => item !== childId) : [...prev, childId]
+  if (!hasChildren) {
+    return (
+      <MenuItem
+        href={itemPath}
+        className={`text-fk-white w-full text-sm font-bold uppercase ${isActiveItem ? 'border-fk-yellow border-l-4' : ''} ${marginClass}`}
+      >
+        {item.label}
+      </MenuItem>
     )
   }
 
   return (
-    <div>
-      <div
-        className={`flex items-center rounded-lg px-1 transition-colors duration-150 ${isActive(itemPath) || isExpanded ? 'border-fk-yellow border-l-4' : ''}`}
-      >
-        {hasChildren ? (
-          <button
-            onClick={onToggle}
-            className={`flex w-full cursor-pointer items-center justify-between px-3 py-3 text-base uppercase transition-colors hover:opacity-70 focus:outline-none ${isActive(itemPath) ? 'underline' : ''}`}
-            aria-expanded={isExpanded}
-            aria-controls={`mobile-submenu-${id}-${level}`}
-            aria-label={`${isExpanded ? t('mainNavigation.closeMenu') : t('mainNavigation.openMenu')} ${item.label}`}
-            role="menuitem"
-          >
-            <span>{item.label}</span>
-            {isExpanded ? (
-              <ChevronUp size={24} className="text-fk-yellow" />
-            ) : (
-              <ChevronDown size={24} className="text-fk-yellow" />
-            )}
-          </button>
-        ) : (
-          <Link
-            href={itemPath}
-            onClick={onNavigate}
-            className="block w-full cursor-pointer px-3 py-3 text-base uppercase transition-colors hover:opacity-70 focus:outline-none"
-            role="menuitem"
-            aria-current={isActive(itemPath) ? 'page' : undefined}
-          >
-            {item.label}
-          </Link>
-        )}
-      </div>
-      {hasChildren && isExpanded && children.length > 0 && (
-        <div id={`mobile-submenu-${id}-${level}`} className="mt-1 ml-4 space-y-1" role="menu">
-          {children.map((child, childIdx) => {
-            const childId = `mobile-${level + 1}-${child.id || childIdx}`
-            return (
-              <MobileMenuItem
-                key={child.id || childIdx}
-                item={child}
-                level={level + 1}
-                idx={childIdx}
-                isExpanded={childExpandedItems.includes(childId)}
-                onToggle={() => toggleChildItem(childId)}
-                onNavigate={onNavigate}
-              />
-            )
-          })}
+    <SubMenu
+      label={({ open }) => (
+        <div
+          className={`text-fk-white flex justify-between pt-2 text-sm font-bold uppercase ${isActiveItem ? 'border-fk-yellow border-l-4' : ''} ${marginClass}`}
+        >
+          <span>{item.label}</span>
+          {open ? (
+            <ChevronUp size={24} className="text-fk-yellow" />
+          ) : (
+            <ChevronDown size={24} className="text-fk-yellow" />
+          )}
         </div>
       )}
-    </div>
+      direction="bottom"
+      menuClassName="!static w-full bg-fk-gray pt-2"
+    >
+      {children.map((child, childIdx) => (
+        <MobileMenuItem
+          key={child.id || childIdx}
+          item={child}
+          level={level === 'main' ? 'sub' : 'subsub'}
+        />
+      ))}
+    </SubMenu>
   )
 }
