@@ -29,6 +29,7 @@ export function DesktopMenuItem({ item, level = 'main' }: MenuItemProps) {
         menuClassName={menuClassName}
         transition={true}
         direction="bottom"
+        arrow={false}
         menuButton={
           <MenuButton className={`border-fk-yellow border-b-4 ${buttonClassName}`}>
             {item.label}
@@ -49,6 +50,7 @@ export function DesktopMenuItem({ item, level = 'main' }: MenuItemProps) {
         className={`border-fk-yellow border-r-4 ${buttonClassName}`}
         menuClassName={`border-r-4 border-fk-yellow ${menuClassName}`}
         direction="right"
+        arrow={false}
       >
         {children.map((child, childIndex) => (
           <DesktopMenuItem key={child.id || childIndex} item={child} level="subsub" />

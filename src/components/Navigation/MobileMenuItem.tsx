@@ -49,6 +49,7 @@ export function MobileMenuItem({ item, level = 'main' }: MenuItemProps) {
         </div>
       )}
       direction="bottom"
+      arrow={false}
       menuClassName="!static w-full bg-fk-gray pt-2"
     >
       {children.map((child, childIdx) => (
