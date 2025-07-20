@@ -31,7 +31,7 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
       </div>
 
       {/* Mobile Navigation */}
-      <div className="flex items-center justify-between px-4 md:hidden">
+      <div className="flex items-center justify-between px-2 md:hidden">
         <NavbarBrand logo={navigation.logo} title={navigation.title} variant="mobile" />
         <Menu
           menuButton={({ open }) => (
