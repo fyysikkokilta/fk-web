@@ -123,24 +123,43 @@ export const FormBlock = ({ block, locale }: FormBlockProps) => {
           <RichText data={introContent} locale={locale} />
         </div>
       )}
+
+      {/* Live region for form status announcements */}
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+        {isLoading && t('form.loading')}
+        {hasSubmitted && confirmationType === 'message' && t('form.success')}
+        {error && `${error.status || '500'}: ${error.message || ''}`}
+      </div>
+
       {confirmationMessage && !isLoading && hasSubmitted && confirmationType === 'message' && (
-        <div className="bg-fk-green-light text-fk-black mb-6 rounded-md p-4">
+        <div className="bg-fk-green-light text-fk-black mb-6 rounded-md p-4" role="alert">
           <RichText data={confirmationMessage} locale={locale} />
         </div>
       )}
       {isLoading && !hasSubmitted && (
-        <div className="bg-fk-blue-light text-fk-black mb-6 flex items-center justify-center rounded-md p-4">
-          <LoaderCircle className="mr-2 h-5 w-5 animate-spin" />
+        <div
+          id="loading-status"
+          className="bg-fk-blue-light text-fk-black mb-6 flex items-center justify-center rounded-md p-4"
+          role="status"
+          aria-live="polite"
+        >
+          <LoaderCircle className="mr-2 h-5 w-5 animate-spin" aria-hidden="true" />
           <span>{t('form.loading')}</span>
         </div>
       )}
       {error && (
-        <div className="bg-fk-red-light text-fk-white mb-6 rounded-md p-4">
+        <div className="bg-fk-red-light text-fk-white mb-6 rounded-md p-4" role="alert">
           <p className="font-medium">{`${error.status || '500'}: ${error.message || ''}`}</p>
         </div>
       )}
       {!hasSubmitted && (
-        <form id={formID.toString()} onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+        <form
+          id={formID.toString()}
+          onSubmit={handleSubmit(onSubmit)}
+          className="space-y-6"
+          aria-label={form.title || 'Form'}
+          noValidate
+        >
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             {form.fields &&
               form.fields.map((field, index) => {
@@ -167,6 +186,7 @@ export const FormBlock = ({ block, locale }: FormBlockProps) => {
               type="submit"
               className="bg-fk-yellow text-fk-black hover:bg-fk-yellow-dark cursor-pointer rounded-lg px-8 py-3 font-semibold shadow-md transition-all duration-200 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-50"
               disabled={isLoading}
+              aria-describedby={isLoading ? 'loading-status' : undefined}
             >
               {submitButtonLabel || t('form.submit')}
             </button>

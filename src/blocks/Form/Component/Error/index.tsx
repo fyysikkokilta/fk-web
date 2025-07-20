@@ -1,7 +1,15 @@
 import { useTranslations } from 'next-intl'
 import * as React from 'react'
 
-export const Error: React.FC = () => {
+interface ErrorProps {
+  id?: string
+}
+
+export const Error: React.FC<ErrorProps> = ({ id }) => {
   const t = useTranslations()
-  return <div className="text-fk-red mt-1 text-sm">{t('form.required')}</div>
+  return (
+    <div id={id} className="text-fk-red mt-1 text-sm" role="alert">
+      {t('form.required')}
+    </div>
+  )
 }

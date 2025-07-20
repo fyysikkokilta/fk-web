@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl'
 import React from 'react'
 import type { Control, FieldErrorsImpl, FieldValues } from 'react-hook-form'
 import { Controller } from 'react-hook-form'
@@ -22,12 +23,20 @@ export const Select: React.FC<
     >
   } & SelectField
 > = ({ name, control, defaultValue, errors, label, options, required, width }) => {
+  const t = useTranslations()
+  const hasError = errors[name]
+  const errorId = `${name}-error`
+
   return (
     <Width width={width ?? 100}>
       <div className="mb-4">
         <label htmlFor={name} className="text-fk-gray mb-1 block text-sm font-medium">
           {label}
-          {required && <span className="text-fk-red ml-1">{'*'}</span>}
+          {required && (
+            <span className="text-fk-red ml-1" aria-label={t('form.requiredField')}>
+              {'*'}
+            </span>
+          )}
         </label>
         <Controller
           control={control}
@@ -41,20 +50,23 @@ export const Select: React.FC<
               onChange={(val) => onChange(val ? val.value : '')}
               options={options ?? []}
               value={options?.find((s) => s.value === value)}
-              className={errors[name] ? 'border-fk-red' : ''}
+              className={hasError ? 'border-fk-red' : ''}
+              aria-invalid={hasError ? 'true' : 'false'}
+              aria-describedby={hasError ? errorId : undefined}
+              aria-required={required ?? false}
               styles={{
                 control: (base, state) => ({
                   ...base,
                   borderRadius: '0.5rem',
                   borderWidth: '1px',
                   padding: '0.25rem 0.5rem',
-                  borderColor: errors[name] ? '#911f2f' : state.isFocused ? '#fbdb1d' : '#bfbaba',
+                  borderColor: hasError ? '#911f2f' : state.isFocused ? '#fbdb1d' : '#bfbaba',
                   boxShadow: state.isFocused
                     ? '0 0 0 2px #fbdb1d'
                     : '0 1px 2px 0 rgb(0 0 0 / 0.05)',
                   transition: 'border-color 0.2s, box-shadow 0.2s',
                   '&:hover': {
-                    borderColor: errors[name] ? '#911f2f' : '#fbdb1d'
+                    borderColor: hasError ? '#911f2f' : '#fbdb1d'
                   }
                 }),
                 option: (base, state) => ({
@@ -74,7 +86,7 @@ export const Select: React.FC<
           )}
           rules={{ required: required ?? false }}
         />
-        {required && errors[name] && <Error />}
+        {required && hasError && <Error id={errorId} />}
       </div>
     </Width>
   )

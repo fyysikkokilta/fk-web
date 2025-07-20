@@ -47,8 +47,12 @@
     "loading": "Ladataan, odota hetki...",
     "required": "Tämä kenttä on pakollinen.",
     "invalidEmail": "Virheellinen sähköpostiosoite.",
+    "emailPlaceholder": "Sähköposti",
     "success": "Lomake lähetetty onnistuneesti!",
-    "error": "Lomakkeen lähetys epäonnistui."
+    "error": "Lomakkeen lähetys epäonnistui.",
+    "requiredField": "pakollinen",
+    "checked": "valittu",
+    "unchecked": "ei valittu"
   },
   "pdfViewer": {
     "openInNewTab": "Avaa uudessa välilehdessä",

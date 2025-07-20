@@ -47,8 +47,12 @@
     "loading": "Loading, please wait...",
     "required": "This field is required.",
     "invalidEmail": "Invalid email address.",
+    "emailPlaceholder": "Email",
     "success": "Form submitted successfully!",
-    "error": "There was an error submitting the form."
+    "error": "There was an error submitting the form.",
+    "requiredField": "required",
+    "checked": "checked",
+    "unchecked": "unchecked"
   },
   "pdfViewer": {
     "openInNewTab": "Open in new tab",
