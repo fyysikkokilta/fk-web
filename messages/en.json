@@ -14,11 +14,32 @@
     "copyright": "© {year} Fyysikkokilta ry"
   },
   "calendar": {
+    "title": "Calendar",
     "google": "Google",
     "previousMonth": "Previous month",
     "nextMonth": "Next month",
     "today": "Today",
-    "noEvents": "No events"
+    "events": "events",
+    "noEvents": "No events",
+    "location": "Location",
+    "viewInGoogle": "View in Google Calendar",
+    "month": "Month",
+    "week": "Week",
+    "day": "Day",
+    "agenda": "Agenda",
+    "date": "Date",
+    "time": "Time",
+    "event": "Event",
+    "allDay": "All Day",
+    "workWeek": "Work Week",
+    "previous": "Previous",
+    "next": "Next",
+    "yesterday": "Yesterday",
+    "tomorrow": "Tomorrow",
+    "noEventsInRange": "No events in this date range",
+    "more": "more",
+    "description": "Description",
+    "close": "Close"
   },
   "form": {
     "submit": "Submit",

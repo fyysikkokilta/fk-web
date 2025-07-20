@@ -14,11 +14,32 @@
     "copyright": "© {year} Fyysikkokilta ry"
   },
   "calendar": {
+    "title": "Kalenteri",
     "google": "Google",
     "previousMonth": "Edellinen kuukausi",
     "nextMonth": "Seuraava kuukausi",
     "today": "Tänään",
-    "noEvents": "Ei tapahtumia"
+    "events": "tapahtumaa",
+    "noEvents": "Ei tapahtumia",
+    "location": "Sijainti",
+    "viewInGoogle": "Katso Google-kalenterissa",
+    "month": "Kuukausi",
+    "week": "Viikko",
+    "day": "Päivä",
+    "agenda": "Agenda",
+    "date": "Päivämäärä",
+    "time": "Aika",
+    "event": "Tapahtuma",
+    "allDay": "Koko päivä",
+    "workWeek": "Työviikko",
+    "previous": "Edellinen",
+    "next": "Seuraava",
+    "yesterday": "Eilen",
+    "tomorrow": "Huomenna",
+    "noEventsInRange": "Ei tapahtumia tällä aikavälillä",
+    "more": "lisää",
+    "description": "Kuvaus",
+    "close": "Sulje"
   },
   "form": {
     "submit": "Lähetä",
