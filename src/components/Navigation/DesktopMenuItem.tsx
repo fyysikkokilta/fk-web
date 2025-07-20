@@ -56,6 +56,7 @@ export function DesktopMenuItem({ item, level = 'main' }: MenuItemProps) {
         label={item.label}
         className={`${buttonClassName} border-fk-yellow border-r-4`}
         menuClassName="bg-fk-gray text-fk-white p-2 !ml-5"
+        itemProps={{ className: 'w-full' }}
         shift={-10}
       >
         {children.map((child, childIndex) => (
