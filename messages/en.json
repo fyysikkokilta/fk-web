@@ -89,7 +89,8 @@
     "more": "More"
   },
   "languageSwitcher": {
-    "label": "Language"
+    "label": "Language",
+    "switchLanguage": "Switch language to Finnish"
   },
   "skipLink": "Skip to main content"
 }

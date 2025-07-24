@@ -89,7 +89,8 @@
     "more": "Lisää"
   },
   "languageSwitcher": {
-    "label": "Kieli"
+    "label": "Kieli",
+    "switchLanguage": "Vaihda kieli englanniksi"
   },
   "skipLink": "Siirry pääsisältöön"
 }
