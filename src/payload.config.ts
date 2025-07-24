@@ -81,7 +81,16 @@ const __dirname = dirname(filename)
 
 const converters: PlaintextConverters<DefaultNodeTypes> = {
   link: ({ node }) => {
-    return node.fields.url ?? ''
+    return node.children
+      .map((child) => {
+        if (child.type === 'text' && 'text' in child) {
+          return child.text as string
+        }
+        return ''
+      })
+      .filter((text) => text.length > 0)
+      .join(' ')
+      .trim()
   }
 }
 
