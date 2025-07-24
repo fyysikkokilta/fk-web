@@ -19,7 +19,7 @@ export const Committee = ({ block }: CommitteeProps) => {
       <div className="text-center text-2xl font-bold">{officialRole.name}</div>
 
       {/* Officials grid */}
-      <div className="grid grid-cols-2 items-baseline justify-center gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+      <div className="grid grid-cols-2 justify-center gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
         {officialRole.officials?.map((official) => {
           if (typeof official === 'number') {
             return null
