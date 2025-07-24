@@ -24,9 +24,9 @@ interface Heading {
 }
 
 interface TableOfContentsProps {
+  show: boolean | null | undefined
   richText: SerializedEditorState
 }
-
 // Utility function to extract headings from RichText data
 const extractHeadingsFromRichText = (data: SerializedEditorState) => {
   const headings: Heading[] = []
@@ -106,7 +106,12 @@ const extractHeadingsFromRichText = (data: SerializedEditorState) => {
   return headings
 }
 
-export const TableOfContents = ({ richText }: TableOfContentsProps) => {
+interface TableOfContentsProps {
+  show: boolean | null | undefined
+  richText: SerializedEditorState
+}
+
+export const TableOfContents = ({ show, richText }: TableOfContentsProps) => {
   const [activeId, setActiveId] = useState<string>('')
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
@@ -193,6 +198,9 @@ export const TableOfContents = ({ richText }: TableOfContentsProps) => {
   }, [isDrawerOpen])
 
   const activeHeading = headings.find((h) => h.id === activeId)
+
+  // If table of contents is not shown, return a div with a width of 20%
+  if (!show) return <div className="lg:w-[20%]" />
 
   return (
     <>

@@ -17,7 +17,7 @@ export const Collapsible = ({ block, locale }: CollapsibleBlockProps) => {
   return (
     <details
       open={block.isOpenByDefault ?? false}
-      className="group border-fk-gray m-3 w-full rounded border-2"
+      className="group border-fk-gray m-3 rounded border-2"
     >
       <summary
         className="border-fk-gray flex w-full cursor-pointer list-none items-center justify-between rounded p-3 group-open:border-b-2 [&::-webkit-details-marker]:hidden"
