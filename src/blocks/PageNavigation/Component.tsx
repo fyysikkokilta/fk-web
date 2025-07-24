@@ -41,7 +41,7 @@ export const PageNavigation = ({ block }: PageNavigationProps) => {
             <Link
               key={page.id}
               href={`/${page.path}`}
-              className="bg-fk-orange hover:bg-fk-red flex aspect-square items-center justify-center text-center text-3xl font-bold transition-colors duration-200 hover:scale-110"
+              className="text-fk-white bg-fk-orange hover:bg-fk-red flex aspect-square items-center justify-center text-center text-3xl font-bold transition-colors duration-200 hover:scale-110"
             >
               {label}
             </Link>
