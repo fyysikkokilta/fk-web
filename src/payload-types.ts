@@ -612,6 +612,10 @@ export interface Page {
   showTitle?: boolean | null;
   showTableOfContents?: boolean | null;
   showPartners?: boolean | null;
+  /**
+   * For pages with mainly text content, this should be unchecked.
+   */
+  fullWidth?: boolean | null;
   hidden?: boolean | null;
   boardMember?: (number | BoardMember)[] | null;
   updatedAt: string;
@@ -1479,6 +1483,7 @@ export interface PagesSelect<T extends boolean = true> {
   showTitle?: T;
   showTableOfContents?: T;
   showPartners?: T;
+  fullWidth?: T;
   hidden?: T;
   boardMember?: T;
   updatedAt?: T;

@@ -111,7 +111,8 @@ export const Pages: CollectionConfig = {
       type: 'checkbox',
       defaultValue: false,
       admin: {
-        position: 'sidebar'
+        position: 'sidebar',
+        condition: (data) => !data?.fullWidth
       }
     },
     {
@@ -120,6 +121,15 @@ export const Pages: CollectionConfig = {
       defaultValue: false,
       admin: {
         position: 'sidebar'
+      }
+    },
+    {
+      name: 'fullWidth',
+      type: 'checkbox',
+      defaultValue: false,
+      admin: {
+        position: 'sidebar',
+        description: 'For pages with mainly text content, this should be unchecked.'
       }
     },
     {
@@ -138,7 +148,8 @@ export const Pages: CollectionConfig = {
       relationTo: 'board-members',
       hasMany: true,
       admin: {
-        position: 'sidebar'
+        position: 'sidebar',
+        condition: (data) => !data?.fullWidth
       }
     }
   ],
