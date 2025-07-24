@@ -143,7 +143,7 @@ export const Pages: CollectionConfig = {
     }
   ],
   versions: {
-    maxPerDoc: env.NODE_ENV === 'production' ? 20 : 2,
+    maxPerDoc: env.NODE_ENV === 'production' ? 100 : 20,
     drafts: {
       autosave: {
         interval: 200

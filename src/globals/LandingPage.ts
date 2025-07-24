@@ -158,7 +158,7 @@ export const LandingPage: GlobalConfig = {
     }
   ],
   versions: {
-    max: env.NODE_ENV === 'production' ? 5 : 2,
+    max: env.NODE_ENV === 'production' ? 100 : 20,
     drafts: {
       autosave: {
         interval: 200
