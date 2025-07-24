@@ -182,7 +182,7 @@ export const Newsletters: CollectionConfig = {
       filterOptions: ({ data }) =>
         !!data.newsletterNumber && {
           date: {
-            greater_than_equal: parse(data.newsletterNumber, 'R/I', new Date())
+            greater_than_equal: parse(data.newsletterNumber, 'I/R', new Date())
           }
         },
       required: true,
