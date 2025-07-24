@@ -1,6 +1,7 @@
 import { PayloadHandler, PayloadRequest } from 'payload'
 
 import { signedIn } from '@/access/signed-in'
+import { getNameSlugs } from '@/utils/getNameSlugs'
 
 export const fuksiImportController: PayloadHandler = async (req: PayloadRequest) => {
   if (!signedIn({ req })) {
@@ -32,11 +33,11 @@ export const fuksiImportController: PayloadHandler = async (req: PayloadRequest)
       groups.map(async (group) => {
         const createdFuksis = await Promise.all(
           group.fuksis.map(async (name) => {
-            const slugifiedName = [name, name.replace(/ /g, '_'), name.replace(/ /g, '-')]
+            const slugifiedNames = getNameSlugs(name)
             const photoResult = await req.payload.find({
               collection: 'media',
               where: {
-                or: slugifiedName.map((slugifiedName) => ({
+                or: slugifiedNames.map((slugifiedName) => ({
                   filename: { contains: slugifiedName }
                 }))
               },
