@@ -14,6 +14,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const pages = await payload.find({
     collection: 'pages',
+    select: {
+      path: true,
+      updatedAt: true
+    },
     where: {
       and: [
         {
@@ -28,11 +32,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         }
       ]
     },
-    locale: 'all'
+    locale: 'all',
+    limit: 10000
   })
 
   const landingPage = await payload.findGlobal({
     slug: 'landing-page',
+    select: {
+      updatedAt: true
+    },
     locale: 'all'
   })
 
