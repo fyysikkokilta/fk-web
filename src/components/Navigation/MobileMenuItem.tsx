@@ -1,7 +1,8 @@
 'use client'
 
-import { FocusableItem, SubMenu } from '@szhsin/react-menu'
-import { ChevronDown, ChevronUp } from 'lucide-react'
+import { FocusableItem, MenuInstance, SubMenu } from '@szhsin/react-menu'
+import { ChevronUp } from 'lucide-react'
+import { useRef } from 'react'
 
 import { Link } from '@/i18n/navigation'
 
@@ -11,6 +12,7 @@ import { getChildrenArray, useGetPath, useIsActive } from './utils'
 export function MobileMenuItem({ item, level = 'main' }: MenuItemProps) {
   const isActive = useIsActive()
   const getPath = useGetPath()
+  const subMenuRef = useRef<MenuInstance>(null)
 
   const itemPath = getPath(item)
   const hasChildren = item.type === 'menu'
@@ -40,18 +42,15 @@ export function MobileMenuItem({ item, level = 'main' }: MenuItemProps) {
 
   return (
     <SubMenu
+      instanceRef={subMenuRef}
+      openTrigger="clickOnly"
       label={({ open }) => (
-        <div
-          aria-label={item.label}
+        <span
           className={`text-fk-white flex justify-between px-2 text-base font-bold uppercase ${isActiveItem ? 'border-fk-yellow border-l-4' : ''} ${marginClass}`}
         >
-          <span>{item.label}</span>
-          {open ? (
-            <ChevronUp size={24} className="text-fk-yellow" />
-          ) : (
-            <ChevronDown size={24} className="text-fk-yellow" />
-          )}
-        </div>
+          {item.label}
+          <ChevronUp size={24} className={`text-fk-yellow ${open ? 'rotate-180' : ''}`} />
+        </span>
       )}
       aria-label={item.label}
       menuClassName="!static w-full bg-fk-gray space-y-2 pt-2"
