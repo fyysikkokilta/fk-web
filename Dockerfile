@@ -4,7 +4,7 @@
 FROM node:24-alpine AS base
 
 ARG SKIP_ENV_VALIDATION=true
-ARG NEXT_PUBLIC_SERVER_URL=https://poc.fyysikkokilta.fi
+ARG NEXT_PUBLIC_SERVER_URL=https://fyysikkokilta.fi
 ARG NEXT_PUBLIC_S3_PUBLIC_URL=https://files.fyysikkokilta.fi
 ARG NODE_ENV=production
 
