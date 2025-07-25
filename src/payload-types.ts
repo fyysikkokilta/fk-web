@@ -839,9 +839,6 @@ export interface OfficialYearBlock {
    * Show officials from a specified divisions
    */
   divisions: {
-    /**
-     * Select the division to show officials from
-     */
     division: number | Division;
     /**
      * Pick a color

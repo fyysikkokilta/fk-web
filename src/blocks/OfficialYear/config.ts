@@ -19,13 +19,7 @@ export const OfficialYearBlock: Block = {
           name: 'division',
           type: 'relationship',
           relationTo: 'divisions',
-          required: true,
-          // Select appearance doesn't select the relationship field, which causes the admin not to show the name of the official roles
-          // In drawer appearance, this isn't the case
-          admin: {
-            appearance: 'drawer',
-            description: 'Select the division to show officials from'
-          }
+          required: true
         },
         ColorField({
           name: 'backgroundColor',
