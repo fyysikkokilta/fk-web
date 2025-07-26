@@ -56,7 +56,8 @@
   },
   "pdfViewer": {
     "openInNewTab": "Avaa uudessa välilehdessä",
-    "fallbackMessage": "Selaimesi ei tue PDF-tiedostojen upottamista. Voit ladata PDF-tiedoston avaamalla sen uudessa välilehdessä."
+    "fallbackMessage": "Selaimesi ei tue PDF-tiedostojen upottamista. Voit ladata PDF-tiedoston avaamalla sen uudessa välilehdessä.",
+    "selectDocument": "Valitse dokumentti"
   },
   "draftMode": {
     "preview": "Tämä on luonnoksen esikatselu",

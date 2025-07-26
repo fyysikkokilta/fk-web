@@ -880,21 +880,29 @@ export interface Division {
  */
 export interface PDFViewerBlock {
   /**
-   * Choose whether to use an internal document or external URL
+   * Choose whether to use internal or external documents
    */
   type?: ('internal' | 'external') | null;
   /**
-   * Select a document to display (required when type is internal)
+   * Select one or more documents. If multiple documents are selected, a dropdown will be displayed to select the document to be displayed.
    */
-  document?: (number | null) | Document;
+  documents?: (number | Document)[] | null;
   /**
-   * Direct URL to PDF file (required when type is external)
+   * Add one or more external documents. If multiple documents are selected, a dropdown will be displayed to select the document to be displayed.
    */
-  directUrl?: string | null;
-  /**
-   * Title for the PDF viewer (optional, will use document title if available)
-   */
-  title?: string | null;
+  externalDocuments?:
+    | {
+        /**
+         * Direct URL to PDF file. Make sure the url can be previewed in the viewer
+         */
+        url: string;
+        /**
+         * Title for the PDF document to be displayed
+         */
+        title: string;
+        id?: string | null;
+      }[]
+    | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'pdf-viewer';

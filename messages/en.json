@@ -56,7 +56,8 @@
   },
   "pdfViewer": {
     "openInNewTab": "Open in new tab",
-    "fallbackMessage": "Your browser does not support embedding PDFs directly. You can download the PDF by opening it in a new tab."
+    "fallbackMessage": "Your browser does not support embedding PDFs directly. You can download the PDF by opening it in a new tab.",
+    "selectDocument": "Select document"
   },
   "draftMode": {
     "preview": "This is a draft preview",
