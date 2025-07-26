@@ -15,6 +15,7 @@ export default async function NotFound() {
         alt={t('notFound.logoAlt')}
         className="pointer-events-none absolute inset-0 h-full w-full object-contain opacity-30 select-none"
         fill
+        unoptimized
       />
       <div className="bg-fk-black relative z-10 flex flex-col items-center rounded-xl p-8 text-center shadow-xl">
         <h2 className="text-fk-yellow mb-4 animate-bounce text-4xl font-extrabold drop-shadow-lg">

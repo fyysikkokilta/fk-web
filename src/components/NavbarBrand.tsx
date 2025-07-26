@@ -39,6 +39,7 @@ export function NavbarBrand({ logo, title, variant = 'desktop' }: NavbarBrandPro
             priority
             src={getLogoUrl(logo)!}
             alt={getLogoAlt(logo, title)}
+            unoptimized
             width={48}
             height={48}
           />

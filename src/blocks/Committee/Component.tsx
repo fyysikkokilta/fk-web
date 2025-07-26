@@ -36,6 +36,7 @@ export const Committee = ({ block }: CommitteeProps) => {
                     blurDataURL={(official.photo as Media).blurDataUrl}
                     placeholder="blur"
                     fill
+                    unoptimized
                     sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 16vw"
                     className="object-cover"
                   />

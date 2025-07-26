@@ -20,6 +20,7 @@ export const renderCustomUpload: JSXConverter<SerializedUploadNode> = ({ node })
         placeholder="blur"
         height={height ?? 0}
         width={width ?? 0}
+        unoptimized
         className="object-contain"
       />
     )

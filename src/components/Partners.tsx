@@ -25,6 +25,7 @@ export const Partners = ({ partnerData }: PartnersProps) => {
                 src={(logo as Media).url || ''}
                 alt={(logo as Media).alt || name}
                 fill
+                unoptimized
                 sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
                 className="scale-150 object-contain transition-transform duration-200 hover:scale-200"
               />
