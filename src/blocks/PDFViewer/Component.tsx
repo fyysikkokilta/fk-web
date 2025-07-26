@@ -1,39 +1,57 @@
-'use client'
-
 import { ExternalLink, FileText } from 'lucide-react'
-import { useTranslations } from 'next-intl'
-import { useState } from 'react'
+import { getTranslations } from 'next-intl/server'
 
-import { BlockLink } from '@/components/BlockLink'
 import type { PDFViewerBlock as PDFViewerBlockType } from '@/payload-types'
 
 interface PDFViewerProps {
   block: PDFViewerBlockType
 }
 
-export const PDFViewer = ({ block }: PDFViewerProps) => {
-  const t = useTranslations()
-  const [isLoading, setIsLoading] = useState(true)
+export const PDFViewer = async ({ block }: PDFViewerProps) => {
+  const t = await getTranslations()
 
-  if (typeof block.document === 'number') {
+  // Determine URL and title based on type
+  const getUrlAndTitle = () => {
+    if (block.type === 'internal') {
+      if (block.document && typeof block.document !== 'number') {
+        return {
+          url: block.document.url || '',
+          title: block.document.title || block.title || 'PDF Document'
+        }
+      }
+      return null
+    }
+
+    if (block.type === 'external') {
+      if (block.directUrl) {
+        return {
+          url: block.directUrl,
+          title: block.title || 'PDF Document'
+        }
+      }
+      return null
+    }
+
     return null
   }
 
+  const urlAndTitle = getUrlAndTitle()
+
+  if (!urlAndTitle) {
+    return null
+  }
+
+  const { url, title } = urlAndTitle
+
   return (
     <div className="mx-auto w-full max-w-4xl">
-      {/* Mobile view - simple link block */}
-      <div className="block md:hidden">
-        <BlockLink document={block.document} />
-      </div>
-
-      {/* Desktop view - full PDF viewer */}
-      <div className="bg-fk-white border-fk-gray hidden overflow-hidden rounded-lg border shadow-sm md:block">
+      <div className="bg-fk-white border-fk-gray overflow-hidden rounded-lg border shadow-sm">
         {/* Header */}
         <div className="border-fk-gray border-b px-6 py-4">
           <div className="flex items-center justify-between">
-            <span className="text-fk-gray text-lg font-semibold">{block.document.title}</span>
+            <span className="text-fk-gray text-lg font-semibold">{title}</span>
             <a
-              href={block.document.url || ''}
+              href={url}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1 text-sm"
@@ -46,36 +64,12 @@ export const PDFViewer = ({ block }: PDFViewerProps) => {
 
         {/* PDF Viewer */}
         <div className="bg-fk-gray-lightest relative aspect-[3/4] w-full">
-          {isLoading && (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="animate-pulse space-y-4">
-                <div className="bg-fk-gray-lightest mx-auto h-8 w-3/4 rounded"></div>
-                <div className="bg-fk-gray-lightest mx-auto h-4 w-1/2 rounded"></div>
-                <div className="bg-fk-gray-lightest mx-auto h-4 w-2/3 rounded"></div>
-                <div className="bg-fk-gray-lightest mx-auto h-4 w-1/2 rounded"></div>
-              </div>
-            </div>
-          )}
           <iframe
-            src={`/api/pdf?url=${encodeURIComponent(block.document.url || '')}#page=1&view=FitH&toolbar=0`}
+            src={`${url}#page=1&view=FitH&toolbar=0`}
             className="h-full w-full border-none"
-            title={block.document.title}
-            onLoad={() => setIsLoading(false)}
+            title={title}
           >
-            <p>
-              {t.rich('pdfViewer.fallbackMessage', {
-                downloadLink: (chunks) => {
-                  if (typeof block.document === 'number') {
-                    return null
-                  }
-                  return (
-                    <a href={block.document.url || ''} target="_blank" rel="noopener noreferrer">
-                      {chunks}
-                    </a>
-                  )
-                }
-              })}
-            </p>
+            {t('pdfViewer.fallbackMessage')}
           </iframe>
         </div>
 
