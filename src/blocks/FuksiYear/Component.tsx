@@ -37,6 +37,7 @@ export const FuksiYear = async ({ block }: FuksiYearProps) => {
                             blurDataURL={(fuksi.photo as Media).blurDataUrl}
                             placeholder="blur"
                             fill
+                            unoptimized
                             sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 16vw"
                             className="rounded-lg object-cover"
                           />
@@ -47,6 +48,7 @@ export const FuksiYear = async ({ block }: FuksiYearProps) => {
                             blurDataURL={(block.defaultImage as Media).blurDataUrl}
                             placeholder="blur"
                             fill
+                            unoptimized
                             sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 16vw"
                             className="rounded-lg object-cover"
                           />
