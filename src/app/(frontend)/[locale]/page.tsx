@@ -21,8 +21,8 @@ interface LandingPageProps {
   }>
 }
 
-// Revalidate at least once per hour
-export const revalidate = 3600
+// Revalidate at least once per day
+export const revalidate = 86400
 
 export async function generateMetadata({ params }: LandingPageProps) {
   const { locale } = await params
