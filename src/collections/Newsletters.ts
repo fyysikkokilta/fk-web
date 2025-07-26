@@ -174,6 +174,7 @@ export const Newsletters: CollectionConfig = {
       name: 'newsItems',
       type: 'relationship',
       relationTo: 'news-items',
+      localized: true,
       hasMany: true,
       admin: {
         description:
