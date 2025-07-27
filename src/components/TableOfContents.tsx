@@ -5,6 +5,7 @@ import type {
   SerializedLexicalNode
 } from '@payloadcms/richtext-lexical/lexical'
 import { ChevronDown, ChevronUp } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { useEffect, useRef, useState } from 'react'
 
 import {
@@ -114,6 +115,7 @@ interface TableOfContentsProps {
 export const TableOfContents = ({ show, richText }: TableOfContentsProps) => {
   const [activeId, setActiveId] = useState<string>('')
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+  const t = useTranslations()
 
   const headings = extractHeadingsFromRichText(richText)
 
@@ -213,7 +215,7 @@ export const TableOfContents = ({ show, richText }: TableOfContentsProps) => {
             <button
               className="w-full cursor-pointer rounded-md px-6 py-4"
               onClick={() => setIsDrawerOpen(!isDrawerOpen)}
-              aria-label="Toggle table of contents"
+              aria-label={t('tableOfContents.toggle')}
             >
               <div className="flex items-center justify-between text-left">
                 <span>{activeHeading.text}</span>

@@ -3,6 +3,9 @@
     "menu": "Main navigation menu",
     "toggleMenu": "Toggle menu"
   },
+  "tableOfContents": {
+    "toggle": "Toggle table of contents"
+  },
   "footer": {
     "copyright": "© {year} Fyysikkokilta ry"
   },

@@ -3,6 +3,9 @@
     "menu": "Päävalikko",
     "toggleMenu": "Avaa/sulje valikko"
   },
+  "tableOfContents": {
+    "toggle": "Avaa/sulje sisällysluettelo"
+  },
   "footer": {
     "copyright": "© {year} Fyysikkokilta ry"
   },
