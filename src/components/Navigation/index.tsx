@@ -39,7 +39,7 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
           <button
             {...anchorProps}
             className="text-fk-white cursor-pointer p-2 focus:outline-none"
-            aria-label="Toggle mobile menu"
+            aria-label={t('mainNavigation.toggleMenu')}
           >
             {menuState.state === 'open' || menuState.state === 'closing' ? (
               <X size={24} />
