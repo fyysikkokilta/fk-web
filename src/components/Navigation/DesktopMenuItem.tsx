@@ -69,6 +69,7 @@ export function DesktopMenuItem({ item, level = 'main' }: MenuItemProps) {
     <FocusableItem aria-label={item.label} className={`${buttonClassName} px-4 py-2`}>
       {({ ref, closeMenu }) => (
         <Link
+          className="w-full"
           ref={ref}
           href={itemPath}
           onClick={({ detail }) => closeMenu(detail === 0 ? 'Enter' : undefined)}

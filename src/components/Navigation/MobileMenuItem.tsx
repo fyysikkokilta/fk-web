@@ -29,6 +29,7 @@ export function MobileMenuItem({ item, level = 'main' }: MenuItemProps) {
       >
         {({ ref, closeMenu }) => (
           <Link
+            className="w-full"
             ref={ref}
             href={itemPath}
             onClick={({ detail }) => closeMenu(detail === 0 ? 'Enter' : undefined)}
