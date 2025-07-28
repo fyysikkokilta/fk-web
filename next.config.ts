@@ -13,7 +13,9 @@ const withNextIntl = createNextIntlPlugin()
 const nextConfig: NextConfig = {
   output: 'standalone',
   experimental: {
+    clientSegmentCache: true,
     reactCompiler: true,
+    turbopackPersistentCaching: true,
     useCache: true
   },
   images: {
