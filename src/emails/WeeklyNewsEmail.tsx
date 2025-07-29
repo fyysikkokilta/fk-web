@@ -5,6 +5,7 @@ import {
   Font,
   Head,
   Heading,
+  Hr,
   Html,
   Img,
   Link,
@@ -71,7 +72,7 @@ const WeeklyNewsEmail = ({
           />
           <Font
             fontFamily="lora"
-            fallbackFontFamily={['serif']}
+            fallbackFontFamily={['Georgia']}
             webFont={{
               url: 'https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap',
               format: 'woff2'
@@ -86,13 +87,11 @@ const WeeklyNewsEmail = ({
               }
 
               h1, h2, h3, h4, h5, h6 {
-                font-family: 'Lora', serif;
-                color: #000000;
+                font-family: Lora, Georgia;
               }
 
               p {
                 font-family: 'Source Sans 3', sans-serif;
-                color: #000000;
               }
             `}
           </style>
@@ -129,21 +128,21 @@ const WeeklyNewsEmail = ({
               </Section>
             )}
 
+            <Hr />
+
             {/* Table of Contents */}
             <Section className="py-5">
               {Object.entries(newsGroups).map(([type, group]) => {
                 const { thisWeek, followingWeeks } = groupNewsByDate(group.items)
                 return (
                   <div key={type}>
-                    <Heading as="h2" className="my-1 text-2xl font-bold italic">
-                      {group.type}
-                    </Heading>
+                    <div className="my-1 text-2xl font-bold italic">{group.type}</div>
 
                     {thisWeek.length > 0 && (
                       <>
-                        <Heading as="h3" className="my-1 text-xl font-medium italic">
+                        <div className="my-1 text-xl font-medium italic">
                           {getLocalizedTimeframe('thisWeek', locale)}
-                        </Heading>
+                        </div>
                         <ul>
                           {thisWeek.map((item) => {
                             if (!item || typeof item !== 'object') return null
@@ -166,9 +165,9 @@ const WeeklyNewsEmail = ({
 
                     {followingWeeks.length > 0 && (
                       <>
-                        <Heading as="h3" className="my-1 text-xl font-medium italic">
+                        <div className="my-1 text-xl font-medium italic">
                           {getLocalizedTimeframe('followingWeeks', locale)}
-                        </Heading>
+                        </div>
                         <ul>
                           {followingWeeks.map((item) => {
                             if (!item || typeof item !== 'object') return null
@@ -192,6 +191,8 @@ const WeeklyNewsEmail = ({
                 )
               })}
             </Section>
+
+            <Hr />
 
             {/* News Items */}
             <Section className="py-5">
@@ -221,12 +222,16 @@ const WeeklyNewsEmail = ({
                 })}
             </Section>
 
+            <Hr />
+
             {/* Closing Words */}
             {weeklyNews.closingWords && (
               <Section className="flex justify-center py-5">
                 <EmailRichText data={weeklyNews.closingWords} locale={locale} />
               </Section>
             )}
+
+            <Hr />
 
             {/* Footer */}
             {newsletterSettings.footer && (

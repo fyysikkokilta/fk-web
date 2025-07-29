@@ -3,7 +3,6 @@ import { hasLocale, Locale, NextIntlClientProvider } from 'next-intl'
 import { setRequestLocale } from 'next-intl/server'
 import React from 'react'
 
-import { lora, sourceSans3 } from '@/app/fonts'
 import { routing } from '@/i18n/routing'
 
 export default async function NewslettersLayout({
@@ -23,11 +22,8 @@ export default async function NewslettersLayout({
   console.info('[Next.js] Rendering layout', `/newsletters/${locale}`)
 
   return (
-    <html
-      lang={locale}
-      className={`${sourceSans3.variable} ${sourceSans3.className} ${lora.variable}`}
-    >
-      <body>
+    <html lang={locale}>
+      <body style={{ height: '100vh', width: '100vw', overflowX: 'hidden' }}>
         <NextIntlClientProvider>{children}</NextIntlClientProvider>
       </body>
     </html>

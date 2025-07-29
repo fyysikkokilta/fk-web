@@ -43,9 +43,13 @@ export default async function NewsletterPage({
   return (
     <>
       <RefreshRouteOnSave />
-      <div
-        className="flex w-full flex-col items-center justify-center"
-        dangerouslySetInnerHTML={{ __html: html }}
+      <iframe
+        srcDoc={html}
+        style={{ overflow: 'hidden', height: '100%', width: '100%' }}
+        height="100%"
+        width="100%"
+        title="Newsletter Preview"
+        sandbox="allow-same-origin allow-scripts"
       />
     </>
   )
