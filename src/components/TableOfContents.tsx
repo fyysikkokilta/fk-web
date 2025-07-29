@@ -5,7 +5,7 @@ import type {
   SerializedLexicalNode
 } from '@payloadcms/richtext-lexical/lexical'
 import { ChevronDown, ChevronUp } from 'lucide-react'
-import { useTranslations } from 'next-intl'
+import { Locale, useLocale, useTranslations } from 'next-intl'
 import { useEffect, useRef, useState } from 'react'
 
 import {
@@ -13,9 +13,11 @@ import {
   CardBlock,
   CollapsibleBlock,
   FormBlock,
+  NewsletterBlock,
   TwoColumnsBlock
 } from '@/payload-types'
 import { extractTextFromHeadingChildren } from '@/utils/extractTextFromHeadingChildren'
+import { getSectionHeading, groupNewsByDate, groupNewsByType } from '@/utils/newsletters'
 import { slugify } from '@/utils/slugify'
 
 interface Heading {
@@ -28,8 +30,16 @@ interface TableOfContentsProps {
   show: boolean | null | undefined
   richText: SerializedEditorState
 }
+
+// Utility function to create a heading object
+const createHeading = (text: string, level: number): Heading => ({
+  id: slugify(text),
+  text: text.trim(),
+  level
+})
+
 // Utility function to extract headings from RichText data
-const extractHeadingsFromRichText = (data: SerializedEditorState) => {
+const extractHeadingsFromRichText = (data: SerializedEditorState, locale: Locale) => {
   const headings: Heading[] = []
 
   const traverseNodes = (nodes: SerializedLexicalNode[]) => {
@@ -49,11 +59,7 @@ const extractHeadingsFromRichText = (data: SerializedEditorState) => {
           }
 
           if (text.trim()) {
-            headings.push({
-              id: slugify(text),
-              text: text.trim(),
-              level
-            })
+            headings.push(createHeading(text, level))
           }
         }
 
@@ -73,6 +79,10 @@ const extractHeadingsFromRichText = (data: SerializedEditorState) => {
             const align = typedNode.fields as AlignBlock
             traverseNodes(align.content.root.children)
             break
+          case 'card':
+            const card = typedNode.fields as CardBlock
+            traverseNodes(card.content.root.children)
+            break
           case 'collapsible':
             const collapsible = typedNode.fields as CollapsibleBlock
             traverseNodes(collapsible.content.root.children)
@@ -83,14 +93,46 @@ const extractHeadingsFromRichText = (data: SerializedEditorState) => {
               traverseNodes(form.introContent.root.children)
             }
             break
+          case 'newsletter':
+            const newsletter = typedNode.fields as NewsletterBlock
+            const newsletterData = newsletter.newsletter
+            if (typeof newsletterData === 'number') return
+            const newsGroups = groupNewsByType(newsletterData.newsItems || [])
+            const sortedNewsHeadings = Object.values(newsGroups)
+              .flatMap((group) => {
+                const { thisWeek, followingWeeks } = groupNewsByDate(group.items)
+
+                const thisWeekTitle = getSectionHeading(group.type, 'thisWeek', locale)
+                const groupTitleThisWeek = createHeading(thisWeekTitle, 2)
+
+                const followingWeeksTitle = getSectionHeading(group.type, 'followingWeeks', locale)
+                const groupTitleFollowingWeeks = createHeading(followingWeeksTitle, 2)
+
+                const thisWeekHeadings = thisWeek
+                  .filter((item) => typeof item !== 'number')
+                  .map((item) => createHeading(item.title, 3))
+
+                if (thisWeekHeadings.length > 0) {
+                  thisWeekHeadings.unshift(groupTitleThisWeek)
+                }
+
+                const followingWeeksHeadings = followingWeeks
+                  .filter((item) => typeof item !== 'number')
+                  .map((item) => createHeading(item.title, 3))
+
+                if (followingWeeksHeadings.length > 0) {
+                  followingWeeksHeadings.unshift(groupTitleFollowingWeeks)
+                }
+
+                return [...thisWeekHeadings, ...followingWeeksHeadings]
+              })
+              .filter((item) => !!item)
+            headings.push(...sortedNewsHeadings)
+            break
           case 'two-columns':
             const block = typedNode.fields as TwoColumnsBlock
             traverseNodes(block.contentLeft.root.children)
             traverseNodes(block.contentRight.root.children)
-            break
-          case 'card':
-            const card = typedNode.fields as CardBlock
-            traverseNodes(card.content.root.children)
             break
           default:
             break
@@ -116,8 +158,9 @@ export const TableOfContents = ({ show, richText }: TableOfContentsProps) => {
   const [activeId, setActiveId] = useState<string>('')
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const t = useTranslations()
+  const locale = useLocale()
 
-  const headings = extractHeadingsFromRichText(richText)
+  const headings = extractHeadingsFromRichText(richText, locale)
 
   const mainHeadingRef = useRef<IntersectionObserverEntry>(undefined)
   const headingElementsRef = useRef<Record<string, IntersectionObserverEntry>>({})

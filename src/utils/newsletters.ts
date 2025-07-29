@@ -57,6 +57,15 @@ export const getLocalizedTimeframe = (timeframe: 'thisWeek' | 'followingWeeks', 
   return locale === 'fi' ? 'Tulevilla viikoilla' : 'Following weeks'
 }
 
+export const getSectionHeading = (
+  groupType: string,
+  timeframe: 'thisWeek' | 'followingWeeks',
+  locale: string
+) => {
+  const localizedTimeframe = getLocalizedTimeframe(timeframe, locale)
+  return `${groupType}: ${localizedTimeframe}`
+}
+
 export function formatWeeklyNewsForTelegram(
   newsItems: Newsletter['newsItems'],
   title: string,

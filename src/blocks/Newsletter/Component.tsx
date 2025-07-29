@@ -2,7 +2,7 @@ import type { Locale } from 'next-intl'
 
 import { RichText } from '@/components/RichText/BlockRichText'
 import type { NewsletterBlock } from '@/payload-types'
-import { getLocalizedTimeframe, groupNewsByDate, groupNewsByType } from '@/utils/newsletters'
+import { getSectionHeading, groupNewsByDate, groupNewsByType } from '@/utils/newsletters'
 import { slugify } from '@/utils/slugify'
 
 interface NewsletterBlockProps {
@@ -36,10 +36,11 @@ export const Newsletter = ({ block, locale }: NewsletterBlockProps) => {
             <div key={type} className="space-y-6">
               {thisWeek.length > 0 && (
                 <div className="space-y-4">
-                  <h2 className="text-2xl font-medium">
-                    {group.type}
-                    {': '}
-                    {getLocalizedTimeframe('thisWeek', locale)}
+                  <h2
+                    id={slugify(getSectionHeading(group.type, 'thisWeek', locale))}
+                    className="text-2xl font-medium"
+                  >
+                    {getSectionHeading(group.type, 'thisWeek', locale)}
                   </h2>
                   {thisWeek.map((newsItem) => {
                     if (!newsItem || typeof newsItem !== 'object') return null
@@ -59,10 +60,11 @@ export const Newsletter = ({ block, locale }: NewsletterBlockProps) => {
 
               {followingWeeks.length > 0 && (
                 <div className="space-y-4">
-                  <h2 className="text-2xl font-medium">
-                    {group.type}
-                    {': '}
-                    {getLocalizedTimeframe('followingWeeks', locale)}
+                  <h2
+                    id={slugify(getSectionHeading(group.type, 'followingWeeks', locale))}
+                    className="text-2xl font-medium"
+                  >
+                    {getSectionHeading(group.type, 'followingWeeks', locale)}
                   </h2>
                   {followingWeeks.map((newsItem) => {
                     if (!newsItem || typeof newsItem !== 'object') return null
