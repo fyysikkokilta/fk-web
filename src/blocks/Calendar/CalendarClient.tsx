@@ -203,7 +203,7 @@ export const CalendarClient = ({ events, locale }: CalendarClientProps) => {
         .rbc-date-cell {
           padding: 8px 8px 4px 8px;
           border-right: 1px solid var(--calendar-grid-line);
-          background: var(--calendar-background);
+          background-color: var(--calendar-primary);
           height: fit-content;
           flex: 1;
           display: flex;
@@ -215,12 +215,7 @@ export const CalendarClient = ({ events, locale }: CalendarClientProps) => {
           min-height: 0;
         }
 
-        .rbc-date-cell:hover {
-          background: var(--calendar-hover);
-        }
-
         .rbc-date-cell.rbc-off-range {
-          background: var(--calendar-off-range);
           color: #999;
         }
 
@@ -426,7 +421,6 @@ export const CalendarClient = ({ events, locale }: CalendarClientProps) => {
         }
 
         .rbc-now {
-          background-color: var(--calendar-primary);
           color: var(--calendar-secondary);
           font-weight: 700;
         }
