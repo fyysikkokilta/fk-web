@@ -18,7 +18,7 @@ export const Newsletter = ({ block, locale }: NewsletterBlockProps) => {
   const newsGroups = groupNewsByType(block.newsletter.newsItems || [])
 
   return (
-    <div className="weekly-news-block mx-auto max-w-4xl">
+    <div className="mx-auto max-w-4xl">
       <div className="mb-8 flex items-center justify-between">
         <h1 className="text-4xl font-bold">{block.newsletter.title}</h1>
       </div>

@@ -15,7 +15,6 @@ const nextConfig: NextConfig = {
   experimental: {
     clientSegmentCache: true,
     reactCompiler: true,
-    turbopackPersistentCaching: true,
     useCache: true
   },
   images: {
