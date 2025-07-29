@@ -5,6 +5,10 @@ interface PageNavigationProps {
   block: PageNavigationBlockType
 }
 
+// Prefetches are disabled so that, for example, fuksi pages
+// don't cause massive performance hits when a user goes to
+// one page and the server renders ALL of them :D
+
 export const PageNavigation = ({ block }: PageNavigationProps) => {
   const { pageNavigation, style } = block
 
@@ -17,7 +21,11 @@ export const PageNavigation = ({ block }: PageNavigationProps) => {
       return null
     }
 
-    return <Link href={`/${page.path}`}>{label}</Link>
+    return (
+      <Link prefetch={false} href={`/${page.path}`}>
+        {label}
+      </Link>
+    )
   }
 
   if (style === 'links') {
@@ -41,6 +49,7 @@ export const PageNavigation = ({ block }: PageNavigationProps) => {
             <Link
               key={page.id}
               href={`/${page.path}`}
+              prefetch={false}
               className="text-fk-white bg-fk-orange hover:bg-fk-red flex aspect-square items-center justify-center text-center text-3xl font-bold transition-colors duration-200 hover:scale-110"
             >
               {label}
