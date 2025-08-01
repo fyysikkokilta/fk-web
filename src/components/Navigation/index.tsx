@@ -72,7 +72,7 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
           )}
         </div>
       </nav>
-      <div className="h-12 md:h-16" />
+      <div className="h-12" />
     </>
   )
 }
