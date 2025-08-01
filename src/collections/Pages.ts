@@ -99,14 +99,6 @@ export const Pages: CollectionConfig = {
       }
     },
     {
-      name: 'showTitle',
-      type: 'checkbox',
-      defaultValue: true,
-      admin: {
-        position: 'sidebar'
-      }
-    },
-    {
       name: 'showTableOfContents',
       type: 'checkbox',
       defaultValue: false,

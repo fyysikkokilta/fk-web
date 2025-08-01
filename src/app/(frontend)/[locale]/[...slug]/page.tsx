@@ -109,11 +109,9 @@ export default async function Page({ params }: PageProps) {
       <PageBanner page={page} />
       <div id="page-content-root" className="mx-auto mb-12 w-full max-w-7xl flex-1 p-6">
         <div className={!page.fullWidth ? 'lg:ml-[20%]' : ''}>
-          {page.showTitle && (
-            <h1 className="mb-8 font-(family-name:--font-lora) text-4xl font-bold break-words hyphens-auto italic">
-              {page.title}
-            </h1>
-          )}
+          <h1 className="mb-8 font-(family-name:--font-lora) text-4xl font-bold break-words hyphens-auto italic">
+            {page.title}
+          </h1>
         </div>
         <div className="flex flex-col gap-8 lg:flex-row">
           {!page.fullWidth && (

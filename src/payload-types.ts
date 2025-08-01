@@ -609,7 +609,6 @@ export interface Page {
    * The URL path for this page. Will be auto-generated from the title if left empty.
    */
   path: string;
-  showTitle?: boolean | null;
   showTableOfContents?: boolean | null;
   showPartners?: boolean | null;
   /**
@@ -1475,7 +1474,6 @@ export interface PagesSelect<T extends boolean = true> {
         image?: T;
       };
   path?: T;
-  showTitle?: T;
   showTableOfContents?: T;
   showPartners?: T;
   fullWidth?: T;
