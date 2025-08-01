@@ -11,7 +11,6 @@ import { RefreshRouteOnSave } from '@/components/RefreshRouteOnSave'
 import { RichText } from '@/components/RichText'
 import { env } from '@/env'
 import { getLandingPage } from '@/lib/getLandingPage'
-import { getMainNavigation } from '@/lib/getMainNavigation'
 import { getPartners } from '@/lib/getPartners'
 import { isDraftMode } from '@/utils/draftMode'
 
@@ -27,8 +26,6 @@ export const revalidate = 86400
 export async function generateMetadata({ params }: LandingPageProps) {
   const { locale } = await params
   const page = await getLandingPage(locale)
-  const mainNavigation = await getMainNavigation(locale)
-  const siteName = mainNavigation.title
 
   const images = page?.bannerImages
     ?.map((image) => {
@@ -45,7 +42,7 @@ export async function generateMetadata({ params }: LandingPageProps) {
     .filter(Boolean)
 
   return {
-    title: page?.meta?.title || siteName,
+    title: page?.title,
     description: page?.meta?.description,
     metadataBase: new URL(env.NEXT_PUBLIC_SERVER_URL || ''),
     openGraph: {
@@ -53,7 +50,7 @@ export async function generateMetadata({ params }: LandingPageProps) {
       description: page?.meta?.description,
       images: images,
       url: `${env.NEXT_PUBLIC_SERVER_URL}/${locale}`,
-      siteName: siteName,
+      siteName: page?.title,
       locale: locale,
       type: 'website'
     },
@@ -97,6 +94,9 @@ export default async function LandingPage({ params }: LandingPageProps) {
         <div id="page-content" className="flex flex-col gap-8">
           <FrontPageAnnouncement page={landingPage} locale={locale} />
           <FrontPageCalendar page={landingPage} />
+          <h1 className="mb-8 font-(family-name:--font-lora) text-4xl font-bold break-words hyphens-auto italic">
+            {landingPage.title}
+          </h1>
           <RichText data={landingPage.content} locale={locale} />
         </div>
       </div>

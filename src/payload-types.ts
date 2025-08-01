@@ -1849,6 +1849,10 @@ export interface Footer {
 export interface LandingPage {
   id: number;
   /**
+   * Title of the landing page
+   */
+  title: string;
+  /**
    * Banner images of the landing page slideshow
    */
   bannerImages: (number | Media)[];
@@ -2095,6 +2099,7 @@ export interface FooterSelect<T extends boolean = true> {
  * via the `definition` "landing-page_select".
  */
 export interface LandingPageSelect<T extends boolean = true> {
+  title?: T;
   bannerImages?: T;
   announcement?:
     | T

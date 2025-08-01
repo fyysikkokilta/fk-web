@@ -31,6 +31,15 @@ export const LandingPage: GlobalConfig = {
           label: 'Content',
           fields: [
             {
+              name: 'title',
+              type: 'text',
+              required: true,
+              localized: true,
+              admin: {
+                description: 'Title of the landing page'
+              }
+            },
+            {
               name: 'bannerImages',
               type: 'upload',
               relationTo: 'media',
