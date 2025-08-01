@@ -65,7 +65,7 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
                 className="fixed inset-x-0 top-12 bottom-0 z-40 bg-black/50"
                 onClick={() => setIsMobileMenuOpen(false)}
               />
-              <div className="border-fk-gray-light bg-fk-gray relative z-50 max-h-[calc(100vh-3rem)] overflow-y-auto border-t">
+              <div className="border-fk-gray-light bg-fk-gray relative z-50 max-h-[calc(100dvh-3rem)] overflow-y-auto border-t">
                 <MobileMenu items={navigation.items} onClose={() => setIsMobileMenuOpen(false)} />
               </div>
             </>
