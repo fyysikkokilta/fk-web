@@ -1,7 +1,8 @@
 {
   "mainNavigation": {
     "menu": "Main navigation menu",
-    "toggleMenu": "Toggle menu"
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
   },
   "tableOfContents": {
     "toggle": "Toggle table of contents"

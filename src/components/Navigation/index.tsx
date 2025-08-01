@@ -1,68 +1,78 @@
 'use client'
 
-import '@szhsin/react-menu/dist/transitions/slide.css'
-
-import { ControlledMenu, RectElement, useClick, useMenuState } from '@szhsin/react-menu'
-import { Menu as LucideMenu, X } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
-import { RefObject, useRef } from 'react'
+import { useEffect, useState } from 'react'
 
 import { NavbarBrand } from '@/components/NavbarBrand'
+import type { MainNavigation } from '@/payload-types'
 
-import { DesktopMenuItem } from './DesktopMenuItem'
-import { MobileMenuItem } from './MobileMenuItem'
-import type { MainNavigationProps } from './types'
+import { DesktopMenu } from './DesktopMenu'
+import { MobileMenu } from './MobileMenu'
+
+interface MainNavigationProps {
+  navigation: MainNavigation
+}
 
 export function MainNavigation({ navigation }: MainNavigationProps) {
   const t = useTranslations()
-  const ref = useRef<HTMLDivElement>(null)
-  const [menuState, toggleMenu] = useMenuState({ transition: true })
-  const anchorProps = useClick(menuState.state, toggleMenu)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
+  // Lock/unlock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+
+    // Cleanup function to restore scroll when component unmounts
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isMobileMenuOpen])
 
   return (
-    <nav
-      className="bg-fk-gray text-fk-white relative z-50 w-full font-bold"
-      aria-label={t('mainNavigation.menu')}
-    >
-      <div className="mx-auto hidden items-center justify-between px-4 md:flex lg:px-8 xl:px-12 2xl:container">
-        <NavbarBrand logo={navigation.logo} title={navigation.title} variant="desktop" />
-        <div className="flex" role="menubar">
-          {navigation.items.map((item, index) => (
-            <DesktopMenuItem key={item.id || index.toString()} item={item} level="main" />
-          ))}
+    <>
+      <nav className="bg-fk-gray text-fk-white fixed top-0 right-0 left-0 z-50 w-full font-bold">
+        <div className="mx-auto hidden items-center justify-between px-4 md:flex lg:px-8 xl:px-12 2xl:container">
+          <NavbarBrand logo={navigation.logo} title={navigation.title} variant="desktop" />
+          <DesktopMenu items={navigation.items} />
         </div>
-      </div>
 
-      <div className="flex items-center justify-between px-2 md:hidden" ref={ref}>
-        <NavbarBrand logo={navigation.logo} title={navigation.title} variant="mobile" />
-        <div className="relative">
-          <button
-            {...anchorProps}
-            className="text-fk-white cursor-pointer p-2 focus:outline-none"
-            aria-label={t('mainNavigation.toggleMenu')}
-          >
-            {menuState.state === 'open' || menuState.state === 'closing' ? (
-              <X size={24} />
-            ) : (
-              <LucideMenu size={24} />
-            )}
-          </button>
-          <ControlledMenu
-            {...menuState}
-            onClose={() => toggleMenu(false)}
-            position="initial"
-            align="start"
-            anchorRef={ref as RefObject<Element | RectElement>}
-            transition={true}
-            unmountOnClose={true}
-            menuClassName="w-screen bg-fk-gray border-t shadow-lg text-fk-white space-y-2 p-2"
-          >
-            {navigation.items.map((item, idx) => (
-              <MobileMenuItem key={item.id || idx} item={item} level="main" />
-            ))}
-          </ControlledMenu>
+        <div className="md:hidden">
+          <div className="flex items-center justify-between px-4">
+            <NavbarBrand
+              logo={navigation.logo}
+              title={navigation.title}
+              variant="mobile"
+              onClose={() => setIsMobileMenuOpen(false)}
+            />
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="text-fk-white hover:text-fk-gray-light p-2"
+              aria-label={
+                isMobileMenuOpen ? t('mainNavigation.closeMenu') : t('mainNavigation.openMenu')
+              }
+            >
+              {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
+          </div>
+
+          {isMobileMenuOpen && (
+            <>
+              <div
+                className="fixed inset-x-0 top-12 bottom-0 z-40 bg-black/50"
+                onClick={() => setIsMobileMenuOpen(false)}
+              />
+              <div className="border-fk-gray-light bg-fk-gray relative z-50 max-h-[calc(100vh-3rem)] overflow-y-auto border-t">
+                <MobileMenu items={navigation.items} onClose={() => setIsMobileMenuOpen(false)} />
+              </div>
+            </>
+          )}
         </div>
-      </div>
-    </nav>
+      </nav>
+      <div className="h-12 md:h-16" />
+    </>
   )
 }

@@ -19,6 +19,7 @@
     "pre-commit": "pnpx lint-staged"
   },
   "dependencies": {
+    "@base-ui-components/react": "1.0.0-beta.2",
     "@date-fns/tz": "^1.2.0",
     "@next/bundle-analyzer": "canary",
     "@payloadcms/admin-bar": "^3.49.0",
@@ -35,7 +36,6 @@
     "@payloadcms/ui": "^3.49.0",
     "@plaiceholder/next": "^3.0.0",
     "@react-email/components": "^0.3.2",
-    "@szhsin/react-menu": "^4.4.1",
     "@t3-oss/env-nextjs": "^0.13.8",
     "@tailwindcss/postcss": "^4.1.11",
     "compress-pdf": "^0.5.4",

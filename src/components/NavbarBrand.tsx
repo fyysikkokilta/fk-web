@@ -9,9 +9,10 @@ interface NavbarBrandProps {
   logo?: Media | string | number | null
   title: string
   variant?: 'desktop' | 'mobile'
+  onClose?: () => void
 }
 
-export function NavbarBrand({ logo, title, variant = 'desktop' }: NavbarBrandProps) {
+export function NavbarBrand({ logo, title, variant = 'desktop', onClose }: NavbarBrandProps) {
   const getLogoAlt = useCallback(
     (logo: Media | string | number | null | undefined, title: string) => {
       if (logo && typeof logo === 'object' && 'alt' in logo) {
@@ -33,7 +34,7 @@ export function NavbarBrand({ logo, title, variant = 'desktop' }: NavbarBrandPro
 
   return (
     <div className="flex items-center gap-4">
-      <Link href="/" className="flex items-center gap-2 hover:no-underline">
+      <Link href="/" className="flex items-center gap-2 hover:no-underline" onClick={onClose}>
         {shouldShowLogo && (
           <Image
             priority
@@ -52,7 +53,7 @@ export function NavbarBrand({ logo, title, variant = 'desktop' }: NavbarBrandPro
           {title}
         </span>
       </Link>
-      <LanguageSwitcher />
+      <LanguageSwitcher onClick={onClose} />
     </div>
   )
 }

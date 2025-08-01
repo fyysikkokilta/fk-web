@@ -1,7 +1,8 @@
 {
   "mainNavigation": {
     "menu": "Päävalikko",
-    "toggleMenu": "Avaa/sulje valikko"
+    "openMenu": "Avaa valikko",
+    "closeMenu": "Sulje valikko"
   },
   "tableOfContents": {
     "toggle": "Avaa/sulje sisällysluettelo"
