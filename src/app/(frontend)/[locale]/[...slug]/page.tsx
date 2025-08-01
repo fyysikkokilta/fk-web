@@ -107,7 +107,7 @@ export default async function Page({ params }: PageProps) {
       <RefreshRouteOnSave />
       <PayloadRedirects url={`/${slug?.join('/')}`} disableNotFound locale={locale} />
       <PageBanner page={page} />
-      <div id="page-content-root" className="mx-auto mb-12 w-full max-w-7xl flex-1 p-6">
+      <div className="mx-auto mb-12 w-full max-w-7xl flex-1 p-6">
         <div className={!page.fullWidth ? 'lg:ml-[20%]' : ''}>
           <h1 className="mb-8 font-(family-name:--font-lora) text-4xl font-bold break-words hyphens-auto italic">
             {page.title}
