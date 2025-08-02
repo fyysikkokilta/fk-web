@@ -392,8 +392,8 @@ export default buildConfig({
         },
         access: {
           read: signedIn,
-          create: signedIn,
-          update: signedIn,
+          create: () => true,
+          update: () => false,
           delete: signedIn
         },
         hooks: {
