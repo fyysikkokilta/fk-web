@@ -66,18 +66,18 @@
 
   /* Links */
   .prose-fk a {
-    color: var(--color-fk-orange);
-    text-decoration: none;
+    color: var(--color-fk-orange-dark);
+    text-decoration: underline;
+    text-decoration-style: solid;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 2px;
     font-weight: bold;
     transition: color 0.2s;
   }
 
   .prose-fk a:hover {
-    text-decoration: underline;
-    text-decoration-style: dotted;
-    text-decoration-thickness: 2px;
-    text-underline-offset: 2px;
-    color: var(--color-fk-orange-dark);
+    color: var(--color-fk-orange);
+    text-decoration-thickness: 3px;
   }
 
   /* Strong text */
@@ -87,7 +87,7 @@
 
   /* Blockquotes */
   .prose-fk blockquote {
-    border-left: 4px solid var(--color-fk-orange);
+    border-left: 4px solid var(--color-fk-orange-dark);
     background-color: var(--color-fk-yellow-light);
     font-style: italic;
     color: var(--color-fk-gray);
@@ -111,7 +111,7 @@
   }
 
   .prose-fk ul li::marker {
-    color: var(--color-fk-orange);
+    color: var(--color-fk-orange-dark);
   }
 
   /* Ordered lists */
@@ -120,7 +120,7 @@
   }
 
   .prose-fk ol li::marker {
-    color: var(--color-fk-orange);
+    color: var(--color-fk-orange-dark);
     font-weight: bold;
   }
 

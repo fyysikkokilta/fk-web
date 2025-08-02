@@ -29,7 +29,10 @@ export const BoardMember = ({ member }: BoardMemberProps) => (
 
     {/* Contact information */}
     <div className="space-y-1 text-sm font-bold">
-      <a href={`mailto:${member.email}`} className="text-fk-orange block hover:underline">
+      <a
+        href={`mailto:${member.email}`}
+        className="text-fk-orange-dark hover:text-fk-orange block font-bold underline decoration-2 underline-offset-2 hover:decoration-3"
+      >
         {member.email}
       </a>
       {member.telegram && (
