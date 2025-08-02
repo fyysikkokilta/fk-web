@@ -34,7 +34,7 @@ export function MobileMenu({ navigation }: { navigation: MainNavigation }) {
 
   return (
     <>
-      <nav className="bg-fk-gray text-fk-white fixed top-0 right-0 left-0 z-50 flex items-center px-4 font-bold lg:hidden">
+      <nav className="bg-fk-gray text-fk-white fixed top-0 right-0 left-0 z-50 flex items-center px-2 font-bold lg:hidden">
         <NavbarBrand
           LinkElement={Link}
           logo={navigation.logo}
@@ -79,7 +79,7 @@ export function MobileMenu({ navigation }: { navigation: MainNavigation }) {
                       <Link
                         href={itemPath}
                         className={
-                          'flex w-full items-center justify-between px-6 py-3 text-left font-bold tracking-wide uppercase ' +
+                          'flex w-full items-center justify-between px-4 py-3 text-left font-bold tracking-wide uppercase ' +
                           'hover:text-fk-gray-light focus-visible:relative' +
                           (isActiveItem
                             ? ' decoration-fk-yellow underline decoration-2 underline-offset-4'
@@ -106,7 +106,7 @@ export function MobileMenu({ navigation }: { navigation: MainNavigation }) {
                         <Accordion.Trigger
                           aria-haspopup="menu"
                           className={
-                            'group flex w-full items-center justify-between px-6 py-3 text-left font-bold tracking-wide uppercase ' +
+                            'group flex w-full items-center justify-between px-4 py-3 text-left font-bold tracking-wide uppercase ' +
                             'hover:text-fk-gray-light border-fk-yellow border-b-4 focus-visible:relative' +
                             (childIsActive
                               ? ' decoration-fk-yellow underline decoration-2 underline-offset-2'
@@ -117,7 +117,7 @@ export function MobileMenu({ navigation }: { navigation: MainNavigation }) {
                           <ChevronDown className="h-5 w-5 transition-transform duration-200 ease-in-out group-data-[panel-open]:rotate-180" />
                         </Accordion.Trigger>
                       </Accordion.Header>
-                      <Accordion.Panel className="bg-fk-gray px-6 py-2">
+                      <Accordion.Panel className="bg-fk-gray px-4 py-2">
                         <Accordion.Root render={<ul />} role="menu" className="mt-2">
                           {children.map((child) => {
                             const childPath = getPath(child)
@@ -152,7 +152,7 @@ export function MobileMenu({ navigation }: { navigation: MainNavigation }) {
                                       <ChevronDown className="h-5 w-5 transition-transform duration-200 ease-in-out group-data-[panel-open]:rotate-180" />
                                     </Accordion.Trigger>
                                   </Accordion.Header>
-                                  <Accordion.Panel className="bg-fk-gray px-6 py-2">
+                                  <Accordion.Panel className="bg-fk-gray px-4 py-2">
                                     <ul role="menu">
                                       {grandChildren.map((grandChild) => {
                                         const grandChildPath = getPath(grandChild)

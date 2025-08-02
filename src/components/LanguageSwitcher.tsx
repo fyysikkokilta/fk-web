@@ -23,7 +23,7 @@ export function LanguageSwitcher({ LinkElement, onClick }: LanguageSwitcherProps
       href={pathname}
       locale={alternativeLocale}
       aria-label={t('switchLanguage')}
-      className="text-fk-white mx-4 box-border flex items-center justify-center px-2 text-xl leading-6 font-bold tracking-wide uppercase no-underline focus-visible:relative"
+      className="text-fk-white mx-2 box-border flex items-center justify-center px-2 text-xl leading-6 font-bold tracking-wide uppercase no-underline focus-visible:relative"
       onClick={onClick}
     >
       {alternativeLabel}
