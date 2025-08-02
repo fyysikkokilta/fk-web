@@ -71,6 +71,9 @@ NEXT_PUBLIC_S3_PUBLIC_URL=...
 # Form builder
 FORM_BUILDER_DEFAULT_TO_EMAIL=...
 
+# Job Queue
+JOB_QUEUE_SECRET=your-job-queue-secret
+
 # Analyze bundle (optional)
 ANALYZE=true
 ```
@@ -177,6 +180,39 @@ src/
 - Rich text editing is powered by Payload's Lexical editor.
 
 ---
+
+## Job Queue
+
+The project uses Payload CMS's built-in job queue system for handling background tasks like newsletter sending and scheduled publishing.
+
+### Configuration
+
+Jobs are configured in `src/payload.config.ts` and can be triggered via API endpoints.
+
+### Running Jobs
+
+Jobs can be executed using the `/api/payload-jobs/run` endpoint:
+
+```bash
+# Trigger a job via API
+curl -X POST http://localhost:3000/api/payload-jobs/run \
+  -H "Content-Type: application/json" \
+  -H "x-job-queue-secret: your-job-queue-secret" \
+  -d '{"task": "sendNewsletter", "data": {"newsletterId": 123}}'
+```
+
+### Available Jobs
+
+- **schedulePublish**: Handles scheduled content publishing
+- **sendNewsletter**: Sends newsletters to subscribers
+
+### Environment Variables
+
+- `JOB_QUEUE_SECRET`: Secret key for API authentication (required for job execution)
+
+### Documentation
+
+For more information, see the [Payload CMS Jobs Queue documentation](https://payloadcms.com/docs/jobs-queue/queues).
 
 ## Useful Scripts
 

@@ -297,6 +297,17 @@ export default buildConfig({
     }
   }),
   jobs: {
+    access: {
+      run: ({ req }) => {
+        if (req.user) {
+          return true
+        }
+
+        const secret = env.JOB_QUEUE_SECRET
+        const provided = req.headers.get('x-job-queue-secret') || req.searchParams.get('secret')
+        return secret === provided
+      }
+    },
     addParentToTaskLog: true,
     tasks: [
       {
@@ -318,21 +329,7 @@ export default buildConfig({
         ],
         handler: sendNewsletterHandler
       }
-    ],
-    autoRun: [
-      {
-        // This is for schedule publishing
-        cron: '* * * * *', // Every minute
-        limit: 100,
-        queue: 'default'
-      }
-    ],
-    shouldAutoRun: async (_payload) => {
-      // Tell Payload if it should run jobs or not.
-      // This function will be invoked each time Payload goes to pick up and run jobs.
-      // If this function ever returns false, the cron schedule will be stopped.
-      return true
-    }
+    ]
   },
   localization: {
     locales: ['fi', 'en'],

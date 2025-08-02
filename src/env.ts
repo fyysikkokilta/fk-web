@@ -37,7 +37,9 @@ export const env = createEnv({
     GOOGLE_API_KEY: z.string(),
 
     FORM_BUILDER_DEFAULT_TO_EMAIL: z.email().default('it@fyysikkokilta.fi'),
-    GOOGLE_SITE_VERIFICATION: z.string().optional()
+    GOOGLE_SITE_VERIFICATION: z.string().optional(),
+
+    JOB_QUEUE_SECRET: z.string()
   },
   client: {
     NEXT_PUBLIC_SERVER_URL: z.url().default('http://localhost:3000'),
