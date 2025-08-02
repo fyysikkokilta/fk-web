@@ -16,7 +16,7 @@ export const env = createEnv({
       .transform((val) => val === 'true'),
 
     EMAIL_FROM_NAME: z.string().default('Fyysikkokilta'),
-    EMAIL_FROM_ADDRESS: z.string().email().default('web@fyysikkokilta.fi'),
+    EMAIL_FROM_ADDRESS: z.email().default('web@fyysikkokilta.fi'),
     SMTP_HOST: z.string().default('smtp.eu.mailgun.org'),
     SMTP_PORT: z.string().default('587'),
     SMTP_USER: z.string(),
@@ -36,12 +36,12 @@ export const env = createEnv({
     GOOGLE_CLIENT_SECRET: z.string(),
     GOOGLE_API_KEY: z.string(),
 
-    FORM_BUILDER_DEFAULT_TO_EMAIL: z.string().email().default('it@fyysikkokilta.fi'),
+    FORM_BUILDER_DEFAULT_TO_EMAIL: z.email().default('it@fyysikkokilta.fi'),
     GOOGLE_SITE_VERIFICATION: z.string().optional()
   },
   client: {
-    NEXT_PUBLIC_SERVER_URL: z.string().url().default('http://localhost:3000'),
-    NEXT_PUBLIC_S3_PUBLIC_URL: z.string().url().optional()
+    NEXT_PUBLIC_SERVER_URL: z.url().default('http://localhost:3000'),
+    NEXT_PUBLIC_S3_PUBLIC_URL: z.url().optional()
   },
   experimental__runtimeEnv: {
     NEXT_PUBLIC_SERVER_URL: process.env.NEXT_PUBLIC_SERVER_URL,
