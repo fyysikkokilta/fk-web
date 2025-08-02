@@ -2,6 +2,7 @@
 
 import { NavigationMenu } from '@base-ui-components/react/navigation-menu'
 import { useTranslations } from 'next-intl'
+import { Fragment } from 'react'
 
 import { Link as NextLink } from '@/i18n/navigation'
 import type { MainNavigation } from '@/payload-types'
@@ -15,11 +16,10 @@ export function DesktopMenu({ items }: { items: MainNavigation['items'] }) {
 
   return (
     <NavigationMenu.Root
-      role="menubar"
       aria-label={t('mainNavigation.menu')}
       className="bg-fk-gray text-fk-white min-w-max font-bold uppercase"
     >
-      <NavigationMenu.List className="relative flex">
+      <NavigationMenu.List role="menubar" render={<ul />} className="relative flex">
         {items.map((item) => {
           const itemPath = getPath(item)
           const hasChildren = item.type === 'menu' && (item?.children?.length ?? 0) > 0
@@ -29,9 +29,8 @@ export function DesktopMenu({ items }: { items: MainNavigation['items'] }) {
 
           if (item.type !== 'menu') {
             return (
-              <NavigationMenu.Item key={item.id}>
+              <NavigationMenu.Item role="menuitem" render={<li />} key={item.id}>
                 <Link
-                  role="menuitem"
                   href={itemPath}
                   className={
                     topLevelClassName +
@@ -49,10 +48,13 @@ export function DesktopMenu({ items }: { items: MainNavigation['items'] }) {
 
           if (hasChildren) {
             return (
-              <NavigationMenu.Item key={item.id}>
+              <NavigationMenu.Item
+                role="menuitem"
+                aria-haspopup="menu"
+                render={<li />}
+                key={item.id}
+              >
                 <NavigationMenu.Trigger
-                  role="menuitem"
-                  aria-haspopup="menu"
                   className={
                     topLevelClassName +
                     ' border-fk-yellow' +
@@ -64,7 +66,11 @@ export function DesktopMenu({ items }: { items: MainNavigation['items'] }) {
                   {item.label}
                 </NavigationMenu.Trigger>
                 <NavigationMenu.Content className={contentClassName}>
-                  <ul className="flex flex-col">
+                  <NavigationMenu.Root
+                    role="menu"
+                    render={<ul className="flex flex-col" />}
+                    orientation="vertical"
+                  >
                     {children.map((child) => {
                       const childPath = getPath(child)
                       const isActiveChild = isActive(childPath)
@@ -77,75 +83,83 @@ export function DesktopMenu({ items }: { items: MainNavigation['items'] }) {
 
                       if (hasGrandChildren) {
                         return (
-                          <li key={child.id}>
-                            <NavigationMenu.Root orientation="vertical">
-                              <NavigationMenu.Item>
-                                <NavigationMenu.Trigger
-                                  role="menuitem"
-                                  aria-haspopup="menu"
-                                  className={
-                                    linkCardClassName +
-                                    ' border-fk-yellow border-r-4' +
-                                    (grandChildrenIsActive
-                                      ? ' decoration-fk-yellow underline decoration-2 underline-offset-2'
-                                      : '')
+                          <Fragment key={child.id}>
+                            <NavigationMenu.Item
+                              role="menuitem"
+                              aria-haspopup="menu"
+                              render={<li />}
+                            >
+                              <NavigationMenu.Trigger
+                                className={
+                                  linkCardClassName +
+                                  ' border-fk-yellow border-r-4' +
+                                  (grandChildrenIsActive
+                                    ? ' decoration-fk-yellow underline decoration-2 underline-offset-2'
+                                    : '')
+                                }
+                              >
+                                {child.label}
+                              </NavigationMenu.Trigger>
+                              <NavigationMenu.Content className={contentClassName}>
+                                <NavigationMenu.Root
+                                  role="menu"
+                                  render={
+                                    <ul className="flex max-w-[400px] flex-col justify-center" />
                                   }
+                                  orientation="vertical"
                                 >
-                                  {child.label}
-                                </NavigationMenu.Trigger>
-                                <NavigationMenu.Content className={contentClassName}>
-                                  <ul className="flex max-w-[400px] flex-col justify-center">
-                                    {grandChildren.map((grandChild) => {
-                                      const grandChildPath = getPath(grandChild)
-                                      return (
-                                        <li key={grandChild.id}>
-                                          <Link
-                                            role="menuitem"
-                                            href={grandChildPath}
-                                            className={
-                                              linkCardClassName +
-                                              (isActive(grandChildPath)
-                                                ? ' decoration-fk-yellow underline decoration-2 underline-offset-2'
-                                                : '')
-                                            }
-                                          >
-                                            {grandChild.label}
-                                          </Link>
-                                        </li>
-                                      )
-                                    })}
-                                  </ul>
-                                </NavigationMenu.Content>
-                              </NavigationMenu.Item>
+                                  {grandChildren.map((grandChild) => {
+                                    const grandChildPath = getPath(grandChild)
+                                    return (
+                                      <NavigationMenu.Item
+                                        role="menuitem"
+                                        render={<li />}
+                                        key={grandChild.id}
+                                      >
+                                        <Link
+                                          href={grandChildPath}
+                                          className={
+                                            linkCardClassName +
+                                            (isActive(grandChildPath)
+                                              ? ' decoration-fk-yellow underline decoration-2 underline-offset-2'
+                                              : '')
+                                          }
+                                        >
+                                          {grandChild.label}
+                                        </Link>
+                                      </NavigationMenu.Item>
+                                    )
+                                  })}
+                                </NavigationMenu.Root>
+                              </NavigationMenu.Content>
+                            </NavigationMenu.Item>
 
-                              <NavigationMenu.Portal>
-                                <NavigationMenu.Positioner
-                                  sideOffset={10}
-                                  align="start"
-                                  side="right"
-                                  className="box-border h-[var(--positioner-height)] w-[var(--positioner-width)] max-w-[var(--available-width)] transition-[top,left,right,bottom] duration-[var(--duration)] ease-[var(--easing)] before:absolute before:content-[''] data-[instant]:transition-none data-[side=bottom]:before:top-[-10px] data-[side=bottom]:before:right-0 data-[side=bottom]:before:left-0 data-[side=bottom]:before:h-2.5 data-[side=left]:before:top-0 data-[side=left]:before:right-[-10px] data-[side=left]:before:bottom-0 data-[side=left]:before:w-2.5 data-[side=right]:before:top-0 data-[side=right]:before:bottom-0 data-[side=right]:before:left-[-10px] data-[side=right]:before:w-2.5 data-[side=top]:before:right-0 data-[side=top]:before:bottom-[-10px] data-[side=top]:before:left-0 data-[side=top]:before:h-2.5"
-                                  style={{
-                                    ['--duration' as string]: '0.35s',
-                                    ['--easing' as string]: 'cubic-bezier(0.22, 1, 0.36, 1)'
-                                  }}
-                                >
-                                  <NavigationMenu.Popup className="data-[ending-style]:easing-[ease] bg-fk-gray text-fk-white border-fk-yellow relative h-[var(--popup-height)] origin-[var(--transform-origin)] transition-[opacity,transform,width,height,scale,translate] duration-[var(--duration)] ease-[var(--easing)] data-[ending-style]:scale-90 data-[ending-style]:opacity-0 data-[ending-style]:duration-150 data-[starting-style]:scale-90 data-[starting-style]:opacity-0 min-[500px]:w-[var(--popup-width)]">
-                                    <NavigationMenu.Arrow className="flex transition-[left] duration-[var(--duration)] ease-[var(--easing)] data-[side=bottom]:top-[-11px] data-[side=left]:right-[-11px] data-[side=left]:rotate-90 data-[side=right]:left-[-11px] data-[side=right]:-rotate-90 data-[side=top]:bottom-[-11px] data-[side=top]:rotate-180">
-                                      <Arrow className="fill-fk-yellow stroke-fk-yellow h-3 w-3 border-none" />
-                                    </NavigationMenu.Arrow>
-                                    <NavigationMenu.Viewport className="relative h-full w-full" />
-                                  </NavigationMenu.Popup>
-                                </NavigationMenu.Positioner>
-                              </NavigationMenu.Portal>
-                            </NavigationMenu.Root>
-                          </li>
+                            <NavigationMenu.Portal>
+                              <NavigationMenu.Positioner
+                                sideOffset={10}
+                                align="start"
+                                side="right"
+                                className="box-border h-[var(--positioner-height)] w-[var(--positioner-width)] max-w-[var(--available-width)] transition-[top,left,right,bottom] duration-[var(--duration)] ease-[var(--easing)] before:absolute before:content-[''] data-[instant]:transition-none data-[side=bottom]:before:top-[-10px] data-[side=bottom]:before:right-0 data-[side=bottom]:before:left-0 data-[side=bottom]:before:h-2.5 data-[side=left]:before:top-0 data-[side=left]:before:right-[-10px] data-[side=left]:before:bottom-0 data-[side=left]:before:w-2.5 data-[side=right]:before:top-0 data-[side=right]:before:bottom-0 data-[side=right]:before:left-[-10px] data-[side=right]:before:w-2.5 data-[side=top]:before:right-0 data-[side=top]:before:bottom-[-10px] data-[side=top]:before:left-0 data-[side=top]:before:h-2.5"
+                                style={{
+                                  ['--duration' as string]: '0.35s',
+                                  ['--easing' as string]: 'cubic-bezier(0.22, 1, 0.36, 1)'
+                                }}
+                              >
+                                <NavigationMenu.Popup className="data-[ending-style]:easing-[ease] bg-fk-gray text-fk-white border-fk-yellow relative h-[var(--popup-height)] origin-[var(--transform-origin)] transition-[opacity,transform,width,height,scale,translate] duration-[var(--duration)] ease-[var(--easing)] data-[ending-style]:scale-90 data-[ending-style]:opacity-0 data-[ending-style]:duration-150 data-[starting-style]:scale-90 data-[starting-style]:opacity-0 min-[500px]:w-[var(--popup-width)]">
+                                  <NavigationMenu.Arrow className="flex transition-[left] duration-[var(--duration)] ease-[var(--easing)] data-[side=bottom]:top-[-11px] data-[side=left]:right-[-11px] data-[side=left]:rotate-90 data-[side=right]:left-[-11px] data-[side=right]:-rotate-90 data-[side=top]:bottom-[-11px] data-[side=top]:rotate-180">
+                                    <Arrow className="fill-fk-yellow stroke-fk-yellow h-3 w-3 border-none" />
+                                  </NavigationMenu.Arrow>
+                                  <NavigationMenu.Viewport className="relative h-full w-full" />
+                                </NavigationMenu.Popup>
+                              </NavigationMenu.Positioner>
+                            </NavigationMenu.Portal>
+                          </Fragment>
                         )
                       }
 
                       return (
-                        <li key={child.id}>
+                        <NavigationMenu.Item role="menuitem" render={<li />} key={child.id}>
                           <Link
-                            role="menuitem"
                             href={childPath}
                             className={
                               linkCardClassName +
@@ -156,10 +170,10 @@ export function DesktopMenu({ items }: { items: MainNavigation['items'] }) {
                           >
                             {child.label}
                           </Link>
-                        </li>
+                        </NavigationMenu.Item>
                       )
                     })}
-                  </ul>
+                  </NavigationMenu.Root>
                 </NavigationMenu.Content>
               </NavigationMenu.Item>
             )
