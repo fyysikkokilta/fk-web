@@ -220,8 +220,8 @@ function Arrow(props: React.ComponentProps<'svg'>) {
 }
 
 const topLevelClassName =
-  'box-border flex items-center justify-center gap-1.5 h-12 border-b-4 ' +
-  'px-4 bg-fk-gray text-fk-white font-bold uppercase tracking-wide ' +
+  'box-border flex items-center justify-center h-12 border-b-4 ' +
+  'px-2 bg-fk-gray text-fk-white font-bold uppercase tracking-wide ' +
   'leading-6 no-underline ' +
   'hover:text-fk-gray-light active:text-fk-gray-light data-[popup-open]:text-fk-gray-light ' +
   'focus-visible:relative'

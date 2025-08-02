@@ -35,12 +35,12 @@ export function MainNavigation({ navigation }: MainNavigationProps) {
   return (
     <>
       <nav className="bg-fk-gray text-fk-white fixed top-0 right-0 left-0 z-50 w-full font-bold">
-        <div className="mx-auto hidden items-center justify-between px-4 md:flex lg:px-8 xl:px-12 2xl:container">
+        <div className="mx-auto hidden items-center justify-between px-4 lg:flex lg:px-8 xl:px-12 2xl:container">
           <NavbarBrand logo={navigation.logo} title={navigation.title} variant="desktop" />
           <DesktopMenu items={navigation.items} />
         </div>
 
-        <div className="md:hidden">
+        <div className="lg:hidden">
           <div className="flex items-center justify-between px-4">
             <NavbarBrand
               logo={navigation.logo}

@@ -13,16 +13,6 @@ interface NavbarBrandProps {
 }
 
 export function NavbarBrand({ logo, title, variant = 'desktop', onClose }: NavbarBrandProps) {
-  const getLogoAlt = useCallback(
-    (logo: Media | string | number | null | undefined, title: string) => {
-      if (logo && typeof logo === 'object' && 'alt' in logo) {
-        return logo.alt || title
-      }
-      return title
-    },
-    []
-  )
-
   const getLogoUrl = useCallback((logo: Media | string | number | null | undefined) => {
     if (logo && typeof logo === 'object' && 'url' in logo) {
       return logo.url
@@ -36,22 +26,9 @@ export function NavbarBrand({ logo, title, variant = 'desktop', onClose }: Navba
     <div className="flex items-center gap-4">
       <Link href="/" className="flex items-center gap-2 hover:no-underline" onClick={onClose}>
         {shouldShowLogo && (
-          <Image
-            priority
-            src={getLogoUrl(logo)!}
-            alt={getLogoAlt(logo, title)}
-            unoptimized
-            width={48}
-            height={48}
-          />
+          <Image priority src={getLogoUrl(logo)!} alt="" unoptimized width={48} height={48} />
         )}
-        <span
-          className={`text-2xl font-bold ${
-            variant === 'desktop' ? 'text-nowrap max-lg:hidden' : ''
-          }`}
-        >
-          {title}
-        </span>
+        <span className="text-2xl font-bold">{title}</span>
       </Link>
       <LanguageSwitcher onClick={onClose} />
     </div>
