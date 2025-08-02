@@ -62,7 +62,7 @@ export default async function middleware(req: NextRequest) {
   const wantedPath = paths[locale]
 
   if (wantedPath && wantedPath !== path) {
-    return NextResponse.redirect(new URL(wantedPath, req.url))
+    return NextResponse.redirect(new URL(wantedPath, req.url), 308)
   }
 
   return intlMiddleware(req)
