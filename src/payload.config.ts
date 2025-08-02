@@ -29,6 +29,7 @@ import { OAuth2Plugin } from 'payload-oauth2'
 import sharp from 'sharp'
 import { fileURLToPath } from 'url'
 
+import { admin } from './access/admin'
 import { signedIn } from './access/signed-in'
 import { AlignBlock } from './blocks/Align/config'
 import { BoardBlock } from './blocks/Board/config'
@@ -376,10 +377,10 @@ export default buildConfig({
           group: 'Forms'
         },
         access: {
-          read: signedIn,
-          create: signedIn,
-          update: signedIn,
-          delete: signedIn
+          read: admin,
+          create: admin,
+          update: admin,
+          delete: admin
         },
         hooks: {
           afterChange: [revalidateCollection('forms')],
@@ -391,10 +392,10 @@ export default buildConfig({
           group: 'Forms'
         },
         access: {
-          read: signedIn,
+          read: admin,
           create: () => true,
           update: () => false,
-          delete: signedIn
+          delete: admin
         },
         hooks: {
           afterChange: [revalidateCollection('form-submissions')],

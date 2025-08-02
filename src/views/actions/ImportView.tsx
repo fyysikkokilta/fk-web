@@ -15,6 +15,10 @@ export const ActionsView = ({
     redirect('/admin/login?redirect=%2Fadmin%2Factions')
   }
 
+  if (user.role !== 'admin') {
+    redirect('/admin')
+  }
+
   return (
     <div
       style={{

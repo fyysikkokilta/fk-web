@@ -1,13 +1,13 @@
 import { BlocksFeature, HeadingFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
 import type { GlobalConfig } from 'payload'
 
-import { signedIn } from '@/access/signed-in'
+import { admin } from '@/access/admin'
 
 export const NewsletterSettings: GlobalConfig = {
   slug: 'newsletter-settings',
   access: {
-    read: () => true,
-    update: signedIn
+    read: admin,
+    update: admin
   },
   admin: {
     group: 'Newsletters',

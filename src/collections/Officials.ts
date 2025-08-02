@@ -1,6 +1,6 @@
 import { CollectionConfig } from 'payload'
 
-import { signedIn } from '@/access/signed-in'
+import { admin } from '@/access/admin'
 import { officialImportController } from '@/controllers/official-import-controller'
 import { revalidateCollection } from '@/hooks/revalidateCollection'
 import { revalidateDeletedCollection } from '@/hooks/revalidateDeletedCollection'
@@ -15,9 +15,9 @@ export const Officials: CollectionConfig = {
   },
   access: {
     read: () => true,
-    create: signedIn,
-    update: signedIn,
-    delete: signedIn
+    create: admin,
+    update: admin,
+    delete: admin
   },
   fields: [
     {

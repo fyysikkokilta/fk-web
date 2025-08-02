@@ -2,8 +2,8 @@ import { BlocksFeature, HeadingFeature, lexicalEditor } from '@payloadcms/richte
 import { addHours, isAfter, parse, parseISO, startOfHour } from 'date-fns'
 import type { CollectionBeforeChangeHook, CollectionConfig } from 'payload'
 
+import { admin } from '@/access/admin'
 import { publishedOrSignedIn } from '@/access/published-or-signed-in'
-import { signedIn } from '@/access/signed-in'
 import { env } from '@/env'
 import { revalidateCollection } from '@/hooks/revalidateCollection'
 import { revalidateDeletedCollection } from '@/hooks/revalidateDeletedCollection'
@@ -69,9 +69,9 @@ export const Newsletters: CollectionConfig = {
   },
   access: {
     read: publishedOrSignedIn,
-    create: signedIn,
-    update: signedIn,
-    delete: signedIn
+    create: admin,
+    update: admin,
+    delete: admin
   },
   fields: [
     {

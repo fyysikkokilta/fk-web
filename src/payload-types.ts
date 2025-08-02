@@ -1085,6 +1085,10 @@ export interface Export {
  */
 export interface User {
   id: number;
+  /**
+   * The role of the user. Admins can, for example, view form submissions and edit board and official information.
+   */
+  role?: ('admin' | 'user') | null;
   sub?: string | null;
   email: string;
   updatedAt: string;
@@ -1693,6 +1697,7 @@ export interface ExportsSelect<T extends boolean = true> {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  role?: T;
   sub?: T;
   email?: T;
   updatedAt?: T;

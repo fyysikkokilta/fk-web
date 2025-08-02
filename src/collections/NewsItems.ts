@@ -1,11 +1,18 @@
 import { BlocksFeature, HeadingFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
 import type { CollectionConfig } from 'payload'
 
+import { admin } from '@/access/admin'
 import { revalidateCollection } from '@/hooks/revalidateCollection'
 import { revalidateDeletedCollection } from '@/hooks/revalidateDeletedCollection'
 
 export const NewsItems: CollectionConfig = {
   slug: 'news-items',
+  access: {
+    read: () => true,
+    create: admin,
+    update: admin,
+    delete: admin
+  },
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'type', 'date'],

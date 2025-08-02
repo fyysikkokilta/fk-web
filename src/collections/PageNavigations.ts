@@ -1,6 +1,5 @@
 import { CollectionConfig } from 'payload'
 
-import { publishedAndVisibleOrSignedIn } from '@/access/published-and-visible-or-signed-in'
 import { signedIn } from '@/access/signed-in'
 import { revalidateCollection } from '@/hooks/revalidateCollection'
 import { revalidateDeletedCollection } from '@/hooks/revalidateDeletedCollection'
@@ -14,7 +13,7 @@ export const PageNavigations: CollectionConfig = {
     description: 'Manage website page navigations'
   },
   access: {
-    read: publishedAndVisibleOrSignedIn,
+    read: () => true,
     create: signedIn,
     update: signedIn,
     delete: signedIn

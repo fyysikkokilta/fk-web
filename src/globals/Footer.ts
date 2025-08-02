@@ -1,12 +1,14 @@
 import { BlocksFeature, HeadingFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
 import type { GlobalConfig } from 'payload'
 
+import { signedIn } from '@/access/signed-in'
 import { revalidateGlobal } from '@/hooks/revalidateGlobal'
 
 export const Footer: GlobalConfig = {
   slug: 'footer',
   access: {
-    read: () => true
+    read: () => true,
+    update: signedIn
   },
   admin: {
     group: 'Globals',
