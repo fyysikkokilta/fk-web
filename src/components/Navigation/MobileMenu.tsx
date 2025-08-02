@@ -114,7 +114,7 @@ export function MobileMenu({ navigation }: { navigation: MainNavigation }) {
                           }
                         >
                           {item.label}
-                          <ChevronDown className="h-5 w-5 transition-transform duration-200 ease-in-out group-data-[panel-open]:rotate-180" />
+                          <ChevronDown className="h-6 w-6 transition-transform duration-200 ease-in-out group-data-[panel-open]:rotate-180" />
                         </Accordion.Trigger>
                       </Accordion.Header>
                       <Accordion.Panel className="bg-fk-gray px-4 py-2">
@@ -149,7 +149,7 @@ export function MobileMenu({ navigation }: { navigation: MainNavigation }) {
                                       }
                                     >
                                       {child.label}
-                                      <ChevronDown className="h-5 w-5 transition-transform duration-200 ease-in-out group-data-[panel-open]:rotate-180" />
+                                      <ChevronDown className="h-6 w-6 transition-transform duration-200 ease-in-out group-data-[panel-open]:rotate-180" />
                                     </Accordion.Trigger>
                                   </Accordion.Header>
                                   <Accordion.Panel className="bg-fk-gray px-4 py-2">
