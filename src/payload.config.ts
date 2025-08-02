@@ -80,6 +80,8 @@ import { textState } from './utils/textState'
 const filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(filename)
 
+const isCI = process.env.IS_CI === 'true'
+
 const converters: PlaintextConverters<DefaultNodeTypes> = {
   link: ({ node }) => {
     return node.children
@@ -506,7 +508,7 @@ export default buildConfig({
     }),
     importExportPlugin({}),
     OAuth2Plugin({
-      enabled: enableOAuth(),
+      enabled: enableOAuth() || isCI,
       strategyName: 'google',
       useEmailAsIdentity: true,
       onUserNotFoundBehavior: env.ALLOW_NON_EXISTING_USERS ? 'create' : 'error',
@@ -540,7 +542,7 @@ export default buildConfig({
     }),
     //https://payloadcms.com/posts/guides/how-to-configure-file-storage-in-payload-with-vercel-blob-r2-and-uploadthing
     s3Storage({
-      enabled: enableCloudStorage(),
+      enabled: enableCloudStorage() || isCI,
       collections: {
         media: {
           prefix: 'media',

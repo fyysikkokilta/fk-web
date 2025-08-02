@@ -9,7 +9,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  SKIP_ENV_VALIDATION: true
+  IS_CI: true
   NEXT_PUBLIC_SERVER_URL: https://fyysikkokilta.fi
   NEXT_PUBLIC_S3_PUBLIC_URL: https://files.fyysikkokilta.fi
   NODE_ENV: production
@@ -48,23 +48,52 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Lint and fix
-        run: pnpm lint --fix
-
-      #- name: Generate types and importmap
-      #  run: |
-      #    pnpm generate:types
-      #    pnpm generate:importmap
-
-      - name: Check for uncommitted changes
+      - name: Check lint
         run: |
+          pnpm lint --fix
           if [ -n "$(git status --porcelain)" ]; then
-            echo "❌ Generated files are not up to date. Please commit the changes:"
+            echo "❌ Lint is not up to date. Please commit the changes:"
             git status
             git diff
             exit 1
           else
-            echo "✅ All generated files are up to date"
+            echo "✅ Lint is up to date"
+          fi
+
+      - name: Check types
+        run: |
+          pnpm generate:types
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "❌ Types are not up to date. Please commit the changes:"
+            git status
+            git diff
+            exit 1
+          else
+            echo "✅ Types are up to date"
+          fi
+
+      - name: Check importmap
+        run: |
+          pnpm generate:importmap
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "❌ Importmap is not up to date. Please commit the changes:"
+            git status
+            git diff
+            exit 1
+          else
+            echo "✅ Importmap is up to date"
+          fi
+
+      - name: Check migrations
+        run: |
+          pnpm payload migrate:create --skip-empty
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "❌ Migrations are not up to date. Please commit the changes:"
+            git status
+            git diff
+            exit 1
+          else
+            echo "✅ Migrations are up to date"
           fi
 
   build:

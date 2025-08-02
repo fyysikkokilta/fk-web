@@ -48,5 +48,5 @@ export const env = createEnv({
     NEXT_PUBLIC_S3_PUBLIC_URL: process.env.NEXT_PUBLIC_S3_PUBLIC_URL
   },
   emptyStringAsUndefined: true,
-  skipValidation: process.env.SKIP_ENV_VALIDATION === 'true'
+  skipValidation: process.env.IS_CI === 'true'
 })
