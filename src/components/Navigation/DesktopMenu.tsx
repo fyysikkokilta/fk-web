@@ -4,12 +4,14 @@ import { NavigationMenu } from '@base-ui-components/react/navigation-menu'
 import { useTranslations } from 'next-intl'
 import { Fragment } from 'react'
 
+import { LanguageSwitcher } from '@/components/LanguageSwitcher'
+import { NavbarBrand } from '@/components/NavbarBrand'
 import { Link as NextLink } from '@/i18n/navigation'
 import type { MainNavigation } from '@/payload-types'
 
 import { useGetPath, useIsActive } from './utils'
 
-export function DesktopMenu({ items }: { items: MainNavigation['items'] }) {
+export function DesktopMenu({ navigation }: { navigation: MainNavigation }) {
   const isActive = useIsActive()
   const getPath = useGetPath()
   const t = useTranslations()
@@ -17,10 +19,22 @@ export function DesktopMenu({ items }: { items: MainNavigation['items'] }) {
   return (
     <NavigationMenu.Root
       aria-label={t('mainNavigation.menu')}
-      className="bg-fk-gray text-fk-white min-w-max font-bold uppercase"
+      className="bg-fk-gray text-fk-white fixed top-0 right-0 left-0 z-50 mx-auto hidden w-full min-w-max items-center justify-between px-4 font-bold lg:flex lg:px-8 xl:px-12 2xl:container"
     >
-      <NavigationMenu.List role="menubar" render={<ul />} className="relative flex">
-        {items.map((item) => {
+      <NavigationMenu.List
+        role="menubar"
+        render={<ul />}
+        className="relative flex w-full items-center"
+      >
+        <NavigationMenu.Item role="menuitem" render={<li />}>
+          <NavbarBrand LinkElement={Link} logo={navigation.logo} title={navigation.title} />
+        </NavigationMenu.Item>
+
+        <NavigationMenu.Item role="menuitem" render={<li />}>
+          <LanguageSwitcher LinkElement={Link} />
+        </NavigationMenu.Item>
+
+        {navigation.items.map((item, i) => {
           const itemPath = getPath(item)
           const hasChildren = item.type === 'menu' && (item?.children?.length ?? 0) > 0
           const children = item?.children || []
@@ -29,7 +43,12 @@ export function DesktopMenu({ items }: { items: MainNavigation['items'] }) {
 
           if (item.type !== 'menu') {
             return (
-              <NavigationMenu.Item role="menuitem" render={<li />} key={item.id}>
+              <NavigationMenu.Item
+                className={i === 0 ? 'ml-auto' : ''}
+                role="menuitem"
+                render={<li />}
+                key={item.id}
+              >
                 <Link
                   href={itemPath}
                   className={
@@ -49,6 +68,7 @@ export function DesktopMenu({ items }: { items: MainNavigation['items'] }) {
           if (hasChildren) {
             return (
               <NavigationMenu.Item
+                className={i === 0 ? 'ml-auto' : ''}
                 role="menuitem"
                 aria-haspopup="menu"
                 render={<li />}

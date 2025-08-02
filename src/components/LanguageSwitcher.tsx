@@ -2,9 +2,14 @@
 
 import { useLocale, useTranslations } from 'next-intl'
 
-import { Link, usePathname } from '@/i18n/navigation'
+import { usePathname } from '@/i18n/navigation'
 
-export function LanguageSwitcher({ onClick }: { onClick?: () => void }) {
+type LanguageSwitcherProps = {
+  LinkElement: React.ElementType
+  onClick?: () => void
+}
+
+export function LanguageSwitcher({ LinkElement, onClick }: LanguageSwitcherProps) {
   const locale = useLocale()
   const t = useTranslations('languageSwitcher')
   const pathname = usePathname()
@@ -14,14 +19,14 @@ export function LanguageSwitcher({ onClick }: { onClick?: () => void }) {
   const alternativeLabel = alternativeLocale.toUpperCase()
 
   return (
-    <Link
+    <LinkElement
       href={pathname}
       locale={alternativeLocale}
       aria-label={t('switchLanguage')}
-      className="text-fk-white cursor-pointer px-3 py-2 text-xl font-semibold tracking-wide uppercase"
+      className="text-fk-white mx-4 box-border flex items-center justify-center px-2 text-xl leading-6 font-bold tracking-wide uppercase no-underline focus-visible:relative"
       onClick={onClick}
     >
       {alternativeLabel}
-    </Link>
+    </LinkElement>
   )
 }
