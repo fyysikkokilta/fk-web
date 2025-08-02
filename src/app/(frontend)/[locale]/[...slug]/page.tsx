@@ -106,24 +106,26 @@ export default async function Page({ params }: PageProps) {
       <DraftModeBanner pageId={page.id.toString()} isDraft={isDraft} hidden={page.hidden} />
       <RefreshRouteOnSave />
       <PayloadRedirects url={`/${slug?.join('/')}`} disableNotFound locale={locale} />
-      <PageBanner page={page} />
-      <main id="page-content" className="mx-auto mb-12 w-full max-w-7xl flex-1 p-6">
-        <div className={!page.fullWidth ? 'lg:ml-[20%]' : ''}>
-          <h1 className="mb-8 font-(family-name:--font-lora) text-4xl font-bold break-words hyphens-auto italic">
-            {page.title}
-          </h1>
-        </div>
-        <div className="flex flex-col gap-8 lg:flex-row">
-          {!page.fullWidth && (
-            <TableOfContents show={page.showTableOfContents} richText={page.content} />
-          )}
-          <div className={!page.fullWidth ? 'lg:w-[60%]' : 'lg:w-full'}>
-            <RichText data={page.content} locale={locale} />
+      <main id="page-content" className="flex w-full flex-col">
+        <PageBanner page={page} />
+        <section className="mx-auto mb-12 w-full max-w-7xl flex-1 p-6">
+          <div className={!page.fullWidth ? 'lg:ml-[20%]' : ''}>
+            <h1 className="mb-8 font-(family-name:--font-lora) text-4xl font-bold break-words hyphens-auto italic">
+              {page.title}
+            </h1>
           </div>
-          {!page.fullWidth && <BoardMemberSidebar boardMembers={page.boardMember} />}
-        </div>
+          <div className="flex flex-col gap-8 lg:flex-row">
+            {!page.fullWidth && (
+              <TableOfContents show={page.showTableOfContents} richText={page.content} />
+            )}
+            <div className={!page.fullWidth ? 'lg:w-[60%]' : 'lg:w-full'}>
+              <RichText data={page.content} locale={locale} />
+            </div>
+            {!page.fullWidth && <BoardMemberSidebar boardMembers={page.boardMember} />}
+          </div>
+        </section>
+        {page.showPartners && partners && <Partners partnerData={partners} />}
       </main>
-      {page.showPartners && partners && <Partners partnerData={partners} />}
     </>
   )
 }

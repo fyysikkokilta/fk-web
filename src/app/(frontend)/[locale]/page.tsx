@@ -89,18 +89,20 @@ export default async function LandingPage({ params }: LandingPageProps) {
     <>
       <DraftModeBanner isDraft={isDraft} />
       <RefreshRouteOnSave />
-      <FrontPageSlideshow page={landingPage} startingIndex={startingIndex} />
-      <main id="page-content" className="mx-auto mb-12 w-full max-w-7xl flex-1 p-6">
-        <div className="flex flex-col gap-8">
-          <FrontPageAnnouncement page={landingPage} locale={locale} />
-          <FrontPageCalendar page={landingPage} />
-          <h1 className="mb-8 font-(family-name:--font-lora) text-4xl font-bold break-words hyphens-auto italic">
-            {landingPage.title}
-          </h1>
-          <RichText data={landingPage.content} locale={locale} />
-        </div>
+      <main id="page-content" className="flex w-full flex-col">
+        <FrontPageSlideshow page={landingPage} startingIndex={startingIndex} />
+        <section className="mx-auto mb-12 w-full max-w-7xl flex-1 p-6">
+          <div className="flex flex-col gap-8">
+            <FrontPageAnnouncement page={landingPage} locale={locale} />
+            <FrontPageCalendar page={landingPage} />
+            <h1 className="mb-8 font-(family-name:--font-lora) text-4xl font-bold break-words hyphens-auto italic">
+              {landingPage.title}
+            </h1>
+            <RichText data={landingPage.content} locale={locale} />
+          </div>
+        </section>
+        {partners && <Partners partnerData={partners} />}
       </main>
-      {partners && <Partners partnerData={partners} />}
     </>
   )
 }

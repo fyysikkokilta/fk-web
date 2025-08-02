@@ -30,7 +30,7 @@ export function FrontPageSlideshow({ page, startingIndex }: FrontPageSlideshowPr
   }
 
   return (
-    <div className="relative z-0 mb-8 h-[calc(50svh)] w-full">
+    <section className="relative z-0 mb-8 h-[calc(50svh)] w-full">
       {page.bannerImages.map((image, index) => (
         <div
           key={(image as Media).id}
@@ -50,6 +50,6 @@ export function FrontPageSlideshow({ page, startingIndex }: FrontPageSlideshowPr
           />
         </div>
       ))}
-    </div>
+    </section>
   )
 }

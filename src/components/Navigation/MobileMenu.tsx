@@ -34,7 +34,7 @@ export function MobileMenu({ navigation }: { navigation: MainNavigation }) {
 
   return (
     <>
-      <header className="bg-fk-gray text-fk-white fixed top-0 right-0 left-0 z-50 flex items-center px-4 font-bold lg:hidden">
+      <nav className="bg-fk-gray text-fk-white fixed top-0 right-0 left-0 z-50 flex items-center px-4 font-bold lg:hidden">
         <NavbarBrand
           LinkElement={Link}
           logo={navigation.logo}
@@ -51,7 +51,7 @@ export function MobileMenu({ navigation }: { navigation: MainNavigation }) {
         >
           {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
-      </header>
+      </nav>
 
       {isMobileMenuOpen && (
         <>
