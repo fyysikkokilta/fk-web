@@ -9,6 +9,14 @@ export const CommitteeBlock: Block = {
       type: 'relationship',
       relationTo: 'official-roles',
       required: true
+    },
+    {
+      name: 'defaultImage',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        description: 'Select a default image to display there is no image for the official'
+      }
     }
   ]
 }

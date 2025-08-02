@@ -312,6 +312,10 @@ export interface CollapsibleBlock {
  */
 export interface CommitteeBlock {
   officialRole: number | OfficialRole;
+  /**
+   * Select a default image to display there is no image for the official
+   */
+  defaultImage?: (number | null) | Media;
   id?: string | null;
   blockName?: string | null;
   blockType: 'committee';

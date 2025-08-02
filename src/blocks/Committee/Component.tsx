@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { getTranslations } from 'next-intl/server'
 
 import type { CommitteeBlock as CommitteeBlockType, Media } from '@/payload-types'
 
@@ -6,8 +7,9 @@ interface CommitteeProps {
   block: CommitteeBlockType
 }
 
-export const Committee = ({ block }: CommitteeProps) => {
-  const { officialRole } = block
+export const Committee = async ({ block }: CommitteeProps) => {
+  const t = await getTranslations()
+  const { officialRole, defaultImage } = block
 
   if (typeof officialRole !== 'object') {
     return null
@@ -40,9 +42,20 @@ export const Committee = ({ block }: CommitteeProps) => {
                     sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 16vw"
                     className="object-cover"
                   />
+                ) : defaultImage ? (
+                  <Image
+                    src={(defaultImage as Media).url!}
+                    alt={(defaultImage as Media).alt || t('common.defaultImage')}
+                    blurDataURL={(defaultImage as Media).blurDataUrl}
+                    placeholder="blur"
+                    fill
+                    unoptimized
+                    sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 16vw"
+                    className="object-cover"
+                  />
                 ) : (
                   <div className="bg-fk-gray-lightest flex h-full w-full items-center justify-center">
-                    <span className="text-fk-gray-light">{'No image'}</span>
+                    <span className="text-fk-gray-light">{t('common.noImage')}</span>
                   </div>
                 )}
               </div>
