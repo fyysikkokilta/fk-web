@@ -42,16 +42,14 @@ export default async function RootLayout({
       lang={locale}
       className={`${sourceSans3.variable} ${sourceSans3.className} ${lora.variable} selection:bg-fk-yellow selection:text-fk-black scrollbar scrollbar-thumb-fk-yellow scrollbar-track-fk-black scroll-pt-4 scroll-smooth`}
     >
-      <body>
-        <main className="flex min-h-dvh flex-1 flex-shrink-0 flex-col items-center overflow-x-clip">
-          <NextIntlClientProvider>
-            <NextTopLoader color="#fbdb1d" showSpinner={false} showForHashAnchor={false} />
-            <SkipLink />
-            <MainNavigation navigation={navigation} />
-            {children}
-            <Footer footer={footer} locale={locale} />
-          </NextIntlClientProvider>
-        </main>
+      <body className="flex min-h-dvh flex-1 flex-shrink-0 flex-col items-center overflow-x-clip">
+        <NextIntlClientProvider>
+          <NextTopLoader color="#fbdb1d" showSpinner={false} showForHashAnchor={false} />
+          <SkipLink />
+          <MainNavigation navigation={navigation} />
+          {children}
+          <Footer footer={footer} locale={locale} />
+        </NextIntlClientProvider>
       </body>
     </html>
   )

@@ -107,7 +107,7 @@ export default async function Page({ params }: PageProps) {
       <RefreshRouteOnSave />
       <PayloadRedirects url={`/${slug?.join('/')}`} disableNotFound locale={locale} />
       <PageBanner page={page} />
-      <div className="mx-auto mb-12 w-full max-w-7xl flex-1 p-6">
+      <main id="page-content" className="mx-auto mb-12 w-full max-w-7xl flex-1 p-6">
         <div className={!page.fullWidth ? 'lg:ml-[20%]' : ''}>
           <h1 className="mb-8 font-(family-name:--font-lora) text-4xl font-bold break-words hyphens-auto italic">
             {page.title}
@@ -117,12 +117,12 @@ export default async function Page({ params }: PageProps) {
           {!page.fullWidth && (
             <TableOfContents show={page.showTableOfContents} richText={page.content} />
           )}
-          <div id="page-content" className={!page.fullWidth ? 'lg:w-[60%]' : 'lg:w-full'}>
+          <div className={!page.fullWidth ? 'lg:w-[60%]' : 'lg:w-full'}>
             <RichText data={page.content} locale={locale} />
           </div>
           {!page.fullWidth && <BoardMemberSidebar boardMembers={page.boardMember} />}
         </div>
-      </div>
+      </main>
       {page.showPartners && partners && <Partners partnerData={partners} />}
     </>
   )
