@@ -9,7 +9,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/admin', '/fi/fuksit-', '/en/fuksis-', '/fi/toimihenkilot', '/en/officials']
+      disallow: ['/admin', '/fi/fuksit-*', '/en/fuksis-*', '/fi/toimihenkilot', '/en/officials']
     },
     sitemap: `${serverURL}/sitemap.xml`
   }
