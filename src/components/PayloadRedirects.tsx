@@ -29,7 +29,15 @@ export const PayloadRedirects = async ({ disableNotFound, url, locale }: Payload
           : undefined
         : to?.url
 
-    if (redirectUrl) redirect({ href: redirectUrl, locale })
+    // Avoid self-redirects and locale duplication
+    if (redirectUrl) {
+      const normalizedTarget = redirectUrl.startsWith('/') ? redirectUrl : `/${redirectUrl}`
+      const normalizedSource = url.startsWith('/') ? url : `/${url}`
+      const isSamePath = normalizedTarget === normalizedSource || normalizedTarget === urlWithLocale
+      if (!isSamePath) {
+        redirect({ href: normalizedTarget, locale })
+      }
+    }
   }
 
   if (disableNotFound) return null

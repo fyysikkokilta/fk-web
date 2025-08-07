@@ -88,7 +88,7 @@ export default async function LandingPage({ params }: LandingPageProps) {
   return (
     <>
       <DraftModeBanner isDraft={isDraft} />
-      <RefreshRouteOnSave />
+      {isDraft ? <RefreshRouteOnSave /> : null}
       <main id="page-content" className="flex w-full flex-col">
         <FrontPageSlideshow page={landingPage} startingIndex={startingIndex} />
         <section className="mx-auto mb-12 w-full max-w-7xl flex-1 p-6">

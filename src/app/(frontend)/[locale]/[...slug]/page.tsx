@@ -104,7 +104,7 @@ export default async function Page({ params }: PageProps) {
   return (
     <>
       <DraftModeBanner pageId={page.id.toString()} isDraft={isDraft} hidden={page.hidden} />
-      <RefreshRouteOnSave />
+      {isDraft ? <RefreshRouteOnSave /> : null}
       <PayloadRedirects url={`/${slug?.join('/')}`} disableNotFound locale={locale} />
       <main id="page-content" className="flex w-full flex-col">
         <PageBanner page={page} />

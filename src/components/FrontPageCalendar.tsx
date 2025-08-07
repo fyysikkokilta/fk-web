@@ -11,9 +11,11 @@ interface FrontPageCalendarProps {
 }
 
 export const FrontPageCalendar = async ({ page }: FrontPageCalendarProps) => {
-  const calendars = page.calendar?.calendars
+  const calendars = page.calendar?.calendars || []
   const maxResults = page.calendar?.maxEvents || 8
   const timeMin = startOfDay(new Date()).toISOString()
+
+  if (calendars.length === 0) return null
 
   const calendarEvents = await Promise.all(
     calendars.map(async (gCal) => {
