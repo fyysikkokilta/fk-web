@@ -160,7 +160,7 @@ export const FormBlock = ({ block, locale }: FormBlockProps) => {
           aria-label={form.title || 'Form'}
           noValidate
         >
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-6">
             {form.fields &&
               form.fields.map((field, index) => {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
