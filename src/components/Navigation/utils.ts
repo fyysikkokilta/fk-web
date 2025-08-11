@@ -24,7 +24,7 @@ export function useGetPath() {
     ) => {
       if (item.type === 'page') {
         if (typeof item.page === 'number') return '#'
-        return item.page?.path || '#'
+        return `/${item.page?.path}` || '#'
       }
       if (item.type === 'external') {
         return item.url || '#'

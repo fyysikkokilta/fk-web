@@ -1,5 +1,3 @@
-'use client'
-
 import type { MainNavigation } from '@/payload-types'
 
 import { DesktopMenu } from './DesktopMenu'
