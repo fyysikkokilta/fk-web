@@ -14,7 +14,7 @@ export const PageBanner = ({ page }: PageBannerProps) => {
   }
 
   return (
-    <section className="relative z-0 mb-8 h-[calc(30svh)] w-full">
+    <section className="relative mb-8 h-[calc(30svh)] w-full">
       <Image
         priority
         src={image.url || ''}

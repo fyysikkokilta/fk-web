@@ -196,17 +196,21 @@ export const CalendarClient = ({ events, locale }: CalendarClientProps) => {
 
         .rbc-row-bg {
           display: flex;
+          right: 0px;
           flex: 1;
           min-height: 120px;
         }
 
         .rbc-date-cell {
           padding: 8px 8px 4px 8px;
-          border-right: 1px solid var(--calendar-grid-line);
           height: fit-content;
           flex: 1;
           display: flex;
           flex-direction: column;
+        }
+
+        .rbc-date-cell + .rbc-date-cell {
+          border-left: 1px solid var(--calendar-grid-line);
         }
 
         .rbc-date-cell .rbc-date-cell-content {

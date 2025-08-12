@@ -17,7 +17,7 @@ export default async function NotFound() {
         fill
         unoptimized
       />
-      <div className="bg-fk-black relative z-10 flex flex-col items-center rounded-xl p-8 text-center shadow-xl">
+      <div className="bg-fk-black relative flex flex-col items-center rounded-xl p-8 text-center shadow-xl">
         <h2 className="text-fk-yellow mb-4 animate-bounce text-4xl font-extrabold drop-shadow-lg">
           {t('notFound.title')}
         </h2>
