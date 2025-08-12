@@ -203,7 +203,6 @@ export const CalendarClient = ({ events, locale }: CalendarClientProps) => {
         .rbc-date-cell {
           padding: 8px 8px 4px 8px;
           border-right: 1px solid var(--calendar-grid-line);
-          background-color: var(--calendar-primary);
           height: fit-content;
           flex: 1;
           display: flex;
