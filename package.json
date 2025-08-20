@@ -9,7 +9,7 @@
     "dev": "next dev --turbo",
     "generate:importmap": "payload generate:importmap",
     "generate:types": "payload generate:types",
-    "lint": "next lint",
+    "lint": "eslint .",
     "migrate": "payload migrate",
     "payload": "payload",
     "start": "next start",

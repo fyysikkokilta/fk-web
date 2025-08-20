@@ -16,6 +16,9 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   {
+    ignores: ['node_modules/**', '.next/**', 'out/**', 'build/**', 'next-env.d.ts']
+  },
+  {
     ignores: ['**/importMap.js', 'src/migrations/**']
   },
   ...compat.extends('next/core-web-vitals', 'next/typescript', 'plugin:prettier/recommended'),
