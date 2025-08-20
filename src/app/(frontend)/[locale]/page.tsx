@@ -69,13 +69,14 @@ export const generateStaticParams = async () => {
   return Promise.resolve([])
 }
 
-export default async function LandingPage({ params }: LandingPageProps) {
+export default async function LandingPage({ params }: PageProps<'/[locale]'>) {
   const { locale } = await params
-  setRequestLocale(locale)
+  const nextIntlLocale = locale as Locale
+  setRequestLocale(nextIntlLocale)
 
   const isDraft = await isDraftMode()
-  const landingPage = await getLandingPage(locale)
-  const partners = await getPartners(locale)
+  const landingPage = await getLandingPage(nextIntlLocale)
+  const partners = await getPartners(nextIntlLocale)
 
   if (!landingPage) {
     notFound()
@@ -93,12 +94,12 @@ export default async function LandingPage({ params }: LandingPageProps) {
         <FrontPageSlideshow page={landingPage} startingIndex={startingIndex} />
         <section className="mx-auto mb-12 w-full max-w-7xl flex-1 p-6">
           <div className="flex flex-col gap-8">
-            <FrontPageAnnouncement page={landingPage} locale={locale} />
+            <FrontPageAnnouncement page={landingPage} locale={nextIntlLocale} />
             <FrontPageCalendar page={landingPage} />
             <h1 className="mb-8 font-(family-name:--font-lora) text-4xl font-bold break-words hyphens-auto italic">
               {landingPage.title}
             </h1>
-            <RichText data={landingPage.content} locale={locale} />
+            <RichText data={landingPage.content} locale={nextIntlLocale} />
           </div>
         </section>
         {partners && <Partners partnerData={partners} />}

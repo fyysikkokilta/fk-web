@@ -10,13 +10,10 @@ import { renderEmail } from '@/emails/renderEmail'
 import { getNewsletter } from '@/lib/getNewsletter'
 import { getNewsletterSettings } from '@/lib/getNewsletterSettings'
 
-export default async function NewsletterPage({
-  params
-}: {
-  params: Promise<{ locale: Locale; id: string }>
-}) {
+export default async function NewsletterPage({ params }: PageProps<'/newsletters/[locale]/[id]'>) {
   const { locale, id } = await params
-  setRequestLocale(locale)
+  const nextIntlLocale = locale as Locale
+  setRequestLocale(nextIntlLocale)
 
   const payload = await getPayload({
     config: configPromise
@@ -28,17 +25,20 @@ export default async function NewsletterPage({
     notFound()
   }
 
-  const newsletter = await getNewsletter(id, locale)
+  const newsletter = await getNewsletter(id, nextIntlLocale)
 
   if (!newsletter) {
     notFound()
   }
 
-  const { weekly, career } = await getNewsletterSettings(locale)
+  const { weekly, career } = await getNewsletterSettings(nextIntlLocale)
 
-  const html = await renderEmail(newsletter, weekly, career, locale)
+  const html = await renderEmail(newsletter, weekly, career, nextIntlLocale)
 
-  console.info('[Next.js] Rendering newsletter preview page', `/newsletters/${locale}/${id}`)
+  console.info(
+    '[Next.js] Rendering newsletter preview page',
+    `/newsletters/${nextIntlLocale}/${id}`
+  )
 
   return (
     <>

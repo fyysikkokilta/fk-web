@@ -1,17 +1,13 @@
 import { notFound } from 'next/navigation'
-import { hasLocale, Locale, NextIntlClientProvider } from 'next-intl'
+import { hasLocale, NextIntlClientProvider } from 'next-intl'
 import { setRequestLocale } from 'next-intl/server'
-import React from 'react'
 
 import { routing } from '@/i18n/routing'
 
 export default async function NewslettersLayout({
   children,
   params
-}: {
-  children: React.ReactNode
-  params: Promise<{ locale: Locale }>
-}) {
+}: LayoutProps<'/newsletters/[locale]'>) {
   const { locale } = await params
   if (!hasLocale(routing.locales, locale)) {
     notFound()

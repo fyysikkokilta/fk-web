@@ -1,10 +1,9 @@
 import '../globals.css'
 
 import { notFound } from 'next/navigation'
-import { hasLocale, Locale, NextIntlClientProvider } from 'next-intl'
+import { hasLocale, NextIntlClientProvider } from 'next-intl'
 import { setRequestLocale } from 'next-intl/server'
 import NextTopLoader from 'nextjs-toploader'
-import React from 'react'
 
 import { lora, sourceSans3 } from '@/app/fonts'
 import { Footer } from '@/components/Footer'
@@ -18,13 +17,7 @@ export const generateStaticParams = async () => {
   return Promise.resolve([])
 }
 
-export default async function RootLayout({
-  children,
-  params
-}: {
-  children: React.ReactNode
-  params: Promise<{ locale: Locale }>
-}) {
+export default async function RootLayout({ children, params }: LayoutProps<'/[locale]'>) {
   const { locale } = await params
   if (!hasLocale(routing.locales, locale)) {
     notFound()

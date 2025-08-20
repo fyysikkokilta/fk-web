@@ -15,13 +15,6 @@ import { getPage } from '@/lib/getPage'
 import { getPartners } from '@/lib/getPartners'
 import { isDraftMode } from '@/utils/draftMode'
 
-interface PageProps {
-  params: Promise<{
-    slug: string[]
-    locale: Locale
-  }>
-}
-
 // Revalidate at least once per day
 export const revalidate = 86400
 
@@ -29,10 +22,11 @@ export const generateStaticParams = async () => {
   return Promise.resolve([])
 }
 
-export async function generateMetadata({ params }: PageProps) {
+export async function generateMetadata({ params }: PageProps<'/[locale]/[...slug]'>) {
   const { slug, locale } = await params
-  const page = await getPage(slug.join('/'), locale)
-  const mainNavigation = await getMainNavigation(locale)
+  const nextIntlLocale = locale as Locale
+  const page = await getPage(slug.join('/'), nextIntlLocale)
+  const mainNavigation = await getMainNavigation(nextIntlLocale)
   const siteName = mainNavigation.title
 
   if (!page) {
@@ -82,30 +76,31 @@ export async function generateMetadata({ params }: PageProps) {
   }
 }
 
-export default async function Page({ params }: PageProps) {
+export default async function Page({ params }: PageProps<'/[locale]/[...slug]'>) {
   const { slug, locale } = await params
-  setRequestLocale(locale)
+  const nextIntlLocale = locale as Locale
+  setRequestLocale(nextIntlLocale)
 
   const isDraft = await isDraftMode()
-  const page = await getPage(slug?.join('/'), locale)
-  const partners = await getPartners(locale)
+  const page = await getPage(slug?.join('/'), nextIntlLocale)
+  const partners = await getPartners(nextIntlLocale)
 
   if (!page) {
-    return <PayloadRedirects url={`/${slug?.join('/')}`} locale={locale} />
+    return <PayloadRedirects url={`/${slug?.join('/')}`} locale={nextIntlLocale} />
   }
 
   // If not in draft mode and page is not published, show 404
   if (!isDraft && page._status !== 'published') {
-    return <PayloadRedirects url={`/${slug?.join('/')}`} locale={locale} />
+    return <PayloadRedirects url={`/${slug?.join('/')}`} locale={nextIntlLocale} />
   }
 
-  console.info('[Next.js] Rendering page', `/${locale}/${slug?.join('/')}`)
+  console.info('[Next.js] Rendering page', `/${nextIntlLocale}/${slug?.join('/')}`)
 
   return (
     <>
       <DraftModeBanner pageId={page.id.toString()} isDraft={isDraft} hidden={page.hidden} />
       {isDraft ? <RefreshRouteOnSave /> : null}
-      <PayloadRedirects url={`/${slug?.join('/')}`} disableNotFound locale={locale} />
+      <PayloadRedirects url={`/${slug?.join('/')}`} disableNotFound locale={nextIntlLocale} />
       <main id="page-content" className="flex w-full flex-col">
         <PageBanner page={page} />
         <section className="mx-auto mb-12 w-full max-w-7xl flex-1 p-6">
@@ -119,7 +114,7 @@ export default async function Page({ params }: PageProps) {
               <TableOfContents show={page.showTableOfContents} richText={page.content} />
             )}
             <div className={!page.fullWidth ? 'lg:w-[60%]' : 'lg:w-full'}>
-              <RichText data={page.content} locale={locale} />
+              <RichText data={page.content} locale={nextIntlLocale} />
             </div>
             {!page.fullWidth && <BoardMemberSidebar boardMembers={page.boardMember} />}
           </div>
