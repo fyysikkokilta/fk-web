@@ -7,6 +7,7 @@
   "scripts": {
     "build": "next build --turbo",
     "dev": "next dev --turbo",
+    "typegen": "next typegen",
     "generate:importmap": "payload generate:importmap",
     "generate:types": "payload generate:types",
     "lint": "eslint .",
