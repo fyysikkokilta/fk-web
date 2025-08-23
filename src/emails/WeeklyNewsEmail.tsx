@@ -133,7 +133,10 @@ const WeeklyNewsEmail = ({
             {/* Table of Contents */}
             <Section className="py-5">
               {Object.entries(newsGroups).map(([type, group]) => {
-                const { thisWeek, followingWeeks } = groupNewsByDate(group.items)
+                const { thisWeek, followingWeeks } = groupNewsByDate(
+                  group.items,
+                  weeklyNews.newsletterNumber
+                )
                 return (
                   <div key={type}>
                     <div className="my-1 text-2xl font-bold italic">{group.type}</div>

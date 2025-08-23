@@ -70,6 +70,7 @@ export async function GET(request: NextRequest) {
     // Format the newsletter for Telegram
     const telegramMessage = formatWeeklyNewsForTelegram(
       latestNewsletter.newsItems,
+      latestNewsletter.newsletterNumber,
       latestNewsletter.title,
       locale,
       baseUrl

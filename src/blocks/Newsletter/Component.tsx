@@ -15,40 +15,46 @@ export const Newsletter = ({ block, locale }: NewsletterBlockProps) => {
     return null
   }
 
-  const newsGroups = groupNewsByType(block.newsletter.newsItems || [])
+  const newsletter = block.newsletter
+  const newsGroups = groupNewsByType(newsletter.newsItems || [])
 
   return (
     <div className="mx-auto max-w-4xl">
       <div className="mb-8 flex items-center justify-between">
-        <h1 className="text-4xl font-bold">{block.newsletter.title}</h1>
+        <h2 id={slugify(newsletter.title)} className="text-4xl font-bold">
+          {newsletter.title}
+        </h2>
       </div>
 
       <div className="space-y-8">
-        {block.newsletter.greetings && (
+        {newsletter.greetings && (
           <div className="max-w-none">
-            <RichText data={block.newsletter.greetings} locale={locale} />
+            <RichText data={newsletter.greetings} locale={locale} />
           </div>
         )}
 
         {Object.entries(newsGroups).map(([type, group]) => {
-          const { thisWeek, followingWeeks } = groupNewsByDate(group.items)
+          const { thisWeek, followingWeeks } = groupNewsByDate(
+            group.items,
+            newsletter.newsletterNumber
+          )
           return (
             <div key={type} className="space-y-6">
               {thisWeek.length > 0 && (
                 <div className="space-y-4">
-                  <h2
+                  <h3
                     id={slugify(getSectionHeading(group.type, 'thisWeek', locale))}
                     className="text-2xl font-medium"
                   >
                     {getSectionHeading(group.type, 'thisWeek', locale)}
-                  </h2>
+                  </h3>
                   {thisWeek.map((newsItem) => {
                     if (!newsItem || typeof newsItem !== 'object') return null
                     return (
                       <div key={newsItem.id} className="space-y-4">
-                        <h3 id={slugify(newsItem.title)} className="text-xl font-semibold">
+                        <h4 id={slugify(newsItem.title)} className="text-xl font-semibold">
                           {newsItem.title}
-                        </h3>
+                        </h4>
                         <div className="max-w-none">
                           <RichText data={newsItem.content} locale={locale} />
                         </div>
@@ -60,19 +66,19 @@ export const Newsletter = ({ block, locale }: NewsletterBlockProps) => {
 
               {followingWeeks.length > 0 && (
                 <div className="space-y-4">
-                  <h2
+                  <h3
                     id={slugify(getSectionHeading(group.type, 'followingWeeks', locale))}
                     className="text-2xl font-medium"
                   >
                     {getSectionHeading(group.type, 'followingWeeks', locale)}
-                  </h2>
+                  </h3>
                   {followingWeeks.map((newsItem) => {
                     if (!newsItem || typeof newsItem !== 'object') return null
                     return (
                       <div key={newsItem.id} className="space-y-4">
-                        <h3 id={slugify(newsItem.title)} className="text-xl font-semibold">
+                        <h4 id={slugify(newsItem.title)} className="text-xl font-semibold">
                           {newsItem.title}
-                        </h3>
+                        </h4>
                         <div className="max-w-none">
                           <RichText data={newsItem.content} locale={locale} />
                         </div>
@@ -85,9 +91,9 @@ export const Newsletter = ({ block, locale }: NewsletterBlockProps) => {
           )
         })}
 
-        {block.newsletter.closingWords && (
+        {newsletter.closingWords && (
           <div className="max-w-none">
-            <RichText data={block.newsletter.closingWords} locale={locale} />
+            <RichText data={newsletter.closingWords} locale={locale} />
           </div>
         )}
       </div>

@@ -1,4 +1,4 @@
-import { isThisWeek, parseISO } from 'date-fns'
+import { isSameWeek, parse, parseISO } from 'date-fns'
 import { Locale } from 'next-intl'
 
 import { env } from '@/env'
@@ -33,14 +33,18 @@ export const groupNewsByType = (newsItems: Newsletter['newsItems']) => {
   return groups
 }
 
-export const groupNewsByDate = (newsItems: Newsletter['newsItems']) => {
+export const groupNewsByDate = (
+  newsItems: Newsletter['newsItems'],
+  weeklyNumber: Newsletter['newsletterNumber']
+) => {
+  const weeklyDate = parse(weeklyNumber, 'I/R', new Date())
   const thisWeek: typeof newsItems = []
   const followingWeeks: typeof newsItems = []
 
   newsItems.forEach((item) => {
     if (!item || typeof item !== 'object' || !item.date) return
     const date = parseISO(item.date)
-    if (isThisWeek(date)) {
+    if (isSameWeek(date, weeklyDate, { weekStartsOn: 1 })) {
       thisWeek.push(item)
     } else {
       followingWeeks.push(item)
@@ -68,6 +72,7 @@ export const getSectionHeading = (
 
 export function formatWeeklyNewsForTelegram(
   newsItems: Newsletter['newsItems'],
+  weeklyNumber: Newsletter['newsletterNumber'],
   title: string,
   locale: Locale,
   baseUrl: string
@@ -79,7 +84,7 @@ export function formatWeeklyNewsForTelegram(
 
   for (const category of Object.values(groupedByType)) {
     const { type, items } = category
-    const { thisWeek, followingWeeks } = groupNewsByDate(items)
+    const { thisWeek, followingWeeks } = groupNewsByDate(items, weeklyNumber)
 
     formatted += `<b>${type}</b>\n`
 
@@ -131,7 +136,13 @@ export async function sendNewsletterToTelegram(
 
   const sanitizedChannelId = `@${telegramChannelId.replace('@', '')}`
 
-  const formattedNewsletter = formatWeeklyNewsForTelegram(newsItems, title, locale, baseUrl)
+  const formattedNewsletter = formatWeeklyNewsForTelegram(
+    newsItems,
+    newsletter.newsletterNumber,
+    title,
+    locale,
+    baseUrl
+  )
 
   try {
     await fetch(`https://api.telegram.org/bot${telegramBotToken}/sendMessage`, {

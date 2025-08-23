@@ -109,20 +109,25 @@ const extractHeadingsFromRichText = (data: SerializedEditorState, locale: Locale
             const newsletter = typedNode.fields as NewsletterBlock
             const newsletterData = newsletter.newsletter
             if (typeof newsletterData === 'number') return
+            const newsletterTitle = createHeading(newsletterData.title, 2)
+            headings.push(newsletterTitle)
             const newsGroups = groupNewsByType(newsletterData.newsItems || [])
             const sortedNewsHeadings = Object.values(newsGroups)
               .flatMap((group) => {
-                const { thisWeek, followingWeeks } = groupNewsByDate(group.items)
+                const { thisWeek, followingWeeks } = groupNewsByDate(
+                  group.items,
+                  newsletterData.newsletterNumber
+                )
 
                 const thisWeekTitle = getSectionHeading(group.type, 'thisWeek', locale)
-                const groupTitleThisWeek = createHeading(thisWeekTitle, 2)
+                const groupTitleThisWeek = createHeading(thisWeekTitle, 3)
 
                 const followingWeeksTitle = getSectionHeading(group.type, 'followingWeeks', locale)
-                const groupTitleFollowingWeeks = createHeading(followingWeeksTitle, 2)
+                const groupTitleFollowingWeeks = createHeading(followingWeeksTitle, 3)
 
                 const thisWeekHeadings = thisWeek
                   .filter((item) => typeof item !== 'number')
-                  .map((item) => createHeading(item.title, 3))
+                  .map((item) => createHeading(item.title, 4))
 
                 if (thisWeekHeadings.length > 0) {
                   thisWeekHeadings.unshift(groupTitleThisWeek)
@@ -130,7 +135,7 @@ const extractHeadingsFromRichText = (data: SerializedEditorState, locale: Locale
 
                 const followingWeeksHeadings = followingWeeks
                   .filter((item) => typeof item !== 'number')
-                  .map((item) => createHeading(item.title, 3))
+                  .map((item) => createHeading(item.title, 4))
 
                 if (followingWeeksHeadings.length > 0) {
                   followingWeeksHeadings.unshift(groupTitleFollowingWeeks)
