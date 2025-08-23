@@ -58,7 +58,7 @@ const CustomUploadComponent = ({ node }: { node: SerializedUploadNode }) => {
       <Img
         alt={alt ?? ''}
         height={heightToUse ?? 0}
-        src={url ?? ''}
+        src={encodeURI(url ?? '')}
         width={widthToUse ?? 0}
         className="object-contain"
       />
@@ -69,7 +69,11 @@ const CustomUploadComponent = ({ node }: { node: SerializedUploadNode }) => {
     if (typeof uploadDoc !== 'object') {
       return null
     }
-    return <Link href={`${serverUrl}${uploadDoc.url}`}>{uploadDoc.filename}</Link>
+    return (
+      <Link href={encodeURI(`${serverUrl}${uploadDoc.url}`)} className="text-orange">
+        {uploadDoc.filename}
+      </Link>
+    )
   }
 
   return null
@@ -89,7 +93,11 @@ const CustomRelationshipComponent = ({
       if (typeof value !== 'object') {
         return null
       }
-      return <Link href={`${serverUrl}/${locale}/${value.path}`}>{value.title}</Link>
+      return (
+        <Link href={encodeURI(`${serverUrl}/${locale}/${value.path}`)} className="text-orange">
+          {value.title}
+        </Link>
+      )
     default:
       return null
   }

@@ -53,6 +53,10 @@ const WeeklyNewsEmail = ({
               green: '#28a745',
               red: '#911f2f',
               purple: '#6f42c1'
+            },
+            fontFamily: {
+              'source-sans': ['Source Sans 3', 'sans-serif'],
+              lora: ['Lora', 'Georgia']
             }
           }
         }
@@ -78,23 +82,6 @@ const WeeklyNewsEmail = ({
               format: 'woff2'
             }}
           />
-          <style>
-            {`
-              a {
-                text-decoration: none;
-                font-family: 'Source Sans 3', sans-serif;
-                color: #ff8a04 !important;
-              }
-
-              h1, h2, h3, h4, h5, h6 {
-                font-family: Lora, Georgia;
-              }
-
-              p {
-                font-family: 'Source Sans 3', sans-serif;
-              }
-            `}
-          </style>
         </Head>
         <Preview>{previewText || weeklyNews.title}</Preview>
         <Body className="bg-fk-white">
@@ -103,12 +90,14 @@ const WeeklyNewsEmail = ({
             <Section className="w-full">
               <Row className="flex w-full items-center justify-between">
                 <Column className="w-full">
-                  <Heading className="m-0 text-3xl font-bold text-wrap">{weeklyNews.title}</Heading>
+                  <Heading className="font-lora m-0 text-3xl font-bold text-wrap">
+                    {weeklyNews.title}
+                  </Heading>
                 </Column>
                 <Column className="w-full">
                   {newsletterSettings.logo && typeof newsletterSettings.logo === 'object' && (
                     <Img
-                      src={newsletterSettings.logo.url ?? ''}
+                      src={encodeURI(newsletterSettings.logo.url ?? '')}
                       alt={newsletterSettings.logo.alt ?? 'Weekly news header logo'}
                       width={newsletterSettings.logo.width ?? 0}
                       height={newsletterSettings.logo.height ?? 0}
@@ -122,7 +111,7 @@ const WeeklyNewsEmail = ({
             {/* Greetings */}
             {weeklyNews.greetings && (
               <Section className="py-5">
-                <Text className="text-base leading-6">
+                <Text className="font-source-sans text-base leading-6">
                   <EmailRichText data={weeklyNews.greetings} locale={locale} />
                 </Text>
               </Section>
@@ -139,11 +128,11 @@ const WeeklyNewsEmail = ({
                 )
                 return (
                   <div key={type}>
-                    <div className="my-1 text-2xl font-bold italic">{group.type}</div>
+                    <div className="font-lora my-1 text-2xl font-bold italic">{group.type}</div>
 
                     {thisWeek.length > 0 && (
                       <>
-                        <div className="my-1 text-xl font-medium italic">
+                        <div className="font-lora my-1 text-xl font-medium italic">
                           {getLocalizedTimeframe('thisWeek', locale)}
                         </div>
                         <ul>
@@ -155,7 +144,7 @@ const WeeklyNewsEmail = ({
                                 <Link
                                   href={`#${slugify(item.title)}`}
                                   target="_self"
-                                  className="no-underline"
+                                  className="font-source-sans text-orange no-underline"
                                 >
                                   {item.title}
                                 </Link>
@@ -168,7 +157,7 @@ const WeeklyNewsEmail = ({
 
                     {followingWeeks.length > 0 && (
                       <>
-                        <div className="my-1 text-xl font-medium italic">
+                        <div className="font-lora my-1 text-xl font-medium italic">
                           {getLocalizedTimeframe('followingWeeks', locale)}
                         </div>
                         <ul>
@@ -180,7 +169,7 @@ const WeeklyNewsEmail = ({
                                 <Link
                                   href={`#${slugify(item.title)}`}
                                   target="_self"
-                                  className="no-underline"
+                                  className="font-source-sans text-orange no-underline"
                                 >
                                   {item.title}
                                 </Link>
@@ -212,12 +201,12 @@ const WeeklyNewsEmail = ({
                     <Container key={newsItem.id} className="mb-8">
                       <Heading
                         as="h2"
-                        className="my-4 text-2xl font-bold italic"
+                        className="font-lora my-4 text-2xl font-bold italic"
                         id={slugify(newsItem.title)}
                       >
                         {newsItem.title}
                       </Heading>
-                      <Text className="text-base leading-6">
+                      <Text className="font-source-sans text-base leading-6">
                         <EmailRichText data={newsItem.content} locale={locale} />
                       </Text>
                     </Container>
@@ -239,7 +228,7 @@ const WeeklyNewsEmail = ({
             {/* Footer */}
             {newsletterSettings.footer && (
               <Section className="mt-8 border-t pt-8">
-                <Text className="text-base leading-6">
+                <Text className="font-source-sans text-base leading-6">
                   <EmailRichText data={newsletterSettings.footer} locale={locale} />
                 </Text>
               </Section>

@@ -49,6 +49,10 @@ const CareerNewsEmail = ({
               green: '#28a745',
               red: '#911f2f',
               purple: '#6f42c1'
+            },
+            fontFamily: {
+              'source-sans': ['Source Sans 3', 'sans-serif'],
+              lora: ['Lora', 'serif']
             }
           }
         }
@@ -74,38 +78,21 @@ const CareerNewsEmail = ({
               format: 'woff2'
             }}
           />
-          <style>
-            {`
-              a {
-                text-decoration: none;
-                font-family: 'Source Sans 3', sans-serif;
-                color: #ff8a04 !important;
-              }
-
-              h1, h2, h3, h4, h5, h6 {
-                font-family: 'Lora', serif;
-                color: #000000;
-              }
-
-              p {
-                font-family: 'Source Sans 3', sans-serif;
-                color: #000000;
-              }
-            `}
-          </style>
         </Head>
         <Preview>{previewText || careerNews.title}</Preview>
         <Body className="bg-fk-white">
           <Container className="mx-auto max-w-[600px] py-5 pb-12">
             {/* Header */}
             <Section className="w-full">
-              <Heading className="m-0 text-3xl font-bold text-wrap">{careerNews.title}</Heading>
+              <Heading className="font-lora m-0 text-3xl font-bold text-wrap">
+                {careerNews.title}
+              </Heading>
             </Section>
 
             {/* Greetings */}
             {careerNews.greetings && (
               <Section className="py-5">
-                <Text className="text-base leading-6">
+                <Text className="font-source-sans text-base leading-6">
                   <EmailRichText data={careerNews.greetings} locale={locale} />
                 </Text>
               </Section>
@@ -115,7 +102,7 @@ const CareerNewsEmail = ({
             <Section className="py-5">
               {Object.entries(newsGroups).map(([type, group]) => (
                 <div key={type}>
-                  <Heading as="h2" className="my-1 text-2xl font-bold italic">
+                  <Heading as="h2" className="font-lora my-1 text-2xl font-bold italic">
                     {group.type}
                   </Heading>
 
@@ -128,7 +115,7 @@ const CareerNewsEmail = ({
                           <Link
                             href={`#${slugify(item.title)}`}
                             target="_self"
-                            className="no-underline"
+                            className="font-source-sans text-orange no-underline"
                           >
                             {item.title}
                           </Link>
@@ -155,12 +142,12 @@ const CareerNewsEmail = ({
                     <Container key={newsItem.id} className="mb-8">
                       <Heading
                         as="h2"
-                        className="my-4 text-2xl font-bold italic"
+                        className="font-lora my-4 text-2xl font-bold italic"
                         id={slugify(newsItem.title)}
                       >
                         {newsItem.title}
                       </Heading>
-                      <Text className="text-base leading-6">
+                      <Text className="font-source-sans text-base leading-6">
                         <EmailRichText data={newsItem.content} locale={locale} />
                       </Text>
                     </Container>
@@ -178,7 +165,7 @@ const CareerNewsEmail = ({
             {/* Footer */}
             {newsletterSettings.footer && (
               <Section className="mt-8 border-t pt-8">
-                <Text className="text-base leading-6">
+                <Text className="font-source-sans text-base leading-6">
                   <EmailRichText data={newsletterSettings.footer} locale={locale} />
                 </Text>
               </Section>
