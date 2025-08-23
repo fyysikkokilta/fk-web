@@ -30,7 +30,7 @@ export const NewsletterSettings: GlobalConfig = {
               relationTo: 'media',
               required: true,
               admin: {
-                description: 'Logo to be used in the newsletter'
+                description: 'Logo to be used in the weekly newsletter'
               }
             },
             {
@@ -50,7 +50,8 @@ export const NewsletterSettings: GlobalConfig = {
               }),
               localized: true,
               admin: {
-                description: 'Footer text for the newsletter'
+                description:
+                  'Footer text for the weekly newsletter. This will shown below the closing words in the newsletter email. This is not shown in the Newsletter block.'
               }
             },
             {
@@ -58,7 +59,8 @@ export const NewsletterSettings: GlobalConfig = {
               type: 'email',
               required: true,
               admin: {
-                description: 'Sender email for the newsletter'
+                description:
+                  'Sender email for the weekly newsletter. This is the email address that will be shown in the newsletter email.'
               }
             },
             {
@@ -67,7 +69,8 @@ export const NewsletterSettings: GlobalConfig = {
               required: true,
               localized: true,
               admin: {
-                description: 'Recipient email for the newsletter'
+                description:
+                  'Recipient email for the weekly newsletter. This is the email address that will receive the newsletter email. Google groups should be configured to allow emails from Mailgun.'
               }
             },
             {
@@ -118,7 +121,7 @@ export const NewsletterSettings: GlobalConfig = {
                 }
               }),
               admin: {
-                description: 'Footer text for the newsletter'
+                description: 'Footer text for the career newsletter'
               }
             },
             {
@@ -126,7 +129,7 @@ export const NewsletterSettings: GlobalConfig = {
               type: 'email',
               required: true,
               admin: {
-                description: 'Sender email for the newsletter'
+                description: 'Sender email for the career newsletter'
               }
             },
             {
@@ -134,7 +137,8 @@ export const NewsletterSettings: GlobalConfig = {
               type: 'email',
               required: true,
               admin: {
-                description: 'Recipient email for the newsletter'
+                description:
+                  'Recipient email for the career newsletter. This is the email address that will receive the newsletter email. Google groups should be configured to allow emails from Mailgun.'
               }
             }
           ]

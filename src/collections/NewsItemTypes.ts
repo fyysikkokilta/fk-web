@@ -14,14 +14,20 @@ export const NewsItemTypes: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'label',
-    group: 'Newsletters'
+    group: 'Newsletters',
+    description:
+      'Manage news item types. These are the types of news items that can be created in the "News Items" section.'
   },
   fields: [
     {
       name: 'label',
       type: 'text',
       required: true,
-      localized: true
+      localized: true,
+      admin: {
+        description:
+          'The label of the news item type. This is shown in the newsletter. Remember to define all locales.'
+      }
     },
     {
       name: 'value',
@@ -29,7 +35,8 @@ export const NewsItemTypes: CollectionConfig = {
       required: true,
       unique: true,
       admin: {
-        description: 'Unique identifier for the type (e.g., "guild-events")'
+        description:
+          'Unique identifier for the type (e.g., "guild-events"). This is used to identify the type of news item.'
       }
     }
   ],

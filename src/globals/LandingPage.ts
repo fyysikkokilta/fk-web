@@ -46,14 +46,16 @@ export const LandingPage: GlobalConfig = {
               required: true,
               hasMany: true,
               admin: {
-                description: 'Banner images of the landing page slideshow'
+                description:
+                  'Banner images of the landing page slideshow. Multiple images are shown in a slideshow.'
               }
             },
             {
               name: 'announcement',
               type: 'group',
               admin: {
-                description: 'Announcement for the landing page'
+                description:
+                  'Announcement for the landing page. This is shown above the calendar. Used for example for guild meeting announcements.'
               },
               fields: [
                 {
@@ -61,7 +63,8 @@ export const LandingPage: GlobalConfig = {
                   type: 'checkbox',
                   defaultValue: false,
                   admin: {
-                    description: 'Enable the announcement'
+                    description:
+                      'Enable the announcement. If disabled, the announcement will not be shown.'
                   }
                 },
                 {
@@ -80,7 +83,7 @@ export const LandingPage: GlobalConfig = {
                     }
                   }),
                   admin: {
-                    description: 'Content of the announcement'
+                    description: 'Content of the announcement. Remember to provide all locales.'
                   },
                   localized: true
                 },
@@ -89,7 +92,7 @@ export const LandingPage: GlobalConfig = {
                   label: 'Background Color',
                   required: true,
                   admin: {
-                    description: 'Background color of the announcement'
+                    description: 'Background color of the announcement.'
                   },
                   defaultValue: '#fbdb1d'
                 }),
@@ -98,7 +101,7 @@ export const LandingPage: GlobalConfig = {
                   label: 'Text Color',
                   required: true,
                   admin: {
-                    description: 'Text color of the announcement'
+                    description: 'Text color of the announcement.'
                   },
                   defaultValue: '#000000'
                 })
@@ -107,6 +110,10 @@ export const LandingPage: GlobalConfig = {
             {
               name: 'calendar',
               type: 'group',
+              admin: {
+                description:
+                  'Calendars for the landing page. This is shown below the announcement. Multiple calendars can be added.'
+              },
               fields: [
                 {
                   name: 'calendars',
@@ -119,7 +126,8 @@ export const LandingPage: GlobalConfig = {
                       type: 'text',
                       required: true,
                       admin: {
-                        description: 'Google Calendar ID (found in calendar settings)'
+                        description:
+                          'Google Calendar ID (the address of google calendar). This is found in the calendar settings.'
                       }
                     },
                     ColorField({
@@ -138,7 +146,8 @@ export const LandingPage: GlobalConfig = {
                       name: 'icon',
                       label: 'Icons',
                       admin: {
-                        description: 'Select icons for the calendar'
+                        description:
+                          'Select icons for the calendar. These are random icons that are shown in the calendar. The icon is shown in the top right corner of the calendar event.'
                       },
                       hasMany: true
                     })
@@ -150,7 +159,7 @@ export const LandingPage: GlobalConfig = {
                   required: true,
                   defaultValue: 8,
                   admin: {
-                    description: 'Maximum number of events to display'
+                    description: 'Maximum number of events to display.'
                   }
                 }
               ]

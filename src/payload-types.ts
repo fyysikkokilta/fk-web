@@ -177,7 +177,7 @@ export interface BoardBlock {
   blockType: 'board';
 }
 /**
- * Manage board members
+ * Manage board members. When creating the board members for the new year, you can just replace the information for the current entries instead of creating new ones.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "board-members".
@@ -194,7 +194,7 @@ export interface BoardMember {
   createdAt: string;
 }
 /**
- * Upload and manage media files
+ * Upload and manage media files. If you want to change an image in the media library, please replace the image with the new one instead of uploading a new version. Beware that this will change the image in all pages that use it.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
@@ -321,7 +321,7 @@ export interface CommitteeBlock {
   blockType: 'committee';
 }
 /**
- * Manage official roles
+ * Manage official roles. When creating the official table for the new year, you should use the upload panel found in "/admin/actions" to upload the official table.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "official-roles".
@@ -337,7 +337,7 @@ export interface OfficialRole {
   createdAt: string;
 }
 /**
- * Manage officials
+ * Manage officials. When creating the official table for the new year, you should use the upload panel found in "/admin/actions" to upload the official table.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "officials".
@@ -583,7 +583,7 @@ export interface Page {
   id: number;
   title: string;
   /**
-   * Banner image of the page
+   * Banner image of the page. Please ensure to provide a high enough quality image.
    */
   bannerImage?: (number | null) | Media;
   content: {
@@ -610,16 +610,28 @@ export interface Page {
     image?: (number | null) | Media;
   };
   /**
-   * The URL path for this page. Will be auto-generated from the title if left empty.
+   * The URL path for this page. This will be auto-generated from the title if left empty. Please prefer flat paths, for example "/about" instead of "/about/index".
    */
   path: string;
+  /**
+   * Show a table of contents for the page. This will be shown in the left sidebar or above the content on mobile.
+   */
   showTableOfContents?: boolean | null;
+  /**
+   * Show the partners of the page. This will be shown above the footer.
+   */
   showPartners?: boolean | null;
   /**
-   * For pages with mainly text content, this should be unchecked.
+   * Make the page full width. This should be used pretty much only for official, fuksi and board pages.
    */
   fullWidth?: boolean | null;
+  /**
+   * Hide the page from public view. This will be set to false when publishing the page via schedule publish.
+   */
   hidden?: boolean | null;
+  /**
+   * Select the board members that are responsible for the page. These will be shown in the right sidebar or below the content mobile.
+   */
   boardMember?: (number | BoardMember)[] | null;
   updatedAt: string;
   createdAt: string;
@@ -647,7 +659,7 @@ export interface FuksiYearBlock {
   blockType: 'fuksi-year';
 }
 /**
- * Manage fuksi groups
+ * Manage fuksi groups. When creating the fuksi groups for the new year, you should use the upload panel found in "/admin/actions" to upload the fuksi groups.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "fuksi-groups".
@@ -661,7 +673,7 @@ export interface FuksiGroup {
   createdAt: string;
 }
 /**
- * Manage fuksis
+ * Manage fuksis. When creating the fuksis for the new year, you should use the upload panel found in "/admin/actions" to upload the fuksis.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "fuksis".
@@ -698,6 +710,8 @@ export interface NewsletterBlock {
   blockType: 'newsletter';
 }
 /**
+ * Manage newsletters. These are the newsletters that are sent to the members. You can change the settings for the newsletter in the "Newsletter Settings" section.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "newsletters".
  */
@@ -715,6 +729,9 @@ export interface Newsletter {
    * Newsletter week number and year in format "1/25"
    */
   newsletterNumber: string;
+  /**
+   * Greetings to be included in the newsletter. This is shown at the beginning of the newsletter.
+   */
   greetings?: {
     root: {
       type: string;
@@ -730,6 +747,9 @@ export interface Newsletter {
     };
     [k: string]: unknown;
   } | null;
+  /**
+   * Closing words (for example "Viikon töherrys") to be included in the newsletter. This is shown at the end of the newsletter.
+   */
   closingWords?: {
     root: {
       type: string;
@@ -750,7 +770,7 @@ export interface Newsletter {
    */
   newsItems: (number | NewsItem)[];
   /**
-   * Whether the newsletter is ready to be sent. The newsletter will be sent automatically when this is checked at the time specified below or the next clock hour. Unchecking will cancel the scheduled email. Remember to save the newsletter when changing this.
+   * Whether the newsletter is ready to be sent. The newsletter will be sent automatically when this is checked at the time specified below or the next clock hour. Unchecking will cancel the scheduled email. Remember to save the newsletter when changing this. The newsletter needs to also be updated to the weekly page.
    */
   readyToSend?: boolean | null;
   /**
@@ -768,6 +788,8 @@ export interface Newsletter {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * Manage news items. These are individual news items that are shown in the newsletter. You can create new news item types in the "News Item Types" section.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "news-items".
  */
@@ -775,7 +797,7 @@ export interface NewsItem {
   id: number;
   title: string;
   /**
-   * The type of news item
+   * The type of news item. You can create new news item types in the "News Item Types" section.
    */
   type: number | NewsItemType;
   content: {
@@ -793,19 +815,27 @@ export interface NewsItem {
     };
     [k: string]: unknown;
   };
+  /**
+   * The date of the news item. The date is used to sort the news items in the newsletter and for filtering the news items in the admin panel.
+   */
   date: string;
   updatedAt: string;
   createdAt: string;
 }
 /**
+ * Manage news item types. These are the types of news items that can be created in the "News Items" section.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "news-item-types".
  */
 export interface NewsItemType {
   id: number;
+  /**
+   * The label of the news item type. This is shown in the newsletter. Remember to define all locales.
+   */
   label: string;
   /**
-   * Unique identifier for the type (e.g., "guild-events")
+   * Unique identifier for the type (e.g., "guild-events"). This is used to identify the type of news item.
    */
   value: string;
   updatedAt: string;
@@ -840,7 +870,7 @@ export interface OfficialYearBlock {
   blockType: 'official-year';
 }
 /**
- * Manage divisions
+ * Manage divisions. When creating the official table for the new year, you should use the upload panel found in "/admin/actions" to upload the official table.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "divisions".
@@ -889,7 +919,7 @@ export interface PDFViewerBlock {
   blockType: 'pdf-viewer';
 }
 /**
- * Upload and manage PDF files
+ * Upload and manage PDF files. After uploading, the files can be shown using the PDF viewer block for Pages.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "documents".
@@ -932,7 +962,7 @@ export interface PageNavigationBlock {
   blockType: 'page-navigation';
 }
 /**
- * Manage website page navigations
+ * Manage website page navigations. These are used for the fuksi page navigation but also link lists can be created with these.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "page-navigations".
@@ -1780,31 +1810,64 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   createdAt?: T;
 }
 /**
- * Main navigation menu items
+ * Main navigation menu items. These are the items that are shown in the main navigation menu.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "main-navigation".
  */
 export interface MainNavigation {
   id: number;
+  /**
+   * The title of the website. This will be shown in the header of the website.
+   */
   title: string;
+  /**
+   * The header logo of the website. This will be shown in the header of the website.
+   */
   logo: number | Media;
   items: {
+    /**
+     * The label of the navigation item. Remember to provide all locales.
+     */
     label: string;
+    /**
+     * The type of the navigation item. If the item is a page, it will be shown as a link to the page. If the item is an external link, it will be shown as a link to the external page. If the item is a menu, it will be shown as a dropdown menu.
+     */
     type: 'page' | 'external' | 'menu';
     page?: (number | null) | Page;
+    /**
+     * The URL of the external link. Remember to provide all locales.
+     */
     url?: string | null;
     children?:
       | {
+          /**
+           * The label of the navigation item. Remember to provide all locales.
+           */
           label: string;
+          /**
+           * The type of the navigation item. If the item is a page, it will be shown as a link to the page. If the item is an external link, it will be shown as a link to the external page. If the item is a menu, it will be shown as a dropdown menu.
+           */
           type: 'page' | 'external' | 'menu';
           page?: (number | null) | Page;
+          /**
+           * The URL of the external link. Remember to provide all locales.
+           */
           url?: string | null;
           subchildren?:
             | {
+                /**
+                 * The label of the navigation item. Remember to provide all locales.
+                 */
                 label: string;
+                /**
+                 * The type of the navigation item. If the item is a page, it will be shown as a link to the page. If the item is an external link, it will be shown as a link to the external page. If the item is a menu, it will be shown as a dropdown menu.
+                 */
                 type: 'page' | 'external' | 'menu';
                 page?: (number | null) | Page;
+                /**
+                 * The URL of the external link. Remember to provide all locales.
+                 */
                 url?: string | null;
                 id?: string | null;
               }[]
@@ -1819,7 +1882,7 @@ export interface MainNavigation {
   createdAt?: string | null;
 }
 /**
- * Footer content
+ * Footer content. This is the content that is shown in the footer of the website.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "footer".
@@ -1827,7 +1890,7 @@ export interface MainNavigation {
 export interface Footer {
   id: number;
   /**
-   * The main content of the footer (address, contact info, etc.)
+   * The main content of the footer (address, contact info, etc.). Remember to provide all locales.
    */
   content: {
     root: {
@@ -1845,7 +1908,7 @@ export interface Footer {
     [k: string]: unknown;
   };
   /**
-   * Social media links. Add the link to the social media profile/page and the correct icon will be automatically added.
+   * Social media links. Add the link to the social media profile/page and the correct icon will be automatically added. Remember to provide all locales.
    */
   socials?: string[] | null;
   updatedAt?: string | null;
@@ -1864,19 +1927,19 @@ export interface LandingPage {
    */
   title: string;
   /**
-   * Banner images of the landing page slideshow
+   * Banner images of the landing page slideshow. Multiple images are shown in a slideshow.
    */
   bannerImages: (number | Media)[];
   /**
-   * Announcement for the landing page
+   * Announcement for the landing page. This is shown above the calendar. Used for example for guild meeting announcements.
    */
   announcement: {
     /**
-     * Enable the announcement
+     * Enable the announcement. If disabled, the announcement will not be shown.
      */
     enabled?: boolean | null;
     /**
-     * Content of the announcement
+     * Content of the announcement. Remember to provide all locales.
      */
     content?: {
       root: {
@@ -1902,10 +1965,13 @@ export interface LandingPage {
      */
     textColor: string;
   };
+  /**
+   * Calendars for the landing page. This is shown below the announcement. Multiple calendars can be added.
+   */
   calendar: {
     calendars: {
       /**
-       * Google Calendar ID (found in calendar settings)
+       * Google Calendar ID (the address of google calendar). This is found in the calendar settings.
        */
       calendarId: string;
       /**
@@ -1923,7 +1989,7 @@ export interface LandingPage {
       id?: string | null;
     }[];
     /**
-     * Maximum number of events to display
+     * Maximum number of events to display.
      */
     maxEvents: number;
   };
@@ -1962,10 +2028,22 @@ export interface LandingPage {
  */
 export interface PartnerSection {
   id: number;
+  /**
+   * The title of the partner section.
+   */
   title: string;
   partners: {
+    /**
+     * The name of the partner organization.
+     */
     name: string;
+    /**
+     * The URL of the partner organization.
+     */
     link: string;
+    /**
+     * The logo of the partner organization.
+     */
     logo: number | Media;
     id?: string | null;
   }[];
@@ -1982,11 +2060,11 @@ export interface NewsletterSettings {
   id: number;
   weekly: {
     /**
-     * Logo to be used in the newsletter
+     * Logo to be used in the weekly newsletter
      */
     logo: number | Media;
     /**
-     * Footer text for the newsletter
+     * Footer text for the weekly newsletter. This will shown below the closing words in the newsletter email. This is not shown in the Newsletter block.
      */
     footer?: {
       root: {
@@ -2004,11 +2082,11 @@ export interface NewsletterSettings {
       [k: string]: unknown;
     } | null;
     /**
-     * Sender email for the newsletter
+     * Sender email for the weekly newsletter. This is the email address that will be shown in the newsletter email.
      */
     senderEmail: string;
     /**
-     * Recipient email for the newsletter
+     * Recipient email for the weekly newsletter. This is the email address that will receive the newsletter email. Google groups should be configured to allow emails from Mailgun.
      */
     recipientEmail: string;
     /**
@@ -2026,7 +2104,7 @@ export interface NewsletterSettings {
   };
   career: {
     /**
-     * Footer text for the newsletter
+     * Footer text for the career newsletter
      */
     footer?: {
       root: {
@@ -2044,11 +2122,11 @@ export interface NewsletterSettings {
       [k: string]: unknown;
     } | null;
     /**
-     * Sender email for the newsletter
+     * Sender email for the career newsletter
      */
     senderEmail: string;
     /**
-     * Recipient email for the newsletter
+     * Recipient email for the career newsletter. This is the email address that will receive the newsletter email. Google groups should be configured to allow emails from Mailgun.
      */
     recipientEmail: string;
   };

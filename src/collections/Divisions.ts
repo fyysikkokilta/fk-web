@@ -15,7 +15,8 @@ export const Divisions: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     group: 'Officials',
-    description: 'Manage divisions',
+    description:
+      'Manage divisions. When creating the official table for the new year, you should use the upload panel found in "/admin/actions" to upload the official table.',
     defaultColumns: ['name', 'officialRoles']
   },
   fields: [

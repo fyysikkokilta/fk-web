@@ -17,7 +17,8 @@ export const Media: CollectionConfig = {
   admin: {
     useAsTitle: 'filename',
     group: 'Files',
-    description: 'Upload and manage media files',
+    description:
+      'Upload and manage media files. If you want to change an image in the media library, please replace the image with the new one instead of uploading a new version. Beware that this will change the image in all pages that use it.',
     defaultColumns: ['filename', 'alt']
   },
   fields: [

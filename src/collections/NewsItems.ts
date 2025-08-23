@@ -16,7 +16,9 @@ export const NewsItems: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'type', 'date'],
-    group: 'Newsletters'
+    group: 'Newsletters',
+    description:
+      'Manage news items. These are individual news items that are shown in the newsletter. You can create new news item types in the "News Item Types" section.'
   },
   fields: [
     {
@@ -31,7 +33,8 @@ export const NewsItems: CollectionConfig = {
       relationTo: 'news-item-types',
       required: true,
       admin: {
-        description: 'The type of news item'
+        description:
+          'The type of news item. You can create new news item types in the "News Item Types" section.'
       }
     },
     {
@@ -60,7 +63,9 @@ export const NewsItems: CollectionConfig = {
         date: {
           pickerAppearance: 'dayOnly',
           displayFormat: 'dd.MM.yyyy'
-        }
+        },
+        description:
+          'The date of the news item. The date is used to sort the news items in the newsletter and for filtering the news items in the admin panel.'
       }
     }
   ],

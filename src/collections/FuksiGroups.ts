@@ -9,7 +9,8 @@ export const FuksiGroups: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     group: 'Fuksis',
-    description: 'Manage fuksi groups',
+    description:
+      'Manage fuksi groups. When creating the fuksi groups for the new year, you should use the upload panel found in "/admin/actions" to upload the fuksi groups.',
     defaultColumns: ['name', 'year', 'fuksis']
   },
   access: {

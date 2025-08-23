@@ -9,7 +9,8 @@ export const OfficialRoles: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     group: 'Officials',
-    description: 'Manage official roles',
+    description:
+      'Manage official roles. When creating the official table for the new year, you should use the upload panel found in "/admin/actions" to upload the official table.',
     defaultColumns: ['name', 'officials']
   },
   access: {

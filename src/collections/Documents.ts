@@ -10,7 +10,8 @@ export const Documents: CollectionConfig = {
   admin: {
     useAsTitle: 'filename',
     group: 'Files',
-    description: 'Upload and manage PDF files'
+    description:
+      'Upload and manage PDF files. After uploading, the files can be shown using the PDF viewer block for Pages.'
   },
   access: {
     read: () => true,

@@ -9,14 +9,21 @@ const fields: Field[] = [
     name: 'label',
     type: 'text',
     required: true,
-    localized: true
+    localized: true,
+    admin: {
+      description: 'The label of the navigation item. Remember to provide all locales.'
+    }
   },
   {
     name: 'type',
     type: 'select',
     options: ['page', 'external', 'menu'],
     required: true,
-    defaultValue: 'page'
+    defaultValue: 'page',
+    admin: {
+      description:
+        'The type of the navigation item. If the item is a page, it will be shown as a link to the page. If the item is an external link, it will be shown as a link to the external page. If the item is a menu, it will be shown as a dropdown menu.'
+    }
   },
   {
     name: 'page',
@@ -38,7 +45,8 @@ const fields: Field[] = [
     admin: {
       condition: (_data, siblingData) => {
         return siblingData.type === 'external'
-      }
+      },
+      description: 'The URL of the external link. Remember to provide all locales.'
     },
     validate: (value: string | null | undefined) => {
       if (!value) return true
@@ -59,20 +67,28 @@ export const MainNavigation: GlobalConfig = {
   },
   admin: {
     group: 'Globals',
-    description: 'Main navigation menu items'
+    description:
+      'Main navigation menu items. These are the items that are shown in the main navigation menu.'
   },
   fields: [
     {
       name: 'title',
       type: 'text',
       required: true,
-      localized: true
+      localized: true,
+      admin: {
+        description: 'The title of the website. This will be shown in the header of the website.'
+      }
     },
     {
       name: 'logo',
       type: 'upload',
       relationTo: 'media',
-      required: true
+      required: true,
+      admin: {
+        description:
+          'The header logo of the website. This will be shown in the header of the website.'
+      }
     },
     {
       name: 'items',

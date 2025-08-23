@@ -10,7 +10,8 @@ export const PageNavigations: CollectionConfig = {
     useAsTitle: 'title',
     defaultColumns: ['title', 'pages'],
     group: 'Pages',
-    description: 'Manage website page navigations'
+    description:
+      'Manage website page navigations. These are used for the fuksi page navigation but also link lists can be created with these.'
   },
   access: {
     read: () => true,

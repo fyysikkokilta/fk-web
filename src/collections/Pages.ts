@@ -69,7 +69,8 @@ export const Pages: CollectionConfig = {
               type: 'upload',
               relationTo: 'media',
               admin: {
-                description: 'Banner image of the page'
+                description:
+                  'Banner image of the page. Please ensure to provide a high enough quality image.'
               }
             },
             {
@@ -95,7 +96,7 @@ export const Pages: CollectionConfig = {
       admin: {
         position: 'sidebar',
         description:
-          'The URL path for this page. Will be auto-generated from the title if left empty.'
+          'The URL path for this page. This will be auto-generated from the title if left empty. Please prefer flat paths, for example "/about" instead of "/about/index".'
       }
     },
     {
@@ -104,7 +105,9 @@ export const Pages: CollectionConfig = {
       defaultValue: false,
       admin: {
         position: 'sidebar',
-        condition: (data) => !data?.fullWidth
+        condition: (data) => !data?.fullWidth,
+        description:
+          'Show a table of contents for the page. This will be shown in the left sidebar or above the content on mobile.'
       }
     },
     {
@@ -112,7 +115,8 @@ export const Pages: CollectionConfig = {
       type: 'checkbox',
       defaultValue: false,
       admin: {
-        position: 'sidebar'
+        position: 'sidebar',
+        description: 'Show the partners of the page. This will be shown above the footer.'
       }
     },
     {
@@ -121,16 +125,18 @@ export const Pages: CollectionConfig = {
       defaultValue: false,
       admin: {
         position: 'sidebar',
-        description: 'For pages with mainly text content, this should be unchecked.'
+        description:
+          'Make the page full width. This should be used pretty much only for official, fuksi and board pages.'
       }
     },
     {
       name: 'hidden',
       type: 'checkbox',
       defaultValue: false,
-      label: 'Hide the page from public view',
       admin: {
-        position: 'sidebar'
+        position: 'sidebar',
+        description:
+          'Hide the page from public view. This will be set to false when publishing the page via schedule publish.'
       }
     },
     {
@@ -141,7 +147,9 @@ export const Pages: CollectionConfig = {
       hasMany: true,
       admin: {
         position: 'sidebar',
-        condition: (data) => !data?.fullWidth
+        condition: (data) => !data?.fullWidth,
+        description:
+          'Select the board members that are responsible for the page. These will be shown in the right sidebar or below the content mobile.'
       }
     }
   ],

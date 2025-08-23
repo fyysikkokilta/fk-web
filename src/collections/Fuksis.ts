@@ -14,7 +14,8 @@ export const Fuksis: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     group: 'Fuksis',
-    description: 'Manage fuksis',
+    description:
+      'Manage fuksis. When creating the fuksis for the new year, you should use the upload panel found in "/admin/actions" to upload the fuksis.',
     defaultColumns: ['name', 'year', 'photo']
   },
   access: {

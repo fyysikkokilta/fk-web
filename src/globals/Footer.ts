@@ -12,7 +12,7 @@ export const Footer: GlobalConfig = {
   },
   admin: {
     group: 'Globals',
-    description: 'Footer content'
+    description: 'Footer content. This is the content that is shown in the footer of the website.'
   },
   fields: [
     {
@@ -33,7 +33,8 @@ export const Footer: GlobalConfig = {
       localized: true,
       required: true,
       admin: {
-        description: 'The main content of the footer (address, contact info, etc.)'
+        description:
+          'The main content of the footer (address, contact info, etc.). Remember to provide all locales.'
       }
     },
     {
@@ -43,7 +44,7 @@ export const Footer: GlobalConfig = {
       localized: true,
       admin: {
         description:
-          'Social media links. Add the link to the social media profile/page and the correct icon will be automatically added.'
+          'Social media links. Add the link to the social media profile/page and the correct icon will be automatically added. Remember to provide all locales.'
       }
     }
   ],

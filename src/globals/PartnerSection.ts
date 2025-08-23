@@ -18,7 +18,10 @@ export const PartnerSection: GlobalConfig = {
       name: 'title',
       type: 'text',
       required: true,
-      localized: true
+      localized: true,
+      admin: {
+        description: 'The title of the partner section.'
+      }
     },
     {
       name: 'partners',
@@ -28,18 +31,27 @@ export const PartnerSection: GlobalConfig = {
         {
           name: 'name',
           type: 'text',
-          required: true
+          required: true,
+          admin: {
+            description: 'The name of the partner organization.'
+          }
         },
         {
           name: 'link',
           type: 'text',
-          required: true
+          required: true,
+          admin: {
+            description: 'The URL of the partner organization.'
+          }
         },
         {
           name: 'logo',
           type: 'upload',
           relationTo: 'media',
-          required: true
+          required: true,
+          admin: {
+            description: 'The logo of the partner organization.'
+          }
         }
       ]
     }

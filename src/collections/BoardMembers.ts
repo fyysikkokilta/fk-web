@@ -9,7 +9,8 @@ export const BoardMembers: CollectionConfig = {
   admin: {
     useAsTitle: 'role',
     group: 'Officials',
-    description: 'Manage board members',
+    description:
+      'Manage board members. When creating the board members for the new year, you can just replace the information for the current entries instead of creating new ones.',
     defaultColumns: ['name', 'role']
   },
   access: {

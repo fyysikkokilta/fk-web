@@ -65,7 +65,9 @@ export const Newsletters: CollectionConfig = {
       const locale = typeof req.query?.locale === 'string' ? req.query.locale : req.locale || 'fi'
       return `${baseUrl}/api/draft?slug=/newsletters/${locale}/${doc.id}`
     },
-    group: 'Newsletters'
+    group: 'Newsletters',
+    description:
+      'Manage newsletters. These are the newsletters that are sent to the members. You can change the settings for the newsletter in the "Newsletter Settings" section.'
   },
   access: {
     read: publishedOrSignedIn,
@@ -151,6 +153,10 @@ export const Newsletters: CollectionConfig = {
           ]
         }
       }),
+      admin: {
+        description:
+          'Greetings to be included in the newsletter. This is shown at the beginning of the newsletter.'
+      },
       localized: true
     },
     {
@@ -168,6 +174,10 @@ export const Newsletters: CollectionConfig = {
           ]
         }
       }),
+      admin: {
+        description:
+          'Closing words (for example "Viikon töherrys") to be included in the newsletter. This is shown at the end of the newsletter.'
+      },
       localized: true
     },
     {
@@ -196,7 +206,7 @@ export const Newsletters: CollectionConfig = {
       admin: {
         position: 'sidebar',
         description:
-          'Whether the newsletter is ready to be sent. The newsletter will be sent automatically when this is checked at the time specified below or the next clock hour. Unchecking will cancel the scheduled email. Remember to save the newsletter when changing this.'
+          'Whether the newsletter is ready to be sent. The newsletter will be sent automatically when this is checked at the time specified below or the next clock hour. Unchecking will cancel the scheduled email. Remember to save the newsletter when changing this. The newsletter needs to also be updated to the weekly page.'
       }
     },
     {
