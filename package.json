@@ -97,7 +97,10 @@
       "sharp",
       "simple-git-hooks",
       "unrs-resolver"
-    ]
+    ],
+    "patchedDependencies": {
+      "@payloadcms/next": "patches/@payloadcms__next.patch"
+    }
   },
   "packageManager": "pnpm@10.15.0"
 }
