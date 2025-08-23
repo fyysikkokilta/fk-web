@@ -1054,6 +1054,7 @@ export interface Export {
   limit?: number | null;
   page?: number | null;
   sort?: string | null;
+  sortOrder?: ('asc' | 'desc') | null;
   locale?: ('all' | 'fi' | 'en') | null;
   drafts?: ('yes' | 'no') | null;
   selectionToUse?: ('currentSelection' | 'currentFilters' | 'all') | null;
@@ -1676,6 +1677,7 @@ export interface ExportsSelect<T extends boolean = true> {
   limit?: T;
   page?: T;
   sort?: T;
+  sortOrder?: T;
   locale?: T;
   drafts?: T;
   selectionToUse?: T;
@@ -2228,6 +2230,7 @@ export interface TaskCreateCollectionExport {
     limit?: number | null;
     page?: number | null;
     sort?: string | null;
+    sortOrder?: ('asc' | 'desc') | null;
     locale?: ('all' | 'fi' | 'en') | null;
     drafts?: ('yes' | 'no') | null;
     selectionToUse?: ('currentSelection' | 'currentFilters' | 'all') | null;
