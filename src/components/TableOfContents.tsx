@@ -13,6 +13,7 @@ import {
   CardBlock,
   CollapsibleBlock,
   FormBlock,
+  FuksiYearBlock,
   NewsletterBlock,
   TwoColumnsBlock
 } from '@/payload-types'
@@ -91,6 +92,17 @@ const extractHeadingsFromRichText = (data: SerializedEditorState, locale: Locale
             const form = typedNode.fields as FormBlock
             if (form.enableIntro && form.introContent) {
               traverseNodes(form.introContent.root.children)
+            }
+            break
+          case 'fuksi-year':
+            const fuksiYear = typedNode.fields as FuksiYearBlock
+            if (fuksiYear.fuksiGroups) {
+              const groups = fuksiYear.fuksiGroups
+                .filter((group) => typeof group !== 'number')
+                .sort((a, b) => a.name.localeCompare(b.name, 'fi'))
+              groups.forEach((group) => {
+                headings.push(createHeading(group.name, 2))
+              })
             }
             break
           case 'newsletter':

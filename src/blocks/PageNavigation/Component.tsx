@@ -1,5 +1,7 @@
-import { Link } from '@/i18n/navigation'
-import type { Page, PageNavigationBlock as PageNavigationBlockType } from '@/payload-types'
+'use client'
+
+import { Link, usePathname } from '@/i18n/navigation'
+import type { PageNavigationBlock as PageNavigationBlockType } from '@/payload-types'
 
 interface PageNavigationProps {
   block: PageNavigationBlockType
@@ -11,21 +13,10 @@ interface PageNavigationProps {
 
 export const PageNavigation = ({ block }: PageNavigationProps) => {
   const { pageNavigation, style } = block
+  const pathname = usePathname()
 
   if (typeof pageNavigation === 'number') {
     return null
-  }
-
-  const renderPage = (page: Page, label: string) => {
-    if (typeof page === 'string' || typeof page === 'number') {
-      return null
-    }
-
-    return (
-      <Link prefetch={false} href={`/${page.path}`}>
-        {label}
-      </Link>
-    )
   }
 
   if (style === 'links') {
@@ -34,7 +25,13 @@ export const PageNavigation = ({ block }: PageNavigationProps) => {
         <ul>
           {pageNavigation.pages?.map(
             ({ page, label }) =>
-              typeof page === 'object' && <li key={page.id}>{renderPage(page, label)}</li>
+              typeof page === 'object' && (
+                <li key={page.id}>
+                  <Link prefetch={false} href={`/${page.path}`}>
+                    {label}
+                  </Link>
+                </li>
+              )
           )}
         </ul>
       </nav>
@@ -42,7 +39,7 @@ export const PageNavigation = ({ block }: PageNavigationProps) => {
   }
 
   return (
-    <div className="not-prose text-fk-white grid grid-cols-3 gap-x-4 gap-y-8 sm:grid-cols-6 md:grid-cols-9">
+    <div className="not-prose text-fk-white my-6 grid grid-cols-3 gap-x-4 gap-y-6 sm:grid-cols-6 md:grid-cols-9">
       {pageNavigation.pages?.map(
         ({ page, label }) =>
           typeof page === 'object' && (
@@ -50,9 +47,13 @@ export const PageNavigation = ({ block }: PageNavigationProps) => {
               key={page.id}
               href={`/${page.path}`}
               prefetch={false}
-              className="text-fk-white bg-fk-orange-dark hover:bg-fk-orange flex aspect-square items-center justify-center text-center text-3xl font-bold transition-colors duration-200 hover:scale-110"
+              className={`text-fk-white hover:bg-fk-orange group flex aspect-[4/3] items-center justify-center text-center font-(family-name:--font-lora) font-bold transition-all duration-200 ${
+                pathname.endsWith(`/${page.path}`) ? 'bg-fk-orange' : 'bg-fk-orange-dark'
+              }`}
             >
-              {label}
+              <span className="text-3xl transition-all duration-200 group-hover:text-4xl">
+                {label}
+              </span>
             </Link>
           )
       )}

@@ -18,11 +18,11 @@ export const FuksiYear = async ({ block }: FuksiYearProps) => {
     <div className="prose-img:my-0">
       {block.fuksiGroups
         .filter((group) => typeof group !== 'number')
-        .sort((a, b) => a.name.localeCompare(b.name))
+        .sort((a, b) => a.name.localeCompare(b.name, 'fi'))
         .map((group) => {
           return (
             <div key={group.id} className="bg-fk-white rounded-lg">
-              <div className="mb-3 text-2xl font-bold">{group.name}</div>
+              <h2 className="mb-3 text-2xl font-bold">{group.name}</h2>
               <div className="my-6 grid grid-cols-2 gap-12 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
                 {group.fuksis.map((fuksi) => {
                   if (typeof fuksi === 'number') return null
