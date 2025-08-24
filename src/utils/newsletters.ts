@@ -129,8 +129,8 @@ export async function sendNewsletterToTelegram(
   newsletterSettings: NewsletterSettings['weekly'],
   locale: Locale
 ) {
-  const { title, newsItems } = newsletter
-  const { telegramChannelId, telegramBotToken, weeklyPage } = newsletterSettings
+  const { newsletterNumber, newsItems } = newsletter
+  const { titlePrefix, telegramChannelId, telegramBotToken, weeklyPage } = newsletterSettings
 
   const baseUrl = `${env.NEXT_PUBLIC_SERVER_URL}/${locale}/${(weeklyPage as Page).path}`
 
@@ -138,8 +138,8 @@ export async function sendNewsletterToTelegram(
 
   const formattedNewsletter = formatWeeklyNewsForTelegram(
     newsItems,
-    newsletter.newsletterNumber,
-    title,
+    newsletterNumber,
+    `${titlePrefix} ${newsletterNumber}`,
     locale,
     baseUrl
   )

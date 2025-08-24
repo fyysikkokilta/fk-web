@@ -67,8 +67,7 @@ export const MainNavigation: GlobalConfig = {
   },
   admin: {
     group: 'Globals',
-    description:
-      'Main navigation menu items. These are the items that are shown in the main navigation menu.'
+    description: 'Main navigation menu items.'
   },
   fields: [
     {

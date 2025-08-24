@@ -34,6 +34,16 @@ export const NewsletterSettings: GlobalConfig = {
               }
             },
             {
+              name: 'titlePrefix',
+              type: 'text',
+              required: true,
+              localized: true,
+              admin: {
+                description:
+                  'Prefix for the title of the weekly newsletter. For example: "Kilta tiedottaa" or "Weekly News"'
+              }
+            },
+            {
               name: 'footer',
               type: 'richText',
               editor: lexicalEditor({
@@ -105,6 +115,15 @@ export const NewsletterSettings: GlobalConfig = {
           label: 'Career',
           name: 'career',
           fields: [
+            {
+              name: 'titlePrefix',
+              type: 'text',
+              required: true,
+              admin: {
+                description:
+                  'Prefix for the title of the career newsletter. For example: "Career News"'
+              }
+            },
             {
               name: 'footer',
               type: 'richText',

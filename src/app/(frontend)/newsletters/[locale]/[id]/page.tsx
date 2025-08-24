@@ -1,4 +1,5 @@
 import configPromise from '@payload-config'
+import { render } from '@react-email/components'
 import { headers } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { Locale } from 'next-intl'
@@ -6,7 +7,8 @@ import { setRequestLocale } from 'next-intl/server'
 import { getPayload } from 'payload'
 
 import { RefreshRouteOnSave } from '@/components/RefreshRouteOnSave'
-import { renderEmail } from '@/emails/renderEmail'
+import CareerNewsEmail from '@/emails/CareerNewsEmail'
+import WeeklyNewsEmail from '@/emails/WeeklyNewsEmail'
 import { getNewsletter } from '@/lib/getNewsletter'
 import { getNewsletterSettings } from '@/lib/getNewsletterSettings'
 
@@ -33,7 +35,25 @@ export default async function NewsletterPage({ params }: PageProps<'/newsletters
 
   const { weekly, career } = await getNewsletterSettings(nextIntlLocale)
 
-  const html = await renderEmail(newsletter, weekly, career, nextIntlLocale)
+  const html =
+    newsletter.type === 'weekly'
+      ? await render(
+          <WeeklyNewsEmail
+            title={`${weekly.titlePrefix} ${newsletter.newsletterNumber}`}
+            logo={weekly.logo}
+            newsletters={[{ newsletter, locale: nextIntlLocale }]}
+            footer={weekly.footer}
+            locale={nextIntlLocale}
+          />
+        )
+      : await render(
+          <CareerNewsEmail
+            title={`${career.titlePrefix} ${newsletter.newsletterNumber}`}
+            newsletters={[{ newsletter, locale: nextIntlLocale }]}
+            footer={career.footer}
+            locale={nextIntlLocale}
+          />
+        )
 
   console.info(
     '[Next.js] Rendering newsletter preview page',

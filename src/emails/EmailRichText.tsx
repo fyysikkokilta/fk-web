@@ -6,6 +6,7 @@ import type {
 } from '@payloadcms/richtext-lexical'
 import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 import {
+  JSXConverter,
   JSXConvertersFunction,
   LinkJSXConverter,
   RichText as LexicalRichText
@@ -37,7 +38,19 @@ const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }, local
   }
 }
 
-const CustomUploadComponent = ({ node }: { node: SerializedUploadNode }) => {
+const renderCustomLinkComponent: (locale: Locale) => JSXConverter<SerializedLinkNode> =
+  (locale) =>
+  // eslint-disable-next-line react/display-name
+  ({ node, nodesToJSX }) => {
+    const href = node.fields.url || internalDocToHref({ linkNode: node }, locale)
+    return (
+      <Link href={href} className="text-orange">
+        {nodesToJSX({ nodes: node.children })}
+      </Link>
+    )
+  }
+
+const renderCustomUploadComponent: JSXConverter<SerializedUploadNode> = ({ node }) => {
   const serverUrl = env.NEXT_PUBLIC_SERVER_URL
   if (node.relationTo === 'media') {
     const uploadDoc = node.value
@@ -79,29 +92,28 @@ const CustomUploadComponent = ({ node }: { node: SerializedUploadNode }) => {
   return null
 }
 
-const CustomRelationshipComponent = ({
-  node,
-  locale
-}: {
-  node: SerializedRelationshipNode
+const renderCustomRelationshipComponent: (
   locale: Locale
-}) => {
-  const { relationTo, value } = node
-  const serverUrl = env.NEXT_PUBLIC_SERVER_URL
-  switch (relationTo) {
-    case 'pages':
-      if (typeof value !== 'object') {
+) => JSXConverter<SerializedRelationshipNode> =
+  (locale) =>
+  // eslint-disable-next-line react/display-name
+  ({ node }) => {
+    const { relationTo, value } = node
+    const serverUrl = env.NEXT_PUBLIC_SERVER_URL
+    switch (relationTo) {
+      case 'pages':
+        if (typeof value !== 'object') {
+          return null
+        }
+        return (
+          <Link href={encodeURI(`${serverUrl}/${locale}/${value.path}`)} className="text-orange">
+            {value.title}
+          </Link>
+        )
+      default:
         return null
-      }
-      return (
-        <Link href={encodeURI(`${serverUrl}/${locale}/${value.path}`)} className="text-orange">
-          {value.title}
-        </Link>
-      )
-    default:
-      return null
+    }
   }
-}
 
 export const EmailRichText = ({ data, locale }: RichTextProps) => {
   const jsxConverters: JSXConvertersFunction<DefaultNodeTypes> = ({ defaultConverters }) => ({
@@ -109,8 +121,9 @@ export const EmailRichText = ({ data, locale }: RichTextProps) => {
     ...LinkJSXConverter({
       internalDocToHref: (linkNode) => internalDocToHref(linkNode, locale)
     }),
-    relationship: ({ node }) => CustomRelationshipComponent({ node, locale }),
-    upload: CustomUploadComponent
+    link: renderCustomLinkComponent(locale),
+    relationship: renderCustomRelationshipComponent(locale),
+    upload: renderCustomUploadComponent
   })
 
   return <LexicalRichText disableContainer data={data} converters={jsxConverters} />

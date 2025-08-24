@@ -58,8 +58,8 @@ const updateReadyToSend: CollectionBeforeChangeHook<NewsletterType> = async ({
 export const Newsletters: CollectionConfig = {
   slug: 'newsletters',
   admin: {
-    useAsTitle: 'title',
-    defaultColumns: ['title', 'newsletterNumber', 'newsItems', 'sent'],
+    useAsTitle: 'newsletterNumber',
+    defaultColumns: ['newsletterNumber', 'type', 'newsItems', 'sent'],
     preview: (doc, { req }) => {
       const baseUrl = env.NEXT_PUBLIC_SERVER_URL
       const locale = typeof req.query?.locale === 'string' ? req.query.locale : req.locale || 'fi'
@@ -67,7 +67,7 @@ export const Newsletters: CollectionConfig = {
     },
     group: 'Newsletters',
     description:
-      'Manage newsletters. These are the newsletters that are sent to the members. You can change the settings for the newsletter in the "Newsletter Settings" section.'
+      'Manage newsletters. You can change the settings for the newsletter in the "Newsletter Settings" section.'
   },
   access: {
     read: publishedOrSignedIn,
@@ -76,32 +76,6 @@ export const Newsletters: CollectionConfig = {
     delete: admin
   },
   fields: [
-    {
-      name: 'title',
-      type: 'text',
-      localized: true,
-      required: true,
-      admin: {
-        description:
-          'Title of the newsletter. If not set, the title will be "Kilta tiedottaa {weekNumber}/{year}" in Finnish and "Weekly News {weekNumber}/{year}" in English.'
-      },
-      hooks: {
-        beforeValidate: [
-          ({ value, data, req: { locale } }) => {
-            if (value) return value
-
-            const newsletterNumber = data?.newsletterNumber
-
-            if (!newsletterNumber) return value
-
-            if (locale === 'fi') {
-              return `Kilta tiedottaa ${newsletterNumber}`
-            }
-            return `Weekly News ${newsletterNumber}`
-          }
-        ]
-      }
-    },
     {
       name: 'type',
       type: 'select',
@@ -118,7 +92,8 @@ export const Newsletters: CollectionConfig = {
       defaultValue: 'weekly',
       required: true,
       admin: {
-        description: 'Type of the newsletter'
+        description:
+          'Type of the newsletter. Career newsletter is currently only in use for English.'
       }
     },
     {

@@ -109,7 +109,7 @@ const extractHeadingsFromRichText = (data: SerializedEditorState, locale: Locale
             const newsletter = typedNode.fields as NewsletterBlock
             const newsletterData = newsletter.newsletter
             if (typeof newsletterData === 'number') return
-            const newsletterTitle = createHeading(newsletterData.title, 2)
+            const newsletterTitle = createHeading(newsletterData.newsletterNumber, 2)
             headings.push(newsletterTitle)
             const newsGroups = groupNewsByType(newsletterData.newsItems || [])
             const sortedNewsHeadings = Object.values(newsGroups)

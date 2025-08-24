@@ -71,7 +71,7 @@ export async function GET(request: NextRequest) {
     const telegramMessage = formatWeeklyNewsForTelegram(
       latestNewsletter.newsItems,
       latestNewsletter.newsletterNumber,
-      latestNewsletter.title,
+      `${newsletterSettings.weekly.titlePrefix} ${latestNewsletter.newsletterNumber}`,
       locale,
       baseUrl
     )
@@ -80,7 +80,7 @@ export async function GET(request: NextRequest) {
       message: telegramMessage,
       newsletter: {
         id: latestNewsletter.id,
-        title: latestNewsletter.title,
+        title: `${newsletterSettings.weekly.titlePrefix} ${latestNewsletter.newsletterNumber}`,
         newsletterNumber: latestNewsletter.newsletterNumber,
         type: latestNewsletter.type,
         date: latestNewsletter.createdAt

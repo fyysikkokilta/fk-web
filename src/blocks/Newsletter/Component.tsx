@@ -21,8 +21,8 @@ export const Newsletter = ({ block, locale }: NewsletterBlockProps) => {
   return (
     <div className="mx-auto max-w-4xl">
       <div className="mb-8 flex items-center justify-between">
-        <h2 id={slugify(newsletter.title)} className="text-4xl font-bold">
-          {newsletter.title}
+        <h2 id={slugify(newsletter.newsletterNumber)} className="text-4xl font-bold">
+          {newsletter.newsletterNumber}
         </h2>
       </div>
 

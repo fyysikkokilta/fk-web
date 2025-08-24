@@ -710,7 +710,7 @@ export interface NewsletterBlock {
   blockType: 'newsletter';
 }
 /**
- * Manage newsletters. These are the newsletters that are sent to the members. You can change the settings for the newsletter in the "Newsletter Settings" section.
+ * Manage newsletters. You can change the settings for the newsletter in the "Newsletter Settings" section.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "newsletters".
@@ -718,11 +718,7 @@ export interface NewsletterBlock {
 export interface Newsletter {
   id: number;
   /**
-   * Title of the newsletter. If not set, the title will be "Kilta tiedottaa {weekNumber}/{year}" in Finnish and "Weekly News {weekNumber}/{year}" in English.
-   */
-  title: string;
-  /**
-   * Type of the newsletter
+   * Type of the newsletter. Career newsletter is currently only in use for English.
    */
   type: 'weekly' | 'career';
   /**
@@ -1463,7 +1459,6 @@ export interface NewsItemsSelect<T extends boolean = true> {
  * via the `definition` "newsletters_select".
  */
 export interface NewslettersSelect<T extends boolean = true> {
-  title?: T;
   type?: T;
   newsletterNumber?: T;
   greetings?: T;
@@ -1810,7 +1805,7 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   createdAt?: T;
 }
 /**
- * Main navigation menu items. These are the items that are shown in the main navigation menu.
+ * Main navigation menu items.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "main-navigation".
@@ -2064,6 +2059,10 @@ export interface NewsletterSettings {
      */
     logo: number | Media;
     /**
+     * Prefix for the title of the weekly newsletter. For example: "Kilta tiedottaa" or "Weekly News"
+     */
+    titlePrefix: string;
+    /**
      * Footer text for the weekly newsletter. This will shown below the closing words in the newsletter email. This is not shown in the Newsletter block.
      */
     footer?: {
@@ -2103,6 +2102,10 @@ export interface NewsletterSettings {
     telegramChannelId: string;
   };
   career: {
+    /**
+     * Prefix for the title of the career newsletter. For example: "Career News"
+     */
+    titlePrefix: string;
     /**
      * Footer text for the career newsletter
      */
@@ -2252,6 +2255,7 @@ export interface NewsletterSettingsSelect<T extends boolean = true> {
     | T
     | {
         logo?: T;
+        titlePrefix?: T;
         footer?: T;
         senderEmail?: T;
         recipientEmail?: T;
@@ -2262,6 +2266,7 @@ export interface NewsletterSettingsSelect<T extends boolean = true> {
   career?:
     | T
     | {
+        titlePrefix?: T;
         footer?: T;
         senderEmail?: T;
         recipientEmail?: T;
