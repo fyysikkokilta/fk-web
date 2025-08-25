@@ -31,7 +31,7 @@ export const EmbedVideo = ({ block }: EmbedVideoProps) => {
 
   return (
     <div
-      className={`relative ${aspectRatioClasses[block.aspectRatio!]} w-full overflow-hidden rounded-lg`}
+      className={`relative ${aspectRatioClasses[block.aspectRatio]} w-full overflow-hidden rounded-lg`}
     >
       {embedUrl ? (
         <iframe

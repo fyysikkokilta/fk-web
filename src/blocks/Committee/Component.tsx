@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { getTranslations } from 'next-intl/server'
 
-import type { CommitteeBlock as CommitteeBlockType, Media } from '@/payload-types'
+import type { CommitteeBlock as CommitteeBlockType } from '@/payload-types'
 
 interface CommitteeProps {
   block: CommitteeBlockType
@@ -31,22 +31,22 @@ export const Committee = async ({ block }: CommitteeProps) => {
             <div key={official.id} className="flex flex-col overflow-hidden p-4 text-center">
               {/* Oval-shaped image container */}
               <div className="not-prose relative mb-4 aspect-[2/3] overflow-hidden rounded-[50%]">
-                {official.photo ? (
+                {typeof official.photo === 'object' && official.photo && official.photo.url ? (
                   <Image
-                    src={(official.photo as Media).url!}
+                    src={official.photo.url}
                     alt={official.name}
-                    blurDataURL={(official.photo as Media).blurDataUrl}
+                    blurDataURL={official.photo.blurDataUrl}
                     placeholder="blur"
                     fill
                     unoptimized
                     sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 16vw"
                     className="object-cover"
                   />
-                ) : defaultImage ? (
+                ) : typeof defaultImage === 'object' && defaultImage && defaultImage.url ? (
                   <Image
-                    src={(defaultImage as Media).url!}
-                    alt={(defaultImage as Media).alt || t('common.defaultImage')}
-                    blurDataURL={(defaultImage as Media).blurDataUrl}
+                    src={defaultImage.url}
+                    alt={defaultImage.alt || t('common.defaultImage')}
+                    blurDataURL={defaultImage.blurDataUrl}
                     placeholder="blur"
                     fill
                     unoptimized

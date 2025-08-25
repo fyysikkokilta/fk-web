@@ -75,12 +75,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
                       `${env.NEXT_PUBLIC_SERVER_URL}/${innerLocale}/${innerLocalizedPath}`
                     ]
                   })
-                  .filter((item) => item !== null)
+                  .filter((item) => !!item)
               )
             }
           }
         })
-        .filter((item) => item !== null)
+        .filter((item) => !!item)
     })
     .flat()
 

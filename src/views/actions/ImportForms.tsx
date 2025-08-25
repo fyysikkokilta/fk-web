@@ -130,15 +130,15 @@ export const ImportForms = () => {
         })
       }
 
-      const division = divisionsMap.get(divisionKey)!
-      const existingRole = division.officialRoles.find((role) => role.name === roleKey)
+      const division = divisionsMap.get(divisionKey)
+      const existingRole = division?.officialRoles.find((role) => role.name === roleKey)
 
       if (existingRole) {
         // Add officials to existing role
         existingRole.officials.push(...officials)
       } else {
         // Create new role
-        division.officialRoles.push({
+        division?.officialRoles.push({
           name: roleKey,
           nameEn: roleNameEn,
           officials

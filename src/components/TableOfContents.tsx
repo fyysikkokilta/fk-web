@@ -233,7 +233,10 @@ export const TableOfContents = ({ show, richText }: TableOfContentsProps) => {
     }
 
     headings.forEach((heading) => {
-      observer.observe(document.getElementById(heading.id)!)
+      const headingElement = document.getElementById(heading.id)
+      if (headingElement) {
+        observer.observe(headingElement)
+      }
     })
 
     return () => observer.disconnect()

@@ -15,6 +15,7 @@ import { Img, Link } from '@react-email/components'
 import { Locale } from 'next-intl'
 
 import { env } from '@/env'
+import { Page } from '@/payload-types'
 
 interface RichTextProps {
   data: SerializedEditorState
@@ -22,19 +23,26 @@ interface RichTextProps {
 }
 
 const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }, locale: Locale) => {
-  const { relationTo, value } = linkNode.fields.doc!
-  if (typeof value !== 'object') {
+  const { doc } = linkNode.fields
+  if (!doc || typeof doc !== 'object') {
     throw new Error('Expected value to be an object')
   }
-  const path = value.path
 
   const serverUrl = env.NEXT_PUBLIC_SERVER_URL
 
-  switch (relationTo) {
+  switch (doc.relationTo) {
     case 'pages':
-      return `${serverUrl}/${locale}/${path}`
+      const page = doc.value as unknown as Page
+      return `${serverUrl}/${locale}/${page.path}`
     default:
-      return `${serverUrl}/${locale}/${relationTo}/${path}`
+      const url = doc.value as unknown as { url?: string; path?: string }
+      if (url.url) {
+        return url.url
+      }
+      if (url.path) {
+        return `${serverUrl}/${locale}/${url.path}`
+      }
+      return ''
   }
 }
 

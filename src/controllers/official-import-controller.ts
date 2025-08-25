@@ -82,13 +82,15 @@ export const officialImportController: PayloadHandler = async (req: PayloadReque
     divisions.forEach(async (division) => {
       const createdOfficialRoles = await Promise.all(
         division.officialRoles.map(async (officialRole) => {
+          const officials = officialRole.officials
+            .map((official) => createdOfficials.find((o) => o.name === official))
+            .filter((official) => !!official)
+
           const createdOfficialRole = await req.payload.create({
             collection: 'official-roles',
             data: {
               name: officialRole.name,
-              officials: officialRole.officials.map(
-                (official) => createdOfficials.find((o) => o.name === official)!
-              )
+              officials
             },
             locale: 'fi',
             req
