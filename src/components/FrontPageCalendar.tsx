@@ -1,5 +1,5 @@
 import { TZDate } from '@date-fns/tz'
-import { format, startOfDay } from 'date-fns'
+import { addHours, format, isAfter, startOfDay } from 'date-fns'
 import { fi } from 'date-fns/locale'
 import { DynamicIcon, IconName } from 'lucide-react/dynamic'
 
@@ -44,47 +44,58 @@ export const FrontPageCalendar = async ({ page }: FrontPageCalendarProps) => {
 
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-      {events.map((event) => (
-        <div
-          key={event.id}
-          className="flex flex-col rounded-lg p-6 shadow-lg transition-all duration-300 hover:shadow-2xl"
-          style={{ backgroundColor: event.backgroundColor, color: event.textColor }}
-        >
-          <div className="mb-2 flex items-center gap-2">
-            <span className="text-lg font-bold">{event.summary}</span>
-          </div>
+      {events.map((event) => {
+        const startDateString = event.start?.dateTime || event.start?.date
+        const endDateString = event.end?.dateTime || event.end?.date
+        const startDate = new TZDate(startDateString, 'Europe/Helsinki')
+        const endDate = endDateString ? new TZDate(endDateString, 'Europe/Helsinki') : null
+
+        // Check if event continues past 6 AM the next day
+        const shouldShowEndDate = endDate && isAfter(endDate, addHours(startOfDay(startDate), 30))
+
+        return (
           <div
-            // Same height as the icons
-            className="mt-auto flex min-h-18 items-center justify-between"
+            key={event.id}
+            className="flex flex-col rounded-lg p-6 shadow-lg transition-all duration-300 hover:shadow-2xl"
+            style={{ backgroundColor: event.backgroundColor, color: event.textColor }}
           >
-            <div>
-              <div className="text-lg">
-                {format(
-                  new TZDate(event.start?.dateTime || event.start?.date || '', 'Europe/Helsinki'),
-                  'd.M.'
-                )}
-              </div>
-              {event.start?.dateTime && (
-                <div>
-                  {format(new TZDate(event.start?.dateTime, 'Europe/Helsinki'), 'HH:mm', {
-                    locale: fi
-                  })}
-                  {event.end?.dateTime && (
+            <div className="mb-2 flex items-center gap-2">
+              <span className="text-lg font-bold">{event.summary}</span>
+            </div>
+            <div
+              // Same height as the icons
+              className="mt-auto flex min-h-18 items-center justify-between"
+            >
+              <div>
+                <div className="text-lg">
+                  {format(startDate, 'd.M.')}
+                  {/* If the event ends after 6 AM the next day, show the end date */}
+                  {shouldShowEndDate && endDate && (
                     <span>
                       {' - '}
-                      {format(new TZDate(event.end?.dateTime, 'Europe/Helsinki'), 'HH:mm', {
-                        locale: fi
-                      })}
+                      {format(endDate, 'd.M.')}
                     </span>
                   )}
                 </div>
-              )}
-              {event.location && <div className="text-lg">{event.location.split(',')[0]}</div>}
+                {event.start?.dateTime && (
+                  <div>
+                    {format(startDate, 'HH:mm', { locale: fi })}
+                    {/* If the event ends before 6 AM the next day, show the end time */}
+                    {!shouldShowEndDate && endDate && (
+                      <span>
+                        {' - '}
+                        {format(endDate, 'HH:mm', { locale: fi })}
+                      </span>
+                    )}
+                  </div>
+                )}
+                {event.location && <div className="text-lg">{event.location.split(',')[0]}</div>}
+              </div>
+              <div>{event.icon && <DynamicIcon name={event.icon as IconName} size={72} />}</div>
             </div>
-            <div>{event.icon && <DynamicIcon name={event.icon as IconName} size={72} />}</div>
           </div>
-        </div>
-      ))}
+        )
+      })}
     </div>
   )
 }
