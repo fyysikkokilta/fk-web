@@ -15,7 +15,12 @@ import { routing } from '@/i18n/routing'
 // Eg. /(frontend)/[locale] will revalidate all landing pages for all locales AND all pages for all locales.
 
 export const revalidateGlobal = (globalSlug: GlobalSlug): GlobalAfterChangeHook => {
-  return async ({ req: { payload } }) => {
+  return async ({ req: { payload, context } }) => {
+    // Don't revalidate if the skipRevalidate flag is set
+    if (context.skipRevalidate) {
+      return
+    }
+
     const isLandingPage = globalSlug === 'landing-page'
 
     if (isLandingPage) {

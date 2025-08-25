@@ -18,7 +18,12 @@ import { Page } from '@/payload-types'
 export const revalidateDeletedCollection = <T extends TypeWithID>(
   collectionSlug: CollectionSlug
 ): CollectionAfterDeleteHook<T> => {
-  return async ({ doc, req: { payload } }) => {
+  return async ({ doc, req: { payload, context } }) => {
+    // Don't revalidate if the skipRevalidate flag is set
+    if (context.skipRevalidate) {
+      return
+    }
+
     const isPage = collectionSlug === 'pages'
 
     if (isPage) {

@@ -18,7 +18,12 @@ import { Page } from '@/payload-types'
 export const revalidateCollection = <T extends TypeWithID>(
   collectionSlug: CollectionSlug
 ): CollectionAfterChangeHook<T> => {
-  return async ({ doc, req: { payload }, operation }) => {
+  return async ({ doc, req: { payload, context }, operation }) => {
+    // Don't revalidate if the skipRevalidate flag is set
+    if (context.skipRevalidate) {
+      return
+    }
+
     const isPage = collectionSlug === 'pages'
 
     if (isPage) {

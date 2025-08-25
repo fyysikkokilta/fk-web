@@ -1,3 +1,4 @@
+import { revalidatePath } from 'next/cache'
 import { PayloadHandler, PayloadRequest } from 'payload'
 
 import { signedIn } from '@/access/signed-in'
@@ -15,6 +16,9 @@ export const fuksiImportController: PayloadHandler = async (req: PayloadRequest)
       fuksis: string[]
     }[]
   }
+
+  // Don't revalidate on each mutation
+  req.context.skipRevalidate = true
 
   try {
     await req.payload.delete({
@@ -73,6 +77,10 @@ export const fuksiImportController: PayloadHandler = async (req: PayloadRequest)
         })
       })
     )
+
+    // Revalidate all pages
+    req.payload.logger.info(`[Fuksi import] Revalidating all pages at path: /(frontend)/[locale]`)
+    revalidatePath('/(frontend)/[locale]', 'layout')
 
     return Response.json({ message: 'Fuksi years, groups and fuksis created' }, { status: 200 })
   } catch (error) {
