@@ -49,7 +49,7 @@ const sendNewsletterHandler: TaskHandler<'sendNewsletter'> = async ({ input, req
       html: combinedHtml,
       locale: 'fi',
       fallbackLocale: 'en',
-      from: finnishWeeklySettings.senderEmail,
+      from: `${finnishWeeklySettings.senderName} <${finnishWeeklySettings.senderEmail}>`,
       req
     })
 
@@ -71,7 +71,7 @@ const sendNewsletterHandler: TaskHandler<'sendNewsletter'> = async ({ input, req
       html: englishHtml,
       locale: 'en',
       fallbackLocale: 'fi',
-      from: englishWeeklySettings.senderEmail,
+      from: `${englishWeeklySettings.senderName} <${englishWeeklySettings.senderEmail}>`,
       req
     })
   } else {
@@ -95,7 +95,7 @@ const sendNewsletterHandler: TaskHandler<'sendNewsletter'> = async ({ input, req
       html,
       locale: 'en',
       fallbackLocale: 'fi',
-      from: englishCareerSettings.senderEmail,
+      from: `${englishCareerSettings.senderName} <${englishCareerSettings.senderEmail}>`,
       req
     })
   }

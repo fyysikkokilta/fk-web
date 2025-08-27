@@ -2081,7 +2081,11 @@ export interface NewsletterSettings {
       [k: string]: unknown;
     } | null;
     /**
-     * Sender email for the weekly newsletter. This is the email address that will be shown in the newsletter email.
+     * Sender name for the weekly newsletter.
+     */
+    senderName: string;
+    /**
+     * Sender email for the weekly newsletter.
      */
     senderEmail: string;
     /**
@@ -2124,6 +2128,10 @@ export interface NewsletterSettings {
       };
       [k: string]: unknown;
     } | null;
+    /**
+     * Sender name for the career newsletter.
+     */
+    senderName: string;
     /**
      * Sender email for the career newsletter
      */
@@ -2257,6 +2265,7 @@ export interface NewsletterSettingsSelect<T extends boolean = true> {
         logo?: T;
         titlePrefix?: T;
         footer?: T;
+        senderName?: T;
         senderEmail?: T;
         recipientEmail?: T;
         weeklyPage?: T;
@@ -2268,6 +2277,7 @@ export interface NewsletterSettingsSelect<T extends boolean = true> {
     | {
         titlePrefix?: T;
         footer?: T;
+        senderName?: T;
         senderEmail?: T;
         recipientEmail?: T;
       };

@@ -65,12 +65,19 @@ export const NewsletterSettings: GlobalConfig = {
               }
             },
             {
+              name: 'senderName',
+              type: 'text',
+              required: true,
+              admin: {
+                description: 'Sender name for the weekly newsletter.'
+              }
+            },
+            {
               name: 'senderEmail',
               type: 'email',
               required: true,
               admin: {
-                description:
-                  'Sender email for the weekly newsletter. This is the email address that will be shown in the newsletter email.'
+                description: 'Sender email for the weekly newsletter.'
               }
             },
             {
@@ -141,6 +148,14 @@ export const NewsletterSettings: GlobalConfig = {
               }),
               admin: {
                 description: 'Footer text for the career newsletter'
+              }
+            },
+            {
+              name: 'senderName',
+              type: 'text',
+              required: true,
+              admin: {
+                description: 'Sender name for the career newsletter.'
               }
             },
             {
