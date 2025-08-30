@@ -1,3 +1,4 @@
+import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { Locale } from 'next-intl'
 import { setRequestLocale } from 'next-intl/server'
@@ -23,7 +24,7 @@ interface LandingPageProps {
 // Revalidate at least once per day
 export const revalidate = 86400
 
-export async function generateMetadata({ params }: LandingPageProps) {
+export async function generateMetadata({ params }: LandingPageProps): Promise<Metadata> {
   const { locale } = await params
   const page = await getLandingPage(locale)
 
@@ -31,33 +32,28 @@ export async function generateMetadata({ params }: LandingPageProps) {
     ?.map((image) => {
       if (typeof image === 'object') {
         return {
-          url: image.url,
-          width: image.width,
-          height: image.height,
-          alt: image.alt
+          url: image.url || '',
+          width: image.width || 100,
+          height: image.height || 100,
+          alt: image.alt || ''
         }
       }
       return null
     })
-    .filter(Boolean)
+    .filter((image) => !!image)
 
   return {
     title: page?.title,
     description: page?.meta?.description,
     metadataBase: new URL(env.NEXT_PUBLIC_SERVER_URL || ''),
     openGraph: {
-      title: page?.meta?.title,
-      description: page?.meta?.description,
-      images: images,
+      title: page?.meta?.title || page?.title,
+      description: page?.meta?.description || '',
+      images: images || [],
       url: `${env.NEXT_PUBLIC_SERVER_URL}/${locale}`,
       siteName: page?.title,
       locale: locale,
       type: 'website'
-    },
-    robots: {
-      index: true,
-      follow: true,
-      nocache: false
     },
     verification: {
       google: env.GOOGLE_SITE_VERIFICATION

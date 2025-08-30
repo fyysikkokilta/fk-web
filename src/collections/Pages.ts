@@ -130,6 +130,16 @@ export const Pages: CollectionConfig = {
       }
     },
     {
+      name: 'noIndex',
+      type: 'checkbox',
+      defaultValue: false,
+      admin: {
+        position: 'sidebar',
+        description:
+          'Prevent the page from being indexed by search engines. Use for fuksi and official pages.'
+      }
+    },
+    {
       name: 'hidden',
       type: 'checkbox',
       defaultValue: false,

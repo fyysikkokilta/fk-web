@@ -626,6 +626,10 @@ export interface Page {
    */
   fullWidth?: boolean | null;
   /**
+   * Prevent the page from being indexed by search engines. Use for fuksi and official pages.
+   */
+  noIndex?: boolean | null;
+  /**
    * Hide the page from public view. This will be set to false when publishing the page via schedule publish.
    */
   hidden?: boolean | null;
@@ -1512,6 +1516,7 @@ export interface PagesSelect<T extends boolean = true> {
   showTableOfContents?: T;
   showPartners?: T;
   fullWidth?: T;
+  noIndex?: T;
   hidden?: T;
   boardMember?: T;
   updatedAt?: T;

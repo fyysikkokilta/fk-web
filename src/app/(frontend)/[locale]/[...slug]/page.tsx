@@ -1,3 +1,4 @@
+import { Metadata } from 'next'
 import { Locale } from 'next-intl'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 
@@ -22,7 +23,9 @@ export const generateStaticParams = async () => {
   return Promise.resolve([])
 }
 
-export async function generateMetadata({ params }: PageProps<'/[locale]/[...slug]'>) {
+export async function generateMetadata({
+  params
+}: PageProps<'/[locale]/[...slug]'>): Promise<Metadata> {
   const { slug, locale } = await params
   const nextIntlLocale = locale as Locale
   const page = await getPage(slug.join('/'), nextIntlLocale)
@@ -37,7 +40,11 @@ export async function generateMetadata({ params }: PageProps<'/[locale]/[...slug
       description: t('notFound.meta.description'),
       robots: {
         index: false,
-        follow: false
+        follow: false,
+        googleBot: {
+          index: false,
+          noimageindex: true
+        }
       }
     }
   }
@@ -45,10 +52,10 @@ export async function generateMetadata({ params }: PageProps<'/[locale]/[...slug
   const images =
     page?.bannerImage && typeof page?.bannerImage === 'object'
       ? {
-          url: page?.bannerImage?.url,
-          width: page?.bannerImage?.width,
-          height: page?.bannerImage?.height,
-          alt: page?.bannerImage?.alt
+          url: page?.bannerImage?.url || '',
+          width: page?.bannerImage?.width || 100,
+          height: page?.bannerImage?.height || 100,
+          alt: page?.bannerImage?.alt || ''
         }
       : null
 
@@ -57,18 +64,20 @@ export async function generateMetadata({ params }: PageProps<'/[locale]/[...slug
     description: page?.meta?.description,
     metadataBase: new URL(env.NEXT_PUBLIC_SERVER_URL || ''),
     openGraph: {
-      title: page?.meta?.title,
-      description: page?.meta?.description,
-      images: images,
+      title: page?.meta?.title || `${page?.title} - ${siteName}`,
+      description: page?.meta?.description || '',
+      images: images || [],
       url: `${env.NEXT_PUBLIC_SERVER_URL}/${locale}/${slug?.join('/')}`,
       siteName: siteName,
       locale: locale,
       type: 'website'
     },
     robots: {
-      index: true,
-      follow: true,
-      nocache: false
+      index: !page?.noIndex,
+      googleBot: {
+        index: !page?.noIndex,
+        noimageindex: !!page?.noIndex
+      }
     },
     verification: {
       google: env.GOOGLE_SITE_VERIFICATION
