@@ -93,11 +93,13 @@
       "@tailwindcss/oxide",
       "compress-pdf",
       "esbuild",
-      "eslint-config-prettier",
       "sharp",
       "simple-git-hooks",
       "unrs-resolver"
-    ]
+    ],
+    "patchedDependencies": {
+      "@payloadcms/ui": "patches/@payloadcms__ui.patch"
+    }
   },
   "packageManager": "pnpm@10.15.0"
 }
