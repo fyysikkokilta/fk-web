@@ -46,6 +46,7 @@ export function DesktopMenu({ navigation }: { navigation: MainNavigation }) {
               >
                 <Link
                   href={itemPath}
+                  active={isActiveItem}
                   className={
                     topLevelClassName +
                     ' border-transparent' +
@@ -112,13 +113,15 @@ export function DesktopMenu({ navigation }: { navigation: MainNavigation }) {
                                     <NavigationMenu.List role="menu">
                                       {grandChildren.map((grandChild) => {
                                         const grandChildPath = getPath(grandChild)
+                                        const isActiveGrandChild = isActive(grandChildPath)
                                         return (
                                           <NavigationMenu.Item role="menuitem" key={grandChild.id}>
                                             <Link
                                               href={grandChildPath}
+                                              active={isActiveGrandChild}
                                               className={
                                                 linkCardClassName +
-                                                (isActive(grandChildPath)
+                                                (isActiveGrandChild
                                                   ? ' decoration-fk-yellow underline decoration-2 underline-offset-2'
                                                   : '')
                                               }
@@ -160,6 +163,7 @@ export function DesktopMenu({ navigation }: { navigation: MainNavigation }) {
                           <NavigationMenu.Item role="menuitem" key={child.id}>
                             <Link
                               href={childPath}
+                              active={isActiveChild}
                               className={
                                 linkCardClassName +
                                 (isActiveChild
