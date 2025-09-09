@@ -21,16 +21,12 @@ export function DesktopMenu({ navigation }: { navigation: MainNavigation }) {
       aria-label={t('mainNavigation.menu')}
       className="bg-fk-gray text-fk-white mx-auto hidden w-full min-w-max items-center justify-between px-2 font-bold lg:flex lg:px-8 xl:px-12 2xl:container"
     >
-      <NavigationMenu.List
-        role="menubar"
-        render={<ul />}
-        className="relative flex w-full items-center"
-      >
-        <NavigationMenu.Item role="menuitem" render={<li />}>
+      <NavigationMenu.List role="menubar" className="relative flex w-full items-center">
+        <NavigationMenu.Item role="menuitem">
           <NavbarBrand LinkElement={Link} logo={navigation.logo} title={navigation.title} />
         </NavigationMenu.Item>
 
-        <NavigationMenu.Item role="menuitem" render={<li />}>
+        <NavigationMenu.Item role="menuitem">
           <LanguageSwitcher LinkElement={Link} />
         </NavigationMenu.Item>
 
@@ -46,7 +42,6 @@ export function DesktopMenu({ navigation }: { navigation: MainNavigation }) {
               <NavigationMenu.Item
                 className={i === 0 ? 'ml-auto' : ''}
                 role="menuitem"
-                render={<li />}
                 key={item.id}
               >
                 <Link
@@ -71,7 +66,6 @@ export function DesktopMenu({ navigation }: { navigation: MainNavigation }) {
                 className={i === 0 ? 'ml-auto' : ''}
                 role="menuitem"
                 aria-haspopup="menu"
-                render={<li />}
                 key={item.id}
               >
                 <NavigationMenu.Trigger
@@ -86,113 +80,99 @@ export function DesktopMenu({ navigation }: { navigation: MainNavigation }) {
                   {item.label}
                 </NavigationMenu.Trigger>
                 <NavigationMenu.Content className={contentClassName}>
-                  <NavigationMenu.Root
-                    role="menu"
-                    render={<ul className="flex flex-col" />}
-                    orientation="vertical"
-                  >
-                    {children.map((child) => {
-                      const childPath = getPath(child)
-                      const isActiveChild = isActive(childPath)
-                      const hasGrandChildren =
-                        child.type === 'menu' && (child?.subchildren?.length ?? 0) > 0
-                      const grandChildren = child?.subchildren || []
-                      const grandChildrenIsActive = grandChildren.some((grandChild) =>
-                        isActive(getPath(grandChild))
-                      )
-
-                      if (hasGrandChildren) {
-                        return (
-                          <Fragment key={child.id}>
-                            <NavigationMenu.Item
-                              role="menuitem"
-                              aria-haspopup="menu"
-                              render={<li />}
-                            >
-                              <NavigationMenu.Trigger
-                                className={
-                                  linkCardClassName +
-                                  ' border-fk-yellow border-r-4' +
-                                  (grandChildrenIsActive
-                                    ? ' decoration-fk-yellow underline decoration-2 underline-offset-2'
-                                    : '')
-                                }
-                              >
-                                {child.label}
-                              </NavigationMenu.Trigger>
-                              <NavigationMenu.Content className={contentClassName}>
-                                <NavigationMenu.Root
-                                  role="menu"
-                                  render={
-                                    <ul className="flex max-w-[400px] flex-col justify-center" />
-                                  }
-                                  orientation="vertical"
-                                >
-                                  {grandChildren.map((grandChild) => {
-                                    const grandChildPath = getPath(grandChild)
-                                    return (
-                                      <NavigationMenu.Item
-                                        role="menuitem"
-                                        render={<li />}
-                                        key={grandChild.id}
-                                      >
-                                        <Link
-                                          href={grandChildPath}
-                                          className={
-                                            linkCardClassName +
-                                            (isActive(grandChildPath)
-                                              ? ' decoration-fk-yellow underline decoration-2 underline-offset-2'
-                                              : '')
-                                          }
-                                        >
-                                          {grandChild.label}
-                                        </Link>
-                                      </NavigationMenu.Item>
-                                    )
-                                  })}
-                                </NavigationMenu.Root>
-                              </NavigationMenu.Content>
-                            </NavigationMenu.Item>
-
-                            <NavigationMenu.Portal>
-                              <NavigationMenu.Positioner
-                                sideOffset={10}
-                                align="start"
-                                side="right"
-                                className="z-10 box-border h-[var(--positioner-height)] w-[var(--positioner-width)] max-w-[var(--available-width)] transition-[top,left,right,bottom] duration-[var(--duration)] ease-[var(--easing)] before:absolute before:content-[''] data-[instant]:transition-none data-[side=bottom]:before:top-[-10px] data-[side=bottom]:before:right-0 data-[side=bottom]:before:left-0 data-[side=bottom]:before:h-2.5 data-[side=left]:before:top-0 data-[side=left]:before:right-[-10px] data-[side=left]:before:bottom-0 data-[side=left]:before:w-2.5 data-[side=right]:before:top-0 data-[side=right]:before:bottom-0 data-[side=right]:before:left-[-10px] data-[side=right]:before:w-2.5 data-[side=top]:before:right-0 data-[side=top]:before:bottom-[-10px] data-[side=top]:before:left-0 data-[side=top]:before:h-2.5"
-                                style={{
-                                  ['--duration' as string]: '0.35s',
-                                  ['--easing' as string]: 'cubic-bezier(0.22, 1, 0.36, 1)'
-                                }}
-                              >
-                                <NavigationMenu.Popup className="data-[ending-style]:easing-[ease] bg-fk-gray text-fk-white border-fk-yellow relative h-[var(--popup-height)] origin-[var(--transform-origin)] transition-[opacity,transform,width,height,scale,translate] duration-[var(--duration)] ease-[var(--easing)] data-[ending-style]:scale-90 data-[ending-style]:opacity-0 data-[ending-style]:duration-150 data-[starting-style]:scale-90 data-[starting-style]:opacity-0 min-[500px]:w-[var(--popup-width)]">
-                                  <NavigationMenu.Arrow className="flex transition-[left] duration-[var(--duration)] ease-[var(--easing)] data-[side=bottom]:top-[-11px] data-[side=left]:right-[-11px] data-[side=left]:rotate-90 data-[side=right]:left-[-11px] data-[side=right]:-rotate-90 data-[side=top]:bottom-[-11px] data-[side=top]:rotate-180">
-                                    <Arrow className="fill-fk-yellow stroke-fk-yellow h-3 w-3 border-none" />
-                                  </NavigationMenu.Arrow>
-                                  <NavigationMenu.Viewport className="relative h-full w-full" />
-                                </NavigationMenu.Popup>
-                              </NavigationMenu.Positioner>
-                            </NavigationMenu.Portal>
-                          </Fragment>
+                  <NavigationMenu.Root orientation="vertical">
+                    <NavigationMenu.List role="menu">
+                      {children.map((child) => {
+                        const childPath = getPath(child)
+                        const isActiveChild = isActive(childPath)
+                        const hasGrandChildren =
+                          child.type === 'menu' && (child?.subchildren?.length ?? 0) > 0
+                        const grandChildren = child?.subchildren || []
+                        const grandChildrenIsActive = grandChildren.some((grandChild) =>
+                          isActive(getPath(grandChild))
                         )
-                      }
 
-                      return (
-                        <NavigationMenu.Item role="menuitem" render={<li />} key={child.id}>
-                          <Link
-                            href={childPath}
-                            className={
-                              linkCardClassName +
-                              (isActiveChild
-                                ? ' decoration-fk-yellow underline decoration-2 underline-offset-2'
-                                : '')
-                            }
-                          >
-                            {child.label}
-                          </Link>
-                        </NavigationMenu.Item>
-                      )
-                    })}
+                        if (hasGrandChildren) {
+                          return (
+                            <Fragment key={child.id}>
+                              <NavigationMenu.Item role="menuitem" aria-haspopup="menu">
+                                <NavigationMenu.Trigger
+                                  className={
+                                    linkCardClassName +
+                                    ' border-fk-yellow border-r-4' +
+                                    (grandChildrenIsActive
+                                      ? ' decoration-fk-yellow underline decoration-2 underline-offset-2'
+                                      : '')
+                                  }
+                                >
+                                  {child.label}
+                                </NavigationMenu.Trigger>
+                                <NavigationMenu.Content className={contentClassName}>
+                                  <NavigationMenu.Root orientation="vertical">
+                                    <NavigationMenu.List role="menu">
+                                      {grandChildren.map((grandChild) => {
+                                        const grandChildPath = getPath(grandChild)
+                                        return (
+                                          <NavigationMenu.Item role="menuitem" key={grandChild.id}>
+                                            <Link
+                                              href={grandChildPath}
+                                              className={
+                                                linkCardClassName +
+                                                (isActive(grandChildPath)
+                                                  ? ' decoration-fk-yellow underline decoration-2 underline-offset-2'
+                                                  : '')
+                                              }
+                                            >
+                                              {grandChild.label}
+                                            </Link>
+                                          </NavigationMenu.Item>
+                                        )
+                                      })}
+                                    </NavigationMenu.List>
+                                  </NavigationMenu.Root>
+                                </NavigationMenu.Content>
+                              </NavigationMenu.Item>
+
+                              <NavigationMenu.Portal>
+                                <NavigationMenu.Positioner
+                                  sideOffset={10}
+                                  align="start"
+                                  side="right"
+                                  className="z-10 box-border h-[var(--positioner-height)] w-[var(--positioner-width)] max-w-[var(--available-width)] transition-[top,left,right,bottom] duration-[var(--duration)] ease-[var(--easing)] before:absolute before:content-[''] data-[instant]:transition-none data-[side=bottom]:before:top-[-10px] data-[side=bottom]:before:right-0 data-[side=bottom]:before:left-0 data-[side=bottom]:before:h-2.5 data-[side=left]:before:top-0 data-[side=left]:before:right-[-10px] data-[side=left]:before:bottom-0 data-[side=left]:before:w-2.5 data-[side=right]:before:top-0 data-[side=right]:before:bottom-0 data-[side=right]:before:left-[-10px] data-[side=right]:before:w-2.5 data-[side=top]:before:right-0 data-[side=top]:before:bottom-[-10px] data-[side=top]:before:left-0 data-[side=top]:before:h-2.5"
+                                  style={{
+                                    ['--duration' as string]: '0.35s',
+                                    ['--easing' as string]: 'cubic-bezier(0.22, 1, 0.36, 1)'
+                                  }}
+                                >
+                                  <NavigationMenu.Popup className="data-[ending-style]:easing-[ease] bg-fk-gray text-fk-white border-fk-yellow relative h-[var(--popup-height)] origin-[var(--transform-origin)] transition-[opacity,transform,width,height,scale,translate] duration-[var(--duration)] ease-[var(--easing)] data-[ending-style]:scale-90 data-[ending-style]:opacity-0 data-[ending-style]:duration-150 data-[starting-style]:scale-90 data-[starting-style]:opacity-0 min-[500px]:w-[var(--popup-width)]">
+                                    <NavigationMenu.Arrow className="flex transition-[left] duration-[var(--duration)] ease-[var(--easing)] data-[side=bottom]:top-[-11px] data-[side=left]:right-[-11px] data-[side=left]:rotate-90 data-[side=right]:left-[-11px] data-[side=right]:-rotate-90 data-[side=top]:bottom-[-11px] data-[side=top]:rotate-180">
+                                      <Arrow className="fill-fk-yellow stroke-fk-yellow h-3 w-3 border-none" />
+                                    </NavigationMenu.Arrow>
+                                    <NavigationMenu.Viewport className="relative h-full w-full" />
+                                  </NavigationMenu.Popup>
+                                </NavigationMenu.Positioner>
+                              </NavigationMenu.Portal>
+                            </Fragment>
+                          )
+                        }
+
+                        return (
+                          <NavigationMenu.Item role="menuitem" key={child.id}>
+                            <Link
+                              href={childPath}
+                              className={
+                                linkCardClassName +
+                                (isActiveChild
+                                  ? ' decoration-fk-yellow underline decoration-2 underline-offset-2'
+                                  : '')
+                              }
+                            >
+                              {child.label}
+                            </Link>
+                          </NavigationMenu.Item>
+                        )
+                      })}
+                    </NavigationMenu.List>
                   </NavigationMenu.Root>
                 </NavigationMenu.Content>
               </NavigationMenu.Item>
