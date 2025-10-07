@@ -15,18 +15,13 @@ import { getLandingPage } from '@/lib/getLandingPage'
 import { getPartners } from '@/lib/getPartners'
 import { isDraftMode } from '@/utils/draftMode'
 
-interface LandingPageProps {
-  params: Promise<{
-    locale: Locale
-  }>
-}
-
 // Revalidate at least once per day
 export const revalidate = 86400
 
-export async function generateMetadata({ params }: LandingPageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps<'/[locale]'>): Promise<Metadata> {
   const { locale } = await params
-  const page = await getLandingPage(locale)
+  const nextIntlLocale = locale as Locale
+  const page = await getLandingPage(nextIntlLocale)
 
   const images = page?.bannerImages
     ?.map((image) => {
@@ -50,9 +45,9 @@ export async function generateMetadata({ params }: LandingPageProps): Promise<Me
       title: page?.meta?.title || page?.title,
       description: page?.meta?.description || '',
       images: images || [],
-      url: `${env.NEXT_PUBLIC_SERVER_URL}/${locale}`,
+      url: `${env.NEXT_PUBLIC_SERVER_URL}/${nextIntlLocale}`,
       siteName: page?.title,
-      locale: locale,
+      locale: nextIntlLocale,
       type: 'website'
     },
     verification: {

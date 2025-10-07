@@ -135,19 +135,19 @@ export default buildConfig({
                 // Since the live preview is mounted for also new pages, we need to return an empty string
                 return ''
               }
-              return `${baseUrl}/api/draft?slug=/${locale}/${data.path}`
+              return `${baseUrl}/api/draft?slug=/${locale.code}/${data.path}`
             case Newsletters.slug:
               if (!data) {
                 // There is no data (nor id) for new newsletters
                 // Since the live preview is mounted for also new newsletters, we need to return an empty string
                 return ''
               }
-              return `${baseUrl}/api/draft?slug=/newsletters/${locale}/${data.id}`
+              return `${baseUrl}/api/draft?slug=/newsletters/${locale.code}/${data.id}`
           }
         } else if (globalConfig) {
           switch (globalConfig.slug) {
             case LandingPage.slug:
-              return `${baseUrl}/api/draft?slug=/${locale}`
+              return `${baseUrl}/api/draft?slug=/${locale.code}`
           }
         }
         req.payload.logger.error('No live preview case found for collection or global')
