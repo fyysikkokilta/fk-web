@@ -16,8 +16,8 @@ export default function Error({
   const t = useTranslations('globalError')
 
   useEffect(() => {
-    // Log error for debugging
-    console.error('Error:', error)
+    // Log error message for debugging (avoid logging sensitive data)
+    console.error('Error occurred:', error.message)
   }, [error])
 
   return (
@@ -30,7 +30,11 @@ export default function Error({
         fill
         unoptimized
       />
-      <div className="bg-fk-black relative flex flex-col items-center rounded-xl p-8 text-center shadow-xl">
+      <div
+        className="bg-fk-black relative flex flex-col items-center rounded-xl p-8 text-center shadow-xl"
+        role="alert"
+        aria-live="assertive"
+      >
         <h2 className="text-fk-yellow mb-4 text-4xl font-extrabold drop-shadow-lg">{t('title')}</h2>
         <p className="text-fk-white mb-4 max-w-xl text-lg font-medium">{t('description')}</p>
         <p className="text-fk-white mb-6 max-w-xl text-base">{t('contactInfo')}</p>
