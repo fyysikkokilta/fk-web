@@ -75,8 +75,6 @@ export default async function LandingPage({ params }: PageProps<'/[locale]'>) {
 
   const startingIndex = Math.floor(Math.random() * (landingPage.bannerImages?.length || 1))
 
-  console.info('[Next.js] Rendering landing page', `/${locale}`)
-
   return (
     <>
       <DraftModeBanner isDraft={isDraft} />

@@ -103,8 +103,6 @@ export default async function Page({ params }: PageProps<'/[locale]/[...slug]'>)
     return <PayloadRedirects url={`/${slug?.join('/')}`} locale={nextIntlLocale} />
   }
 
-  console.info('[Next.js] Rendering page', `/${nextIntlLocale}/${slug?.join('/')}`)
-
   return (
     <>
       <DraftModeBanner pageId={page.id.toString()} isDraft={isDraft} hidden={page.hidden} />

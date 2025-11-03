@@ -55,11 +55,6 @@ export default async function NewsletterPage({ params }: PageProps<'/newsletters
           />
         )
 
-  console.info(
-    '[Next.js] Rendering newsletter preview page',
-    `/newsletters/${nextIntlLocale}/${id}`
-  )
-
   return (
     <>
       <RefreshRouteOnSave />

@@ -15,8 +15,6 @@ export default async function NewslettersLayout({
 
   setRequestLocale(locale)
 
-  console.info('[Next.js] Rendering layout', `/newsletters/${locale}`)
-
   return (
     <html lang={locale}>
       <body style={{ height: '100vh', width: '100vw', overflowX: 'hidden' }}>

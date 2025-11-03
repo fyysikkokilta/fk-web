@@ -28,8 +28,6 @@ export default async function RootLayout({ children, params }: LayoutProps<'/[lo
   const navigation = await getMainNavigation(locale)
   const footer = await getFooter(locale)
 
-  console.info('[Next.js] Rendering layout', `/${locale}`)
-
   return (
     <html
       lang={locale}
