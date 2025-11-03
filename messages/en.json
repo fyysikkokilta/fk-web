@@ -77,7 +77,7 @@
   },
   "globalError": {
     "title": "Something Went Wrong",
-    "description": "We're sorry, but an unexpected error has occurred. This is not your fault.",
+    "description": "We're sorry, but an unexpected error has occurred.",
     "contactInfo": "If this issue persists, please contact the Communications Officer.",
     "tryAgain": "Try Again",
     "goHome": "Go Home",

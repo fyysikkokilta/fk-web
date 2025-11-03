@@ -77,8 +77,8 @@
   },
   "globalError": {
     "title": "Jotain meni pieleen",
-    "description": "Pahoittelut, odottamaton virhe on tapahtunut. Tämä ei ole sinun vikasi.",
-    "contactInfo": "Jos ongelma jatkuu, ota yhteyttä tiedottajaan.",
+    "description": "Pahoittelut, odottamaton virhe on tapahtunut.",
+    "contactInfo": "Jos ongelma jatkuu, ota yhteyttä viestintävastaavaan.",
     "tryAgain": "Yritä uudelleen",
     "goHome": "Mene kotiin",
     "logoAlt": "Fyysikkokillan logo"
