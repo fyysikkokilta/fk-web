@@ -75,6 +75,14 @@
     "subtitle": "But this page? Not found. Even perfection has its limits!",
     "goHome": "Go Home & Admire Yourself"
   },
+  "globalError": {
+    "title": "Something Went Wrong",
+    "description": "We're sorry, but an unexpected error has occurred.",
+    "contactInfo": "If this issue persists, please contact the Communications Officer.",
+    "tryAgain": "Try Again",
+    "goHome": "Go Home",
+    "logoAlt": "Guild of Physics Logo"
+  },
   "partners": {
     "title": "Partners"
   },

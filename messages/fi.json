@@ -75,6 +75,14 @@
     "subtitle": "Mutta tämä sivu? Ei löydy. Jopa täydellisyydellä on rajansa!",
     "goHome": "Mene kotiin ja ihaile itseäsi"
   },
+  "globalError": {
+    "title": "Jotain meni pieleen",
+    "description": "Pahoittelut, odottamaton virhe on tapahtunut.",
+    "contactInfo": "Jos ongelma jatkuu, ota yhteyttä viestintävastaavaan.",
+    "tryAgain": "Yritä uudelleen",
+    "goHome": "Mene kotiin",
+    "logoAlt": "Fyysikkokillan logo"
+  },
   "partners": {
     "title": "Yhteistyökumppanit"
   },
