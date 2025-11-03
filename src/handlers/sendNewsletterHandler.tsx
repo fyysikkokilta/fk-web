@@ -31,11 +31,19 @@ const sendNewsletterHandler: TaskHandler<'sendNewsletter'> = async ({ input, req
     // Generate newsletter HTML for Finnish list members
     const combinedHtml = await render(
       <WeeklyNewsEmail
-        title={`${finnishWeeklySettings.titlePrefix} ${englishWeeklySettings.titlePrefix} ${finnishNewsletter.newsletterNumber}`}
+        newsletterNumber={finnishNewsletter.newsletterNumber}
         logo={finnishWeeklySettings.logo}
         newsletters={[
-          { newsletter: finnishNewsletter, locale: 'fi' },
-          { newsletter: englishNewsletter, locale: 'en' }
+          {
+            titlePrefix: finnishWeeklySettings.titlePrefix,
+            newsletter: finnishNewsletter,
+            locale: 'fi'
+          },
+          {
+            titlePrefix: englishWeeklySettings.titlePrefix,
+            newsletter: englishNewsletter,
+            locale: 'en'
+          }
         ]} // We send a combined newsletter in both languages currently to Finnish list members
         footer={finnishWeeklySettings.footer}
         locale="fi"
@@ -56,9 +64,15 @@ const sendNewsletterHandler: TaskHandler<'sendNewsletter'> = async ({ input, req
     // Generate newsletter HTML for English list members
     const englishHtml = await render(
       <WeeklyNewsEmail
-        title={`${englishWeeklySettings.titlePrefix} ${englishNewsletter.newsletterNumber}`}
+        newsletterNumber={englishNewsletter.newsletterNumber}
         logo={englishWeeklySettings.logo}
-        newsletters={[{ newsletter: englishNewsletter, locale: 'en' }]}
+        newsletters={[
+          {
+            titlePrefix: englishWeeklySettings.titlePrefix,
+            newsletter: englishNewsletter,
+            locale: 'en'
+          }
+        ]}
         footer={englishWeeklySettings.footer}
         locale="en"
       />
@@ -81,8 +95,14 @@ const sendNewsletterHandler: TaskHandler<'sendNewsletter'> = async ({ input, req
     // Generate career newsletter HTML
     const html = await render(
       <CareerNewsEmail
-        title={`${englishCareerSettings.titlePrefix} ${englishNewsletter.newsletterNumber}`}
-        newsletters={[{ newsletter: englishNewsletter, locale: 'en' }]} // We only have English career newsletters currently
+        newsletterNumber={englishNewsletter.newsletterNumber}
+        newsletters={[
+          {
+            titlePrefix: englishCareerSettings.titlePrefix,
+            newsletter: englishNewsletter,
+            locale: 'en'
+          }
+        ]} // We only have English career newsletters currently
         footer={englishCareerSettings.footer}
         locale="en"
       />

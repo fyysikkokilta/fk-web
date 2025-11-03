@@ -39,17 +39,17 @@ export default async function NewsletterPage({ params }: PageProps<'/newsletters
     newsletter.type === 'weekly'
       ? await render(
           <WeeklyNewsEmail
-            title={`${weekly.titlePrefix} ${newsletter.newsletterNumber}`}
+            newsletterNumber={newsletter.newsletterNumber}
             logo={weekly.logo}
-            newsletters={[{ newsletter, locale: nextIntlLocale }]}
+            newsletters={[{ titlePrefix: weekly.titlePrefix, newsletter, locale: nextIntlLocale }]}
             footer={weekly.footer}
             locale={nextIntlLocale}
           />
         )
       : await render(
           <CareerNewsEmail
-            title={`${career.titlePrefix} ${newsletter.newsletterNumber}`}
-            newsletters={[{ newsletter, locale: nextIntlLocale }]}
+            newsletterNumber={newsletter.newsletterNumber}
+            newsletters={[{ titlePrefix: career.titlePrefix, newsletter, locale: nextIntlLocale }]}
             footer={career.footer}
             locale={nextIntlLocale}
           />

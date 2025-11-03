@@ -25,14 +25,20 @@ import { slugify } from '@/utils/slugify'
 import { EmailRichText } from './EmailRichText'
 
 interface WeeklyNewsEmailProps {
-  title: string
+  newsletterNumber: string
   logo: NewsletterSettings['weekly']['logo']
-  newsletters: { newsletter: Newsletter; locale: Locale }[]
+  newsletters: { titlePrefix: string; newsletter: Newsletter; locale: Locale }[]
   footer: NewsletterSettings['weekly']['footer']
   locale: Locale
 }
 
-const WeeklyNewsEmail = ({ title, logo, newsletters, footer, locale }: WeeklyNewsEmailProps) => (
+const WeeklyNewsEmail = ({
+  newsletterNumber,
+  logo,
+  newsletters,
+  footer,
+  locale
+}: WeeklyNewsEmailProps) => (
   <Tailwind
     config={{
       theme: {
@@ -58,8 +64,11 @@ const WeeklyNewsEmail = ({ title, logo, newsletters, footer, locale }: WeeklyNew
   >
     <Html lang={locale}>
       <Head>
-        <title>{title}</title>
-        <meta name="description" content={title} />
+        <title>{`${newsletters.map(({ titlePrefix }) => titlePrefix).join(' / ')} ${newsletterNumber}`}</title>
+        <meta
+          name="description"
+          content={`${newsletters.map(({ titlePrefix }) => titlePrefix).join(' / ')} ${newsletterNumber}`}
+        />
         <Font
           fontFamily="Source Sans 3"
           fallbackFontFamily={['sans-serif']}
@@ -77,14 +86,24 @@ const WeeklyNewsEmail = ({ title, logo, newsletters, footer, locale }: WeeklyNew
           }}
         />
       </Head>
-      <Preview>{title}</Preview>
+      <Preview>{`${newsletters.map(({ titlePrefix }) => titlePrefix).join(' / ')} ${newsletterNumber}`}</Preview>
       <Body className="bg-fk-white">
         <Container className="mx-auto max-w-[600px] py-5 pb-12">
           {/* Header */}
           <Section className="w-full">
             <Row className="flex w-full items-center justify-between">
               <Column className="w-full">
-                <Heading className="font-lora m-0 text-3xl font-bold text-wrap">{title}</Heading>
+                <Heading className="font-lora m-0 text-3xl font-bold text-wrap">
+                  {newsletters.map(({ titlePrefix }, index) => {
+                    return (
+                      <Fragment key={`${titlePrefix}-${index}`}>
+                        {titlePrefix}
+                        <br />
+                      </Fragment>
+                    )
+                  })}{' '}
+                  {newsletterNumber}
+                </Heading>
               </Column>
               <Column className="w-full">
                 {logo && typeof logo === 'object' && (

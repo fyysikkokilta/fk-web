@@ -22,13 +22,18 @@ import { slugify } from '@/utils/slugify'
 import { EmailRichText } from './EmailRichText'
 
 interface CareerNewsEmailProps {
-  title: string
-  newsletters: { newsletter: Newsletter; locale: Locale }[]
+  newsletterNumber: string
+  newsletters: { titlePrefix: string; newsletter: Newsletter; locale: Locale }[]
   footer: NewsletterSettings['career']['footer']
   locale: Locale
 }
 
-const CareerNewsEmail = ({ title, newsletters, footer, locale }: CareerNewsEmailProps) => (
+const CareerNewsEmail = ({
+  newsletterNumber,
+  newsletters,
+  footer,
+  locale
+}: CareerNewsEmailProps) => (
   <Tailwind
     config={{
       theme: {
@@ -54,8 +59,11 @@ const CareerNewsEmail = ({ title, newsletters, footer, locale }: CareerNewsEmail
   >
     <Html lang={locale}>
       <Head>
-        <title>{title}</title>
-        <meta name="description" content={title} />
+        <title>{`${newsletters.map(({ titlePrefix }) => titlePrefix).join(' / ')} ${newsletterNumber}`}</title>
+        <meta
+          name="description"
+          content={`${newsletters.map(({ titlePrefix }) => titlePrefix).join(' / ')} ${newsletterNumber}`}
+        />
         <Font
           fontFamily="Source Sans 3"
           fallbackFontFamily={['sans-serif']}
@@ -73,12 +81,22 @@ const CareerNewsEmail = ({ title, newsletters, footer, locale }: CareerNewsEmail
           }}
         />
       </Head>
-      <Preview>{title}</Preview>
+      <Preview>{`${newsletters.map(({ titlePrefix }) => titlePrefix).join(' / ')} ${newsletterNumber}`}</Preview>
       <Body className="bg-fk-white">
         <Container className="mx-auto max-w-[600px] py-5 pb-12">
           {/* Header */}
           <Section className="w-full">
-            <Heading className="font-lora m-0 text-3xl font-bold text-wrap">{title}</Heading>
+            <Heading className="font-lora m-0 text-3xl font-bold text-wrap">
+              {newsletters.map(({ titlePrefix }, index) => {
+                return (
+                  <Fragment key={`${titlePrefix}-${index}`}>
+                    {titlePrefix}
+                    <br />
+                  </Fragment>
+                )
+              })}{' '}
+              {newsletterNumber}
+            </Heading>
           </Section>
 
           {/* Newsletters */}
