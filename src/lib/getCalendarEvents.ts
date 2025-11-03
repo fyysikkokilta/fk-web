@@ -43,7 +43,9 @@ export const getCalendarEvents = async (
       }
     }[]
   } catch (error) {
-    console.error('Error fetching calendar events:', error)
+    console.error(
+      `Error fetching calendar events: ${error instanceof Error ? error.message : 'Unknown error'}`
+    )
     return []
   }
 }

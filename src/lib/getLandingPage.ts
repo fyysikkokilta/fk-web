@@ -20,7 +20,9 @@ export async function getLandingPage(locale: Locale, req?: PayloadRequest) {
 
     return landingPage
   } catch (error) {
-    payload.logger.error('Error fetching landing page:', error)
+    payload.logger.error(
+      `Error fetching landing page: ${error instanceof Error ? error.message : 'Unknown error'}`
+    )
     return null
   }
 }

@@ -19,7 +19,9 @@ export async function getMainNavigation(locale: Locale, req?: PayloadRequest) {
 
     return result
   } catch (error) {
-    payload.logger.error('Error fetching main navigation:', error)
+    payload.logger.error(
+      `Error fetching main navigation: ${error instanceof Error ? error.message : 'Unknown error'}`
+    )
     return {} as MainNavigation
   }
 }

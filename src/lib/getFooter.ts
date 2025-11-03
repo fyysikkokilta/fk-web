@@ -19,7 +19,9 @@ export async function getFooter(locale: Locale, req?: PayloadRequest) {
 
     return footer
   } catch (error) {
-    payload.logger.error('Error fetching footer:', error)
+    payload.logger.error(
+      `Error fetching footer: ${error instanceof Error ? error.message : 'Unknown error'}`
+    )
     return {} as Footer
   }
 }

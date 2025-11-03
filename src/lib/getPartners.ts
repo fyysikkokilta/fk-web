@@ -18,7 +18,9 @@ export async function getPartners(locale: Locale, req?: PayloadRequest) {
 
     return partnerData
   } catch (error) {
-    payload.logger.error('Error fetching partners:', error)
+    payload.logger.error(
+      `Error fetching partners: ${error instanceof Error ? error.message : 'Unknown error'}`
+    )
     return null
   }
 }

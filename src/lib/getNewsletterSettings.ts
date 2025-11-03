@@ -19,7 +19,9 @@ export async function getNewsletterSettings(locale: Locale, req?: PayloadRequest
 
     return result
   } catch (error) {
-    payload.logger.error('Error fetching newsletter settings:', error)
+    payload.logger.error(
+      `Error fetching newsletter settings: ${error instanceof Error ? error.message : 'Unknown error'}`
+    )
     return {} as NewsletterSettings
   }
 }

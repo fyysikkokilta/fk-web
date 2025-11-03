@@ -22,7 +22,9 @@ export async function getNewsletter(id: string, locale: Locale, req?: PayloadReq
 
     return newsletter
   } catch (error) {
-    payload.logger.error('Error fetching newsletter:', error)
+    payload.logger.error(
+      `Error fetching newsletter: ${error instanceof Error ? error.message : 'Unknown error'}`
+    )
     return null
   }
 }

@@ -48,7 +48,9 @@ export async function getPage(path: string, locale: Locale, req?: PayloadRequest
 
     return docs[0] || null
   } catch (error) {
-    payload.logger.error('Error fetching page:', error)
+    payload.logger.error(
+      `Error fetching page: ${error instanceof Error ? error.message : 'Unknown error'}`
+    )
     return null
   }
 }
