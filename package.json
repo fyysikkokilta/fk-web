@@ -18,7 +18,7 @@
     "prepare": "simple-git-hooks"
   },
   "simple-git-hooks": {
-    "pre-commit": "pnpx lint-staged"
+    "pre-commit": "NODE_OPTIONS='--import tsx/esm' pnpx lint-staged"
   },
   "dependencies": {
     "@base-ui-components/react": "1.0.0-beta.4",
@@ -82,6 +82,7 @@
     "prettier-plugin-tailwindcss": "^0.6.14",
     "simple-git-hooks": "^2.13.1",
     "tailwind-scrollbar": "^4.0.2",
+    "tsx": "^4.20.6",
     "typescript": "5.9.3"
   },
   "engines": {
