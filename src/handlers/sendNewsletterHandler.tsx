@@ -31,7 +31,7 @@ const sendNewsletterHandler: TaskHandler<'sendNewsletter'> = async ({ input, req
     // Generate newsletter HTML for Finnish list members
     const combinedHtml = await render(
       <WeeklyNewsEmail
-        title={`${finnishWeeklySettings.titlePrefix} ${englishWeeklySettings.titlePrefix} ${finnishNewsletter.newsletterNumber}`}
+        title={`${finnishWeeklySettings.titlePrefix} / ${englishWeeklySettings.titlePrefix} ${finnishNewsletter.newsletterNumber}`}
         logo={finnishWeeklySettings.logo}
         newsletters={[
           { newsletter: finnishNewsletter, locale: 'fi' },
