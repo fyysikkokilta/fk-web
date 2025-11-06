@@ -1,93 +1,97 @@
+import { Field } from '@base-ui-components/react/field'
+import { Select } from '@base-ui-components/react/select'
+import { Check, ChevronDown } from 'lucide-react'
 import { useTranslations } from 'next-intl'
-import React from 'react'
-import type { Control, FieldErrorsImpl, FieldValues } from 'react-hook-form'
-import { Controller } from 'react-hook-form'
-import ReactSelect from 'react-select'
+import React, { useState } from 'react'
 
 import type { Form } from '@/payload-types'
 
-import { Error } from '../Error'
 import { Width } from '../Width'
 
 type SelectField = Extract<NonNullable<Form['fields']>[number], { blockType: 'select' }>
 
-export const Select: React.FC<
+export const SelectComponent: React.FC<
   {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    control: Control<FieldValues, any>
-    errors: Partial<
-      FieldErrorsImpl<{
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        [x: string]: any
-      }>
-    >
+    errors: Record<string, string>
   } & SelectField
-> = ({ name, control, defaultValue, errors, label, options, required, width }) => {
+> = ({ name, defaultValue, errors, label, options, required, width }) => {
   const t = useTranslations()
-  const hasError = errors[name]
-  const errorId = `${name}-error`
+  const hasError = !!errors[name]
+  const selectOptions = options ?? []
+  const [value, setValue] = useState<string | null>(defaultValue ?? null)
 
   return (
     <Width width={width ?? 100}>
-      <div className="mb-4">
-        <label htmlFor={name} className="text-fk-gray mb-1 block text-sm font-medium">
+      <Field.Root name={name} className="mb-4">
+        <Field.Label className="text-fk-gray mb-1 block text-sm font-medium">
           {label}
           {required && (
             <span className="text-fk-red ml-1" aria-label={t('form.requiredField')}>
               {'*'}
             </span>
           )}
-        </label>
-        <Controller
-          control={control}
-          defaultValue={defaultValue ?? ''}
+        </Field.Label>
+        <Select.Root
           name={name}
-          render={({ field: { onChange, value } }) => (
-            <ReactSelect
-              classNamePrefix="rs"
-              inputId={name}
-              instanceId={name}
-              onChange={(val) => onChange(val ? val.value : '')}
-              options={options ?? []}
-              value={options?.find((s) => s.value === value)}
-              className={hasError ? 'border-fk-red' : ''}
-              aria-invalid={hasError ? 'true' : 'false'}
-              aria-describedby={hasError ? errorId : undefined}
-              aria-required={required ?? false}
-              styles={{
-                control: (base, state) => ({
-                  ...base,
-                  borderRadius: '0.5rem',
-                  borderWidth: '1px',
-                  padding: '0.25rem 0.5rem',
-                  borderColor: hasError ? '#911f2f' : state.isFocused ? '#fbdb1d' : '#bfbaba',
-                  boxShadow: state.isFocused
-                    ? '0 0 0 2px #fbdb1d'
-                    : '0 1px 2px 0 rgb(0 0 0 / 0.05)',
-                  transition: 'border-color 0.2s, box-shadow 0.2s',
-                  '&:hover': {
-                    borderColor: hasError ? '#911f2f' : '#fbdb1d'
-                  }
-                }),
-                option: (base, state) => ({
-                  ...base,
-                  backgroundColor: state.isSelected
-                    ? '#fbdb1d'
-                    : state.isFocused
-                      ? '#fefcc3'
-                      : 'white',
-                  color: state.isSelected ? '#201e1e' : '#201e1e',
-                  '&:active': {
-                    backgroundColor: '#fbdb1d'
-                  }
-                })
+          value={value}
+          onValueChange={setValue}
+          required={required ?? false}
+          modal={false}
+        >
+          <Select.Trigger
+            className={`focus-visible:ring-fk-yellow group flex w-full items-center justify-between rounded-lg border px-4 py-3 shadow-sm transition-colors focus-visible:ring-2 focus-visible:ring-offset-0 focus-visible:outline-none ${
+              hasError ? 'border-fk-red' : 'border-fk-gray-lightest'
+            }`}
+          >
+            <Select.Value>
+              {(val) => {
+                const option = selectOptions.find((opt) => opt.value === val)
+                return option ? option.label : ''
               }}
-            />
-          )}
-          rules={{ required: required ?? false }}
-        />
-        {required && hasError && <Error id={errorId} />}
-      </div>
+            </Select.Value>
+            <Select.Icon>
+              <ChevronDown
+                size={16}
+                className="transition-transform duration-200 group-data-popup-open:rotate-180"
+              />
+            </Select.Icon>
+          </Select.Trigger>
+          <Select.Portal>
+            <Select.Positioner alignItemWithTrigger={false} className="z-50">
+              <Select.Popup
+                className="mt-1 max-h-60 overflow-auto rounded-lg border-0 bg-white shadow-lg"
+                style={{ minWidth: 'var(--anchor-width)', width: 'var(--anchor-width)' }}
+              >
+                <Select.List>
+                  {selectOptions.map((option) => (
+                    <Select.Item
+                      key={option.value}
+                      value={option.value}
+                      className={(state) =>
+                        `flex cursor-pointer items-center justify-between px-4 py-2 transition-colors ${
+                          state.selected
+                            ? 'bg-fk-yellow text-fk-black'
+                            : state.highlighted
+                              ? 'bg-fk-gray-lightest text-fk-gray'
+                              : 'text-fk-gray'
+                        }`
+                      }
+                    >
+                      <Select.ItemText>{option.label}</Select.ItemText>
+                      <Select.ItemIndicator>
+                        <Check size={16} />
+                      </Select.ItemIndicator>
+                    </Select.Item>
+                  ))}
+                </Select.List>
+              </Select.Popup>
+            </Select.Positioner>
+          </Select.Portal>
+        </Select.Root>
+        <Field.Error className="text-fk-red mt-1 text-sm" match={hasError}>
+          {errors[name] || t('form.required')}
+        </Field.Error>
+      </Field.Root>
     </Width>
   )
 }

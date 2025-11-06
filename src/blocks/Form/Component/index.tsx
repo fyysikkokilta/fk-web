@@ -1,26 +1,15 @@
 'use client'
 
+import { Form } from '@base-ui-components/react/form'
 import { LoaderCircle } from 'lucide-react'
 import { Locale, useTranslations } from 'next-intl'
 import React, { useState } from 'react'
-import { useForm } from 'react-hook-form'
 
 import { RichText } from '@/components/RichText/BlockRichText'
 import { useRouter } from '@/i18n/navigation'
 import type { FormBlock as FormBlockType } from '@/payload-types'
 
-import { buildInitialFormState } from './buildInitialFormState'
 import { fields } from './fields'
-
-export type Value = unknown
-
-export interface Property {
-  [key: string]: Value
-}
-
-export interface Data {
-  [key: string]: Property | Property[] | Value
-}
 
 interface FormBlockProps {
   block: FormBlockType
@@ -31,16 +20,7 @@ export const FormBlock = ({ block, locale }: FormBlockProps) => {
   const t = useTranslations()
   const { enableIntro, form, introContent } = block
 
-  const formMethods = useForm({
-    defaultValues: buildInitialFormState(typeof form === 'object' ? form.fields || [] : [])
-  })
-  const {
-    control,
-    formState: { errors },
-    handleSubmit,
-    register
-  } = formMethods
-
+  const [errors, setErrors] = useState<Record<string, string>>({})
   const [isLoading, setIsLoading] = useState(false)
   const [hasSubmitted, setHasSubmitted] = useState<boolean>()
   const [error, setError] = useState<{ message: string; status?: string } | undefined>()
@@ -52,11 +32,50 @@ export const FormBlock = ({ block, locale }: FormBlockProps) => {
 
   const { id: formID, confirmationMessage, confirmationType, redirect, submitButtonLabel } = form
 
-  const onSubmit = (data: Data) => {
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    setError(undefined)
+    setErrors({})
+
+    const formData = new FormData(event.currentTarget)
+    const data: Record<string, unknown> = {}
+
+    // Convert FormData to object
+    for (const [name, value] of formData.entries()) {
+      data[name] = value
+    }
+
+    // Validate required fields and email pattern
+    const validationErrors: Record<string, string> = {}
+    if (form.fields) {
+      for (const field of form.fields) {
+        if (field.blockType !== 'message' && 'name' in field && 'required' in field) {
+          const fieldValue = data[field.name]
+
+          // Check email pattern first (if value exists)
+          if (field.blockType === 'email' && fieldValue && typeof fieldValue === 'string') {
+            const emailPattern = /^\S[^\s@]*@\S+$/
+            if (!emailPattern.test(fieldValue)) {
+              validationErrors[field.name] = t('form.invalidEmail')
+              continue
+            }
+          }
+
+          // Check required (only if no pattern error was set)
+          if (field.required && !fieldValue) {
+            validationErrors[field.name] = t('form.required')
+          }
+        }
+      }
+    }
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors)
+      return
+    }
+
     let loadingTimerID: ReturnType<typeof setTimeout>
     const submitForm = async () => {
-      setError(undefined)
-
       const dataToSend = Object.entries(data).map(([name, value]) => ({
         field: name,
         value
@@ -153,9 +172,11 @@ export const FormBlock = ({ block, locale }: FormBlockProps) => {
         </div>
       )}
       {!hasSubmitted && (
-        <form
+        <Form
           id={formID.toString()}
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={onSubmit}
+          errors={errors}
+          onClearErrors={(errors) => setErrors(errors as Record<string, string>)}
           className="space-y-6"
           aria-label={form.title || 'Form'}
           noValidate
@@ -164,19 +185,9 @@ export const FormBlock = ({ block, locale }: FormBlockProps) => {
             {form.fields &&
               form.fields.map((field, index) => {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                const Field: React.FC<any> = fields?.[field.blockType]
-                if (Field) {
-                  return (
-                    <Field
-                      key={index}
-                      form={form}
-                      {...field}
-                      {...formMethods}
-                      control={control}
-                      errors={errors}
-                      register={register}
-                    />
-                  )
+                const FieldComponent: React.FC<any> = fields?.[field.blockType]
+                if (FieldComponent) {
+                  return <FieldComponent key={index} form={form} {...field} errors={errors} />
                 }
                 return null
               })}
@@ -191,7 +202,7 @@ export const FormBlock = ({ block, locale }: FormBlockProps) => {
               {submitButtonLabel || t('form.submit')}
             </button>
           </div>
-        </form>
+        </Form>
       )}
     </div>
   )

@@ -1,9 +1,9 @@
 'use client'
 
-import { ExternalLink, FileText } from 'lucide-react'
+import { Select } from '@base-ui-components/react/select'
+import { Check, ChevronDown, ExternalLink, FileText } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useState } from 'react'
-import Select from 'react-select'
 
 import type { PDFViewerBlock as PDFViewerBlockType } from '@/payload-types'
 
@@ -44,6 +44,8 @@ export const PDFViewer = ({ block }: PDFViewerProps) => {
       label: doc.title || `Document ${index + 1}`
     }))
 
+  const selectedOption = selectOptions[selectedIndex]
+
   return (
     <div className="mx-auto w-full max-w-4xl">
       <div className="bg-fk-white border-fk-gray overflow-hidden rounded-lg border shadow-sm">
@@ -51,50 +53,64 @@ export const PDFViewer = ({ block }: PDFViewerProps) => {
         <div className="border-fk-gray border-b px-6 py-4">
           <div className="flex items-center gap-4">
             {documents.length > 1 ? (
-              <Select
-                value={selectOptions[selectedIndex]}
-                onChange={(option) => option && setSelectedIndex(option.value)}
-                options={selectOptions}
-                aria-label={t('pdfViewer.selectDocument')}
-                className="min-w-[200px]"
-                classNamePrefix="fk"
-                isSearchable={false}
-                instanceId={`pdf-viewer-document-select-${block.id}`}
-                styles={{
-                  control: (base, state) => ({
-                    ...base,
-                    border: 'none',
-                    backgroundColor: 'transparent',
-                    boxShadow: 'none',
-                    fontSize: '1.125rem',
-                    fontWeight: '600',
-                    color: 'var(--color-fk-gray)',
-                    cursor: 'pointer',
-                    outline: state.isFocused ? '2px solid var(--color-fk-yellow)' : 'none'
-                  }),
-                  option: (base, state) => ({
-                    ...base,
-                    backgroundColor: state.isSelected
-                      ? 'var(--color-fk-yellow)'
-                      : state.isFocused
-                        ? 'var(--color-fk-gray-lightest)'
-                        : 'transparent',
-                    color: 'var(--color-fk-gray)',
-                    cursor: 'pointer',
-                    border: state.isSelected ? '1px solid var(--color-fk-black)' : 'none'
-                  }),
-                  singleValue: (base) => ({
-                    ...base,
-                    color: 'var(--color-fk-gray)',
-                    fontWeight: '600'
-                  }),
-                  menu: (base) => ({
-                    ...base,
-                    backgroundColor: 'white',
-                    border: '1px solid var(--color-fk-gray)'
-                  })
+              <Select.Root
+                value={selectedOption?.value ?? null}
+                onValueChange={(newValue: number | null) => {
+                  if (newValue !== null) {
+                    setSelectedIndex(newValue)
+                  }
                 }}
-              />
+                modal={false}
+              >
+                <Select.Trigger
+                  className="text-fk-gray focus-visible:ring-fk-yellow group flex w-full items-center justify-between border-none bg-transparent text-lg font-semibold outline-none focus-visible:ring-2 focus-visible:ring-offset-0 focus-visible:outline-none"
+                  aria-label={t('pdfViewer.selectDocument')}
+                >
+                  <Select.Value>
+                    {(val: number | null) => {
+                      const option = selectOptions.find((opt) => opt.value === val)
+                      return option ? option.label : ''
+                    }}
+                  </Select.Value>
+                  <Select.Icon>
+                    <ChevronDown
+                      size={16}
+                      className="transition-transform duration-200 group-data-popup-open:rotate-180"
+                    />
+                  </Select.Icon>
+                </Select.Trigger>
+                <Select.Portal>
+                  <Select.Positioner alignItemWithTrigger={false} className="z-50">
+                    <Select.Popup
+                      className="mt-1 max-h-60 overflow-auto rounded-lg border-0 bg-white shadow-lg"
+                      style={{ minWidth: 'var(--anchor-width)', width: 'var(--anchor-width)' }}
+                    >
+                      <Select.List>
+                        {selectOptions.map((option) => (
+                          <Select.Item
+                            key={option.value}
+                            value={option.value}
+                            className={(state) =>
+                              `flex cursor-pointer items-center justify-between px-4 py-2 transition-colors ${
+                                state.selected
+                                  ? 'bg-fk-yellow text-fk-black'
+                                  : state.highlighted
+                                    ? 'bg-fk-gray-lightest text-fk-gray'
+                                    : 'text-fk-gray'
+                              }`
+                            }
+                          >
+                            <Select.ItemText>{option.label}</Select.ItemText>
+                            <Select.ItemIndicator>
+                              <Check size={16} />
+                            </Select.ItemIndicator>
+                          </Select.Item>
+                        ))}
+                      </Select.List>
+                    </Select.Popup>
+                  </Select.Positioner>
+                </Select.Portal>
+              </Select.Root>
             ) : (
               <span className="text-fk-gray text-lg font-semibold">{title}</span>
             )}
@@ -102,7 +118,7 @@ export const PDFViewer = ({ block }: PDFViewerProps) => {
         </div>
 
         {/* PDF Viewer */}
-        <div className="bg-fk-white relative aspect-[3/4] w-full">
+        <div className="bg-fk-white relative aspect-3/4 w-full">
           <iframe
             src={`${url}#page=1&view=FitH&toolbar=0`}
             className="h-full w-full border-none"

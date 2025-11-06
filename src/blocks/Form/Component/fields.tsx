@@ -3,7 +3,7 @@ import { Date } from './Date'
 import { Email } from './Email'
 import { Message } from './Message'
 import { Number } from './Number'
-import { Select } from './Select'
+import { SelectComponent as Select } from './Select'
 import { Text } from './Text'
 import { Textarea } from './Textarea'
 

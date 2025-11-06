@@ -1,55 +1,51 @@
+import { Field } from '@base-ui-components/react/field'
+import { NumberField } from '@base-ui-components/react/number-field'
 import { useTranslations } from 'next-intl'
-import React from 'react'
-import type { FieldErrorsImpl, FieldValues, UseFormRegister } from 'react-hook-form'
+import React, { useState } from 'react'
 
 import type { Form } from '@/payload-types'
 
-import { Error } from '../Error'
 import { Width } from '../Width'
 
-type NumberField = Extract<NonNullable<Form['fields']>[number], { blockType: 'number' }>
+type NumberFieldType = Extract<NonNullable<Form['fields']>[number], { blockType: 'number' }>
 
 export const Number: React.FC<
   {
-    errors: Partial<
-      FieldErrorsImpl<{
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        [x: string]: any
-      }>
-    >
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    register: UseFormRegister<any & FieldValues>
-  } & NumberField
-> = ({ name, defaultValue, errors, label, register, required, width }) => {
+    errors: Record<string, string>
+  } & NumberFieldType
+> = ({ name, defaultValue, errors, label, required, width }) => {
   const t = useTranslations()
-  const hasError = errors[name]
-  const errorId = `${name}-error`
+  const hasError = !!errors[name]
+  const [value, setValue] = useState<number | null>(defaultValue ? defaultValue : null)
 
   return (
     <Width width={width ?? 100}>
-      <div className="mb-4">
-        <label htmlFor={name} className="text-fk-gray mb-1 block text-sm font-medium">
+      <Field.Root name={name} className="mb-4">
+        <Field.Label className="text-fk-gray mb-1 block text-sm font-medium">
           {label}
           {required && (
             <span className="text-fk-red ml-1" aria-label={t('form.requiredField')}>
               {'*'}
             </span>
           )}
-        </label>
-        <input
+        </Field.Label>
+        <NumberField.Root
           id={name}
-          type="number"
-          defaultValue={defaultValue ?? ''}
-          className={`w-full rounded-lg border px-4 py-3 shadow-sm transition-colors ${
-            hasError ? 'border-fk-red' : 'border-fk-gray-lightest'
-          }`}
-          aria-invalid={hasError ? 'true' : 'false'}
-          aria-describedby={hasError ? errorId : undefined}
-          aria-required={required ?? false}
-          {...register(name, { required: required ?? false })}
-        />
-        {required && hasError && <Error id={errorId} />}
-      </div>
+          name={name}
+          value={value}
+          onValueChange={setValue}
+          required={required ?? false}
+        >
+          <NumberField.Input
+            className={`focus-visible:ring-fk-yellow w-full rounded-lg border px-4 py-3 shadow-sm transition-colors focus-visible:ring-2 focus-visible:ring-offset-0 focus-visible:outline-none ${
+              hasError ? 'border-fk-red' : 'border-fk-gray-lightest'
+            }`}
+          />
+        </NumberField.Root>
+        <Field.Error className="text-fk-red mt-1 text-sm" match={hasError}>
+          {errors[name] || t('form.required')}
+        </Field.Error>
+      </Field.Root>
     </Width>
   )
 }
