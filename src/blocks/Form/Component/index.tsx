@@ -20,10 +20,9 @@ export const FormBlock = ({ block, locale }: FormBlockProps) => {
   const t = useTranslations()
   const { enableIntro, form, introContent } = block
 
-  const [errors, setErrors] = useState<Record<string, string>>({})
   const [isLoading, setIsLoading] = useState(false)
-  const [hasSubmitted, setHasSubmitted] = useState<boolean>()
-  const [error, setError] = useState<{ message: string; status?: string } | undefined>()
+  const [hasSubmitted, setHasSubmitted] = useState(false)
+  const [error, setError] = useState<{ message: string; status?: string }>()
   const router = useRouter()
 
   if (!form || typeof form !== 'object') {
@@ -35,104 +34,61 @@ export const FormBlock = ({ block, locale }: FormBlockProps) => {
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setError(undefined)
-    setErrors({})
 
     const formData = new FormData(event.currentTarget)
     const data: Record<string, unknown> = {}
 
-    // Convert FormData to object
     for (const [name, value] of formData.entries()) {
       data[name] = value
     }
 
-    // Validate required fields and email pattern
-    const validationErrors: Record<string, string> = {}
-    if (form.fields) {
-      for (const field of form.fields) {
-        if (field.blockType !== 'message' && 'name' in field && 'required' in field) {
-          const fieldValue = data[field.name]
+    const dataToSend = Object.entries(data).map(([name, value]) => ({
+      field: name,
+      value
+    }))
 
-          // Check email pattern first (if value exists)
-          if (field.blockType === 'email' && fieldValue && typeof fieldValue === 'string') {
-            const emailPattern = /^\S[^\s@]*@\S+$/
-            if (!emailPattern.test(fieldValue)) {
-              validationErrors[field.name] = t('form.invalidEmail')
-              continue
-            }
-          }
+    const loadingTimerID = setTimeout(() => {
+      setIsLoading(true)
+    }, 1000)
 
-          // Check required (only if no pattern error was set)
-          if (field.required && !fieldValue) {
-            validationErrors[field.name] = t('form.required')
-          }
-        }
-      }
-    }
-
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors)
-      return
-    }
-
-    let loadingTimerID: ReturnType<typeof setTimeout>
-    const submitForm = async () => {
-      const dataToSend = Object.entries(data).map(([name, value]) => ({
-        field: name,
-        value
-      }))
-
-      // delay loading indicator by 1s
-      loadingTimerID = setTimeout(() => {
-        setIsLoading(true)
-      }, 1000)
-
-      try {
-        const req = await fetch(`/api/form-submissions`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            form: formID,
-            submissionData: dataToSend
-          })
+    try {
+      const req = await fetch(`/api/form-submissions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          form: formID,
+          submissionData: dataToSend
         })
+      })
 
-        const res = await req.json()
+      const res = await req.json()
+      clearTimeout(loadingTimerID)
 
-        clearTimeout(loadingTimerID)
-
-        if (req.status >= 400) {
-          setIsLoading(false)
-
-          setError({
-            message: res.errors?.[0]?.message || t('form.error'),
-            status: res.status
-          })
-
-          return
-        }
-
-        setIsLoading(false)
-        setHasSubmitted(true)
-
-        if (confirmationType === 'redirect' && redirect) {
-          const { url } = redirect
-
-          const redirectUrl = url
-
-          if (redirectUrl) router.push(redirectUrl)
-        }
-      } catch (err) {
-        console.warn(err)
+      if (req.status >= 400) {
         setIsLoading(false)
         setError({
-          message: t('form.error')
+          message: res.errors?.[0]?.message || t('form.error'),
+          status: res.status
         })
+        return
       }
-    }
 
-    void submitForm()
+      setIsLoading(false)
+      setHasSubmitted(true)
+
+      if (confirmationType === 'redirect' && redirect?.url) {
+        router.push(redirect.url)
+      }
+    } catch (err) {
+      console.warn(err)
+      clearTimeout(loadingTimerID)
+      setIsLoading(false)
+      setError({
+        message: t('form.error')
+      })
+    }
   }
 
   return (
@@ -175,11 +131,8 @@ export const FormBlock = ({ block, locale }: FormBlockProps) => {
         <Form
           id={formID.toString()}
           onSubmit={onSubmit}
-          errors={errors}
-          onClearErrors={(errors) => setErrors(errors as Record<string, string>)}
           className="space-y-6"
           aria-label={form.title || 'Form'}
-          noValidate
         >
           <div className="grid grid-cols-1 gap-6">
             {form.fields &&
@@ -187,7 +140,7 @@ export const FormBlock = ({ block, locale }: FormBlockProps) => {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const FieldComponent: React.FC<any> = fields?.[field.blockType]
                 if (FieldComponent) {
-                  return <FieldComponent key={index} form={form} {...field} errors={errors} />
+                  return <FieldComponent key={index} form={form} {...field} />
                 }
                 return null
               })}
