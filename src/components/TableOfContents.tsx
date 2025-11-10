@@ -271,7 +271,7 @@ export const TableOfContents = ({ show, richText }: TableOfContentsProps) => {
     <>
       <nav
         ref={mobileNavRef}
-        className="border-fk-black/20 bg-fk-white/50 fixed top-12 left-0 z-10 w-full overflow-y-auto border-b-1 backdrop-blur-sm lg:hidden"
+        className="border-fk-black/20 bg-fk-white/50 fixed top-12 left-0 z-10 w-full overflow-y-auto border-b backdrop-blur-sm lg:hidden"
       >
         {activeHeading && (
           <div className="flex items-center justify-between">

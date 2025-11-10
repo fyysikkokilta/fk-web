@@ -47,7 +47,7 @@ export const PageNavigation = ({ block }: PageNavigationProps) => {
               key={page.id}
               href={`/${page.path}`}
               prefetch={false}
-              className={`text-fk-white hover:bg-fk-orange group flex aspect-[4/3] items-center justify-center text-center font-(family-name:--font-lora) font-bold transition-all duration-200 ${
+              className={`text-fk-white hover:bg-fk-orange group flex aspect-4/3 items-center justify-center text-center font-(family-name:--font-lora) font-bold transition-all duration-200 ${
                 pathname.endsWith(`/${page.path}`) ? 'bg-fk-orange' : 'bg-fk-orange-dark'
               }`}
             >
