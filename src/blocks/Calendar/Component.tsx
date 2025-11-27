@@ -1,5 +1,9 @@
+import 'react-big-calendar/lib/css/react-big-calendar.css'
+import './calendar-styles.css'
+
 import { startOfMonth, subMonths } from 'date-fns'
 import { Locale } from 'next-intl'
+import { Suspense } from 'react'
 
 import { getCalendarEvents } from '@/lib/getCalendarEvents'
 import { CalendarBlock as CalendarBlockType } from '@/payload-types'
@@ -38,5 +42,9 @@ export const Calendar = async ({ block, locale }: CalendarProps) => {
     return dateA.getTime() - dateB.getTime()
   })
 
-  return <CalendarClient events={events} locale={locale} />
+  return (
+    <Suspense>
+      <CalendarClient events={events} locale={locale} />
+    </Suspense>
+  )
 }
