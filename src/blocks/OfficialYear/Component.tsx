@@ -89,7 +89,7 @@ export const OfficialYear = async ({ block }: OfficialYearProps) => {
                 color: cell.textColor
               }}
             >
-              <div className="relative m-5 aspect-[4/5]">
+              <div className="relative m-5 aspect-4/5">
                 {official.photo ? (
                   <Image
                     src={(official.photo as Media)?.url || ''}

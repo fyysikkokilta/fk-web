@@ -29,7 +29,7 @@ export const FuksiYear = async ({ block }: FuksiYearProps) => {
 
                   return (
                     <div key={fuksi.id} className="text-center">
-                      <div className="relative mb-4 aspect-[2/3]">
+                      <div className="relative mb-4 aspect-2/3">
                         {fuksi.photo ? (
                           <Image
                             src={(fuksi.photo as Media).url || ''}

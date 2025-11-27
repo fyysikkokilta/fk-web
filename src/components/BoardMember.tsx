@@ -12,7 +12,7 @@ export const BoardMember = async ({ member }: BoardMemberProps) => {
   return (
     <div className="flex flex-col p-4 text-center">
       {/* Oval-shaped image container */}
-      <div className="not-prose relative mb-4 aspect-[2/3] overflow-hidden rounded-[50%]">
+      <div className="not-prose relative mb-4 aspect-2/3 overflow-hidden rounded-[50%]">
         {typeof member.image === 'object' && member.image && member.image.url ? (
           <Image
             src={member.image.url}

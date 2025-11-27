@@ -25,7 +25,7 @@ export const EmbedVideo = ({ block }: EmbedVideoProps) => {
 
   const aspectRatioClasses = {
     '16:9': 'aspect-video',
-    '4:3': 'aspect-[4/3]',
+    '4:3': 'aspect-4/3',
     '1:1': 'aspect-square'
   }
 

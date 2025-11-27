@@ -233,19 +233,19 @@ const topLevelClassName =
   'box-border flex items-center justify-center h-12 border-b-4 ' +
   'px-2 bg-fk-gray text-fk-white font-bold uppercase tracking-wide ' +
   'leading-6 no-underline ' +
-  'hover:text-fk-gray-light active:text-fk-gray-light data-[popup-open]:text-fk-gray-light ' +
+  'hover:text-fk-gray-light active:text-fk-gray-light data-popup-open:text-fk-gray-light ' +
   'focus-visible:relative'
 
 const contentClassName =
   'h-full' +
-  'transition-[opacity,transform,translate] duration-[var(--duration)] ease-[var(--easing)] ' +
-  'data-[starting-style]:opacity-0 data-[ending-style]:opacity-0 ' +
-  'data-[starting-style]:data-[activation-direction=left]:translate-x-[-50%] ' +
-  'data-[starting-style]:data-[activation-direction=right]:translate-x-[50%] ' +
-  'data-[ending-style]:data-[activation-direction=left]:translate-x-[50%] ' +
-  'data-[ending-style]:data-[activation-direction=right]:translate-x-[-50%]'
+  'transition-[opacity,transform,translate] duration-(--duration) ease-(--easing) ' +
+  'data-starting-style:opacity-0 data-ending-style:opacity-0 ' +
+  'data-starting-style:data-[activation-direction=left]:translate-x-[-50%] ' +
+  'data-starting-style:data-[activation-direction=right]:translate-x-[50%] ' +
+  'data-ending-style:data-[activation-direction=left]:translate-x-[50%] ' +
+  'data-ending-style:data-[activation-direction=right]:translate-x-[-50%]'
 
 const linkCardClassName =
   'w-full text-left block px-4 py-3 no-underline text-inherit font-bold uppercase tracking-wide ' +
   'hover:text-fk-gray-light ' +
-  'data-[popup-open]:text-fk-gray-light'
+  'data-popup-open:text-fk-gray-light'

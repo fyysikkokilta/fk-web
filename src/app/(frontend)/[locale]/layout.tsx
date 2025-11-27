@@ -33,7 +33,7 @@ export default async function RootLayout({ children, params }: LayoutProps<'/[lo
       lang={locale}
       className={`${sourceSans3.variable} ${sourceSans3.className} ${lora.variable} selection:bg-fk-yellow selection:text-fk-black scrollbar scrollbar-thumb-fk-yellow scrollbar-track-fk-black scroll-pt-16 scroll-smooth`}
     >
-      <body className="flex min-h-dvh flex-1 flex-shrink-0 flex-col items-center overflow-x-clip">
+      <body className="flex min-h-dvh flex-1 shrink-0 flex-col items-center overflow-x-clip">
         <NextIntlClientProvider>
           <NextTopLoader color="#fbdb1d" showSpinner={false} showForHashAnchor={false} />
           <SkipLink />

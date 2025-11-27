@@ -2590,10 +2590,6 @@ packages:
     resolution: {integrity: sha512-DtCOLG98P007x7wiiOmfI0fi3eIKyWiLTGJ2MDnVi/E04lWGbf+JzrRHMm0rgIIZJGtHpKpbVgLWHrv8xXpc3Q==}
     engines: {node: '>=0.10.0'}
 
-  detect-libc@2.1.1:
-    resolution: {integrity: sha512-ecqj/sy1jcK1uWrwpR67UhYrIFQ+5WlGxth34WquCbamhFA6hkkwiu37o6J5xCHdo1oixJRfVRw+ywV+Hq/0Aw==}
-    engines: {node: '>=8'}
-
   detect-libc@2.1.2:
     resolution: {integrity: sha512-Btj2BOOO83o3WyH59e8MgXsxEQVcarkUOpEYrubB0urwnN10yQ364rsiByU11nZlqWYZm05i/of7io4mzihBtQ==}
     engines: {node: '>=8'}
@@ -7758,8 +7754,6 @@ snapshots:
 
   detect-file@1.0.0: {}
 
-  detect-libc@2.1.1: {}
-
   detect-libc@2.1.2: {}
 
   devlop@1.1.0:
@@ -8787,7 +8781,7 @@ snapshots:
 
   lightningcss@1.30.2:
     dependencies:
-      detect-libc: 2.1.1
+      detect-libc: 2.1.2
     optionalDependencies:
       lightningcss-android-arm64: 1.30.2
       lightningcss-darwin-arm64: 1.30.2
