@@ -51,5 +51,8 @@ export const Fuksis: CollectionConfig = {
   hooks: {
     afterChange: [revalidateCollection('fuksis')],
     afterDelete: [revalidateDeletedCollection('fuksis')]
+  },
+  typescript: {
+    interface: 'Fuksi'
   }
 }

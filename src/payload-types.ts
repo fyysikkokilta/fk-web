@@ -90,6 +90,7 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
+  fallbackLocale: ('false' | 'none' | 'null') | false | null | ('fi' | 'en') | ('fi' | 'en')[];
   globals: {
     'main-navigation': MainNavigation;
     footer: Footer;
