@@ -212,7 +212,13 @@ export function DesktopMenu({ navigation }: { navigation: MainNavigation }) {
 }
 
 function Link(props: NavigationMenu.Link.Props) {
-  return <NavigationMenu.Link render={<NextLink href={props.href ?? ''} />} {...props} />
+  return (
+    <NavigationMenu.Link
+      closeOnClick={true}
+      render={<NextLink href={props.href ?? ''} />}
+      {...props}
+    />
+  )
 }
 
 function Arrow(props: React.ComponentProps<'svg'>) {
