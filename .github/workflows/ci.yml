@@ -89,7 +89,7 @@ jobs:
 
       - name: Check migrations
         run: |
-          pnpm payload migrate:create --skip-empty
+          pnpm generate:migration
           if [ -n "$(git status --porcelain)" ]; then
             echo "❌ Migrations are not up to date. Please commit the changes:"
             git status
