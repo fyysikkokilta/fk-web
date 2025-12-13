@@ -3,15 +3,14 @@
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
-import { LandingPage, Media } from '@/payload-types'
+import { LandingPage } from '@/payload-types'
 
 interface FrontPageSlideshowProps {
   page: LandingPage
-  startingIndex: number
 }
 
-export function FrontPageSlideshow({ page, startingIndex }: FrontPageSlideshowProps) {
-  const [currentIndex, setCurrentIndex] = useState(startingIndex)
+export function FrontPageSlideshow({ page }: FrontPageSlideshowProps) {
+  const [currentIndex, setCurrentIndex] = useState(0)
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -31,25 +30,31 @@ export function FrontPageSlideshow({ page, startingIndex }: FrontPageSlideshowPr
 
   return (
     <section className="relative mb-8 h-[calc(50svh)] w-full">
-      {page.bannerImages.map((image, index) => (
-        <div
-          key={(image as Media).id}
-          className={`absolute inset-0 transition-opacity duration-1000 ${
-            index === currentIndex ? 'opacity-100' : 'opacity-0'
-          }`}
-        >
-          <Image
-            priority={index === startingIndex}
-            src={(image as Media).url || ''}
-            alt={(image as Media).alt || ''}
-            blurDataURL={(image as Media).blurDataUrl}
-            placeholder="blur"
-            fill
-            sizes="100vw"
-            className="object-cover"
-          />
-        </div>
-      ))}
+      {page.bannerImages.map((image, index) => {
+        if (typeof image === 'number') {
+          return null
+        }
+        return (
+          <div
+            key={image.id}
+            className={`absolute inset-0 transition-opacity duration-1000 ${
+              index === currentIndex ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
+            <Image
+              priority={index === currentIndex}
+              src={image.url || ''}
+              alt={image.alt || ''}
+              blurDataURL={image.blurDataUrl}
+              placeholder="blur"
+              fill
+              unoptimized
+              sizes="100vw"
+              className="object-cover"
+            />
+          </div>
+        )
+      })}
     </section>
   )
 }

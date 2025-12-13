@@ -1,0 +1,5 @@
+**/.git
+node_modules
+.env
+src/app/(payload)/**
+src/migrations/**

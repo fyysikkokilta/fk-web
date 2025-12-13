@@ -1,5 +1,3 @@
-'use client'
-
 import { ChevronDown } from 'lucide-react'
 import type { Locale } from 'next-intl'
 
@@ -12,7 +10,7 @@ interface CollapsibleBlockProps {
 }
 
 export const Collapsible = ({ block, locale }: CollapsibleBlockProps) => {
-  const contentId = `collapsible-content-${block.id ?? Math.random().toString(36).substring(2, 9)}`
+  const contentId = `collapsible-content-${block.id}`
 
   return (
     <details

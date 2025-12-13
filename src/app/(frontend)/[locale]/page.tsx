@@ -72,14 +72,12 @@ export default async function LandingPage({ params }: PageProps<'/[locale]'>) {
     notFound()
   }
 
-  const startingIndex = Math.floor(Math.random() * (landingPage.bannerImages?.length || 1))
-
   return (
     <>
       <DraftModeBanner isDraft={isDraft} />
       {isDraft ? <RefreshRouteOnSave /> : null}
       <main id="page-content" className="flex w-full flex-col">
-        <FrontPageSlideshow page={landingPage} startingIndex={startingIndex} />
+        <FrontPageSlideshow page={landingPage} />
         <section className="mx-auto mb-12 w-full max-w-7xl flex-1 p-6">
           <div className="flex flex-col gap-8">
             <FrontPageAnnouncement page={landingPage} locale={nextIntlLocale} />

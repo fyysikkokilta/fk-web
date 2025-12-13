@@ -22,6 +22,7 @@ export const PageBanner = ({ page }: PageBannerProps) => {
         blurDataURL={image.blurDataUrl}
         placeholder="blur"
         fill
+        unoptimized
         sizes="100vw"
         className="object-cover"
       />

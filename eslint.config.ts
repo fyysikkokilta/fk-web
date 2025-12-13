@@ -15,7 +15,9 @@ const eslintConfig = defineConfig([
     'test-results/**',
     'playwright-report/**',
     'blob-report/**',
-    'playwright/.cache/**'
+    'playwright/.cache/**',
+    'src/app/(payload)/**',
+    'src/migrations/**'
   ]),
   {
     plugins: {
@@ -27,6 +29,18 @@ const eslintConfig = defineConfig([
       }
     },
     rules: {
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        {
+          vars: 'all',
+          args: 'after-used',
+          ignoreRestSiblings: false,
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          destructuredArrayIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^(_|ignore)'
+        }
+      ],
       '@typescript-eslint/no-misused-promises': ['error', { checksVoidReturn: false }],
       'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error',
