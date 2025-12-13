@@ -1,6 +1,6 @@
 'use client'
 
-import { Accordion } from '@base-ui-components/react/accordion'
+import { Accordion } from '@base-ui/react/accordion'
 import { ChevronDown, Menu, X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useEffect, useState } from 'react'

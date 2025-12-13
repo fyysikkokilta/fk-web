@@ -1,5 +1,5 @@
-import { Checkbox as BaseCheckbox } from '@base-ui-components/react/checkbox'
-import { Field } from '@base-ui-components/react/field'
+import { Checkbox as BaseCheckbox } from '@base-ui/react/checkbox'
+import { Field } from '@base-ui/react/field'
 import { Check } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import React from 'react'

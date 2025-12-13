@@ -1,5 +1,5 @@
-import { Field } from '@base-ui-components/react/field'
-import { Select } from '@base-ui-components/react/select'
+import { Field } from '@base-ui/react/field'
+import { Select } from '@base-ui/react/select'
 import { Check, ChevronDown } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import React from 'react'

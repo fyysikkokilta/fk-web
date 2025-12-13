@@ -1,6 +1,6 @@
 'use client'
 
-import { Form } from '@base-ui-components/react/form'
+import { Form } from '@base-ui/react/form'
 import { LoaderCircle } from 'lucide-react'
 import { Locale, useTranslations } from 'next-intl'
 import React, { useState } from 'react'

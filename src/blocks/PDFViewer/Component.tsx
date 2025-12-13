@@ -1,6 +1,6 @@
 'use client'
 
-import { Select } from '@base-ui-components/react/select'
+import { Select } from '@base-ui/react/select'
 import { Check, ChevronDown, ExternalLink, FileText } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useState } from 'react'

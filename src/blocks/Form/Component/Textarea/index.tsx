@@ -1,4 +1,4 @@
-import { Field } from '@base-ui-components/react/field'
+import { Field } from '@base-ui/react/field'
 import { useTranslations } from 'next-intl'
 import React from 'react'
 

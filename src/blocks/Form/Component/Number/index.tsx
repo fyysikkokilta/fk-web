@@ -1,5 +1,5 @@
-import { Field } from '@base-ui-components/react/field'
-import { NumberField } from '@base-ui-components/react/number-field'
+import { Field } from '@base-ui/react/field'
+import { NumberField } from '@base-ui/react/number-field'
 import { useTranslations } from 'next-intl'
 import React from 'react'
 

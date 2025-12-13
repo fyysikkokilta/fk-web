@@ -1,6 +1,6 @@
 'use client'
 
-import { NavigationMenu } from '@base-ui-components/react/navigation-menu'
+import { NavigationMenu } from '@base-ui/react/navigation-menu'
 import { useTranslations } from 'next-intl'
 import { Fragment } from 'react'
 

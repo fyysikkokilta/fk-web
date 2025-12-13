@@ -1,7 +1,7 @@
-import {
-  StateValues,
-  TextStateFeatureProps
-} from 'node_modules/@payloadcms/richtext-lexical/dist/features/textState/feature.server'
+import type { TextStateFeature } from '@payloadcms/richtext-lexical'
+
+type TextStateFeatureProps = NonNullable<Parameters<typeof TextStateFeature>[0]>
+type StateValues = NonNullable<TextStateFeatureProps['state']>[keyof TextStateFeatureProps['state']]
 
 export const textState: TextStateFeatureProps['state'] = {
   color: {
