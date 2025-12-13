@@ -9,7 +9,6 @@ import { Locale, useLocale, useTranslations } from 'next-intl'
 import { useEffect, useRef, useState } from 'react'
 
 import {
-  AlignBlock,
   CardBlock,
   CollapsibleBlock,
   FormBlock,
@@ -76,10 +75,6 @@ const extractHeadingsFromRichText = (data: SerializedEditorState, locale: Locale
           }
         }
         switch (typedNode.fields.blockType) {
-          case 'align':
-            const align = typedNode.fields as AlignBlock
-            traverseNodes(align.content.root.children)
-            break
           case 'card':
             const card = typedNode.fields as CardBlock
             traverseNodes(card.content.root.children)
@@ -192,6 +187,9 @@ export const TableOfContents = ({ show, richText }: TableOfContentsProps) => {
         const leadElement = entries.at(0)
         if (leadElement?.target.tagName === 'H1' || leadElement?.target.id === 'main-heading') {
           mainHeadingRef.current = leadElement
+          if (leadElement.isIntersecting) {
+            setIsDrawerOpen(false)
+          }
         }
 
         headingElementsRef.current = entries.reduce((map, heading) => {
@@ -241,12 +239,6 @@ export const TableOfContents = ({ show, richText }: TableOfContentsProps) => {
 
     return () => observer.disconnect()
   }, [headings])
-
-  useEffect(() => {
-    if (mainHeadingRef.current?.isIntersecting && isDrawerOpen) {
-      setIsDrawerOpen(false)
-    }
-  }, [mainHeadingRef.current?.isIntersecting, isDrawerOpen])
 
   // Close drawer on outside click
   useEffect(() => {

@@ -19,7 +19,6 @@ export interface Config {
     users: UserAuthOperations;
   };
   blocks: {
-    align: AlignBlock;
     board: BoardBlock;
     calendar: CalendarBlock;
     card: CardBlock;
@@ -139,35 +138,6 @@ export interface UserAuthOperations {
     email: string;
     password: string;
   };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "AlignBlock".
- */
-export interface AlignBlock {
-  align: 'left' | 'center' | 'right';
-  /**
-   * Width of the content in percentage (10-100%)
-   */
-  width: number;
-  content: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'align';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

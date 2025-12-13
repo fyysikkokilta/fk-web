@@ -45,7 +45,7 @@ export const TwoColumnsBlock: Block = {
             ...rootFeatures,
             HeadingFeature({ enabledHeadingSizes: ['h2', 'h3', 'h4', 'h5', 'h6'] }),
             BlocksFeature({
-              blocks: ['align', 'card', 'collapsible'],
+              blocks: ['card', 'collapsible'],
               inlineBlocks: ['icon']
             })
           ]
@@ -63,7 +63,7 @@ export const TwoColumnsBlock: Block = {
             ...rootFeatures,
             HeadingFeature({ enabledHeadingSizes: ['h2', 'h3', 'h4', 'h5', 'h6'] }),
             BlocksFeature({
-              blocks: ['align', 'card', 'collapsible'],
+              blocks: ['card', 'collapsible'],
               inlineBlocks: ['icon']
             })
           ]

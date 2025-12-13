@@ -11,7 +11,6 @@ import {
 } from '@payloadcms/richtext-lexical/react'
 import { Locale } from 'next-intl'
 
-import { Align } from '@/blocks/Align/Component'
 import { Board } from '@/blocks/Board/Component'
 import { Calendar } from '@/blocks/Calendar/Component'
 import { Card } from '@/blocks/Card/Component'
@@ -28,7 +27,6 @@ import { PageNavigation } from '@/blocks/PageNavigation/Component'
 import { PDFViewer } from '@/blocks/PDFViewer/Component'
 import { TwoColumns } from '@/blocks/TwoColumns/Component'
 import type {
-  AlignBlock as AlignBlockType,
   BoardBlock as BoardBlockType,
   CalendarBlock as CalendarBlockType,
   CardBlock as CardBlockType,
@@ -62,7 +60,6 @@ interface RichTextProps {
 type NodeTypes =
   | DefaultNodeTypes
   | SerializedBlockNode<
-      | AlignBlockType
       | BoardBlockType
       | CalendarBlockType
       | CardBlockType
@@ -92,7 +89,6 @@ export const RichText = ({ data, locale, extraClassName }: RichTextProps) => {
     upload: renderCustomUpload,
     blocks: {
       ...defaultConverters.blocks,
-      align: ({ node }) => <Align block={node.fields} locale={locale} />,
       board: ({ node }) => <Board block={node.fields} />,
       calendar: ({ node }) => <Calendar block={node.fields} locale={locale} />,
       card: ({ node }) => <Card block={node.fields} locale={locale} />,

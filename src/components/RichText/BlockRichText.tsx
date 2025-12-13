@@ -11,12 +11,10 @@ import {
 } from '@payloadcms/richtext-lexical/react'
 import { Locale } from 'next-intl'
 
-import { Align } from '@/blocks/Align/Component'
 import { Card } from '@/blocks/Card/Component'
 import { Collapsible } from '@/blocks/Collapsible/Component'
 import { Icon } from '@/blocks/Icon/Component'
 import type {
-  AlignBlock as AlignBlockType,
   CardBlock as CardBlockType,
   CollapsibleBlock as CollapsibleBlockType,
   IconBlock as IconBlockType
@@ -37,7 +35,7 @@ interface RichTextProps {
 
 type NodeTypes =
   | DefaultNodeTypes
-  | SerializedBlockNode<AlignBlockType | CardBlockType | CollapsibleBlockType | IconBlockType>
+  | SerializedBlockNode<CardBlockType | CollapsibleBlockType | IconBlockType>
   | SerializedInlineBlockNode<IconBlockType>
 
 // Use this component for rich text content inside blocks
@@ -54,7 +52,6 @@ export const RichText = ({ data, locale, extraClassName }: RichTextProps) => {
     upload: renderCustomUpload,
     blocks: {
       ...defaultConverters.blocks,
-      align: ({ node }) => <Align block={node.fields} locale={locale} />,
       card: ({ node }) => <Card block={node.fields} locale={locale} />,
       collapsible: ({ node }) => <Collapsible block={node.fields} locale={locale} />
     },

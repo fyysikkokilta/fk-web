@@ -31,7 +31,6 @@ import { fileURLToPath } from 'url'
 
 import { admin } from './access/admin'
 import { signedIn } from './access/signed-in'
-import { AlignBlock } from './blocks/Align/config'
 import { BoardBlock } from './blocks/Board/config'
 import { CalendarBlock } from './blocks/Calendar/config'
 import { CardBlock } from './blocks/Card/config'
@@ -183,7 +182,6 @@ export default buildConfig({
     }
   },
   blocks: [
-    AlignBlock,
     BoardBlock,
     CalendarBlock,
     CardBlock,
@@ -222,7 +220,6 @@ export default buildConfig({
       ...defaultFeatures,
       BlocksFeature({
         blocks: [
-          'align',
           'board',
           'calendar',
           'card',

@@ -22,7 +22,7 @@ export const CollapsibleBlock: Block = {
             ...rootFeatures,
             HeadingFeature({ enabledHeadingSizes: ['h3', 'h4', 'h5', 'h6'] }),
             BlocksFeature({
-              blocks: ['align', 'card'],
+              blocks: ['card'],
               inlineBlocks: ['icon']
             })
           ]
