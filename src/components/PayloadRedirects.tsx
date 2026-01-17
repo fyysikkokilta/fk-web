@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import type { Locale } from 'next-intl'
 
 import { redirect } from '@/i18n/navigation'
-import { getCachedRedirects } from '@/utils/getCachedRedirects'
+import { getRedirects } from '@/lib/getRedirects'
 
 interface PayloadRedirectsProps {
   disableNotFound?: boolean
@@ -11,7 +11,7 @@ interface PayloadRedirectsProps {
 }
 
 export const PayloadRedirects = async ({ disableNotFound, url, locale }: PayloadRedirectsProps) => {
-  const redirects = await getCachedRedirects()
+  const redirects = await getRedirects()
 
   const urlWithLocale = `/${locale}${url}`
 

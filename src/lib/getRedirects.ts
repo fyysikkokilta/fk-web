@@ -1,10 +1,7 @@
 import configPromise from '@payload-config'
-import { unstable_cacheTag as cacheTag } from 'next/cache'
 import { getPayload } from 'payload'
 
-export async function getCachedRedirects() {
-  'use cache'
-  cacheTag('redirects')
+export async function getRedirects() {
   const payload = await getPayload({ config: configPromise })
 
   const { docs: redirects } = await payload.find({

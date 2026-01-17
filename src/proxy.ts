@@ -25,7 +25,7 @@ function extractLocale(pathname: string) {
   return null
 }
 
-export default async function middleware(req: NextRequest) {
+export default async function proxy(req: NextRequest) {
   const localeResult = extractLocale(req.nextUrl.pathname)
 
   if (!localeResult) {
@@ -69,6 +69,5 @@ export default async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  runtime: 'nodejs',
   matcher: ['/', '/(fi|en)/:path*', '/((?!newsletters|api|_next|_vercel|admin|.*\\..*).*)']
 }

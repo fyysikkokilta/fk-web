@@ -1,4 +1,4 @@
-import { revalidatePath, revalidateTag } from 'next/cache'
+import { revalidatePath } from 'next/cache'
 import { after } from 'next/server'
 import type { CollectionAfterChangeHook, CollectionSlug, TypeWithID } from 'payload'
 
@@ -80,7 +80,7 @@ export const revalidateCollection = <T extends TypeWithID>(
       })
     }
 
-    const collectionSpecificRevalidation: CollectionSlug[] = ['redirects']
+    const collectionSpecificRevalidation: CollectionSlug[] = []
 
     if (collectionSpecificRevalidation.includes(collectionSlug)) {
       payload.logger.info(`[Collection changed] Revalidating ${collectionSlug}`)
@@ -88,8 +88,6 @@ export const revalidateCollection = <T extends TypeWithID>(
       after(async () => {
         // Collection specific revalidation.
         switch (collectionSlug) {
-          case 'redirects':
-            revalidateTag('redirects')
         }
       })
     }

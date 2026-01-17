@@ -496,7 +496,9 @@ export default buildConfig({
       },
       tabbedUI: true
     }),
-    importExportPlugin({}),
+    importExportPlugin({
+      collections: []
+    }),
     OAuth2Plugin({
       enabled: enableOAuth() || isCI,
       strategyName: 'google',

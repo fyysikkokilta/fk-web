@@ -12,11 +12,7 @@ const withNextIntl = createNextIntlPlugin()
 
 const nextConfig: NextConfig = {
   output: 'standalone',
-  experimental: {
-    clientSegmentCache: true,
-    reactCompiler: true,
-    useCache: true
-  },
+  reactCompiler: true,
   images: {
     remotePatterns: [
       ...(process.env.NEXT_PUBLIC_SERVER_URL
@@ -28,7 +24,7 @@ const nextConfig: NextConfig = {
     ]
   },
   transpilePackages: ['@t3-oss/env-nextjs', '@t3-oss/env-core'],
-  async headers() {
+  headers() {
     return [
       {
         source: '/:path*{/}?',

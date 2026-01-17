@@ -1,7 +1,7 @@
 'use client'
 
 import { Form } from '@base-ui/react/form'
-import { LoaderCircle } from 'lucide-react'
+import { Loader } from 'lucide-react'
 import { Locale, useTranslations } from 'next-intl'
 import React, { useState } from 'react'
 
@@ -118,7 +118,7 @@ export const FormBlock = ({ block, locale }: FormBlockProps) => {
           role="status"
           aria-live="polite"
         >
-          <LoaderCircle className="mr-2 h-5 w-5 animate-spin" aria-hidden="true" />
+          <Loader className="mr-2 h-5 w-5 animate-spin" aria-hidden="true" />
           <span>{t('form.loading')}</span>
         </div>
       )}
