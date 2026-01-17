@@ -99,7 +99,6 @@ export const Newsletters: CollectionConfig = {
     {
       name: 'newsletterNumber',
       type: 'text',
-      unique: true,
       defaultValue: getNextNewsletterNumber,
       required: true,
       admin: {

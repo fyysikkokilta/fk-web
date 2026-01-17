@@ -4,7 +4,7 @@ import { getPayload, PayloadRequest } from 'payload'
 
 import { isDraftMode } from '../utils/draftMode'
 
-export async function getNewsletter(id: string, locale: Locale, req?: PayloadRequest) {
+export async function getNewsletter(id: string | number, locale: Locale, req?: PayloadRequest) {
   const payload = await getPayload({ config: configPromise })
 
   const isDraft = await isDraftMode()

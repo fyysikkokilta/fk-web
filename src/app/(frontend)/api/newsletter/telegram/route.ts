@@ -27,6 +27,11 @@ export async function GET(request: NextRequest) {
       where: {
         and: [
           {
+            type: {
+              equals: 'weekly'
+            }
+          },
+          {
             newsletterNumber: {
               equals: getCurrentNewsletterNumber()
             }

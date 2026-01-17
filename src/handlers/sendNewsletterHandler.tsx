@@ -10,8 +10,8 @@ import { sendNewsletterToTelegram } from '@/utils/newsletters'
 const sendNewsletterHandler: TaskHandler<'sendNewsletter'> = async ({ input, req }) => {
   const { newsletterId } = input
 
-  const finnishNewsletter = await getNewsletter(String(newsletterId), 'fi')
-  const englishNewsletter = await getNewsletter(String(newsletterId), 'en')
+  const finnishNewsletter = await getNewsletter(newsletterId, 'fi')
+  const englishNewsletter = await getNewsletter(newsletterId, 'en')
 
   if (!finnishNewsletter || !englishNewsletter) {
     req.payload.logger.error(`[Job] Newsletter with id ${newsletterId} not found`)
