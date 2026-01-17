@@ -88,7 +88,7 @@ const WeeklyNewsEmail = ({
       </Head>
       <Preview>{`${newsletters.map(({ titlePrefix }) => titlePrefix).join(' / ')} ${newsletterNumber}`}</Preview>
       <Body className="bg-fk-white">
-        <Container className="mx-auto max-w-[600px] py-5 pb-12">
+        <Container className="mx-auto max-w-150 py-5 pb-12">
           {/* Header */}
           <Section className="w-full">
             <Row className="flex w-full items-center justify-between">

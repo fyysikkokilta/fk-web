@@ -83,7 +83,7 @@ const CareerNewsEmail = ({
       </Head>
       <Preview>{`${newsletters.map(({ titlePrefix }) => titlePrefix).join(' / ')} ${newsletterNumber}`}</Preview>
       <Body className="bg-fk-white">
-        <Container className="mx-auto max-w-[600px] py-5 pb-12">
+        <Container className="mx-auto max-w-150 py-5 pb-12">
           {/* Header */}
           <Section className="w-full">
             <Heading className="font-lora m-0 text-3xl font-bold text-wrap">
