@@ -1,22 +1,21 @@
-import { notFound } from 'next/navigation'
-import { hasLocale, NextIntlClientProvider } from 'next-intl'
-import { setRequestLocale } from 'next-intl/server'
+import { locale } from 'next/root-params'
+import { NextIntlClientProvider } from 'next-intl'
 
 import { routing } from '@/i18n/routing'
 
-export default async function NewslettersLayout({
-  children,
-  params
-}: LayoutProps<'/newsletters/[locale]'>) {
-  const { locale } = await params
-  if (!hasLocale(routing.locales, locale)) {
-    notFound()
-  }
+export const generateStaticParams = () => {
+  return routing.locales.map((locale) => ({ locale }))
+}
 
-  setRequestLocale(locale)
+export const dynamicParams = false
+
+export default async function NewslettersLayout({
+  children
+}: LayoutProps<'/newsletters/[locale]'>) {
+  const curLocale = await locale()
 
   return (
-    <html lang={locale}>
+    <html lang={curLocale}>
       <body style={{ height: '100vh', width: '100vw', overflowX: 'hidden' }}>
         <NextIntlClientProvider>{children}</NextIntlClientProvider>
       </body>

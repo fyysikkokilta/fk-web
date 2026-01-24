@@ -2,8 +2,7 @@ import configPromise from '@payload-config'
 import { render } from '@react-email/components'
 import { headers } from 'next/headers'
 import { notFound } from 'next/navigation'
-import { Locale } from 'next-intl'
-import { setRequestLocale } from 'next-intl/server'
+import { locale } from 'next/root-params'
 import { getPayload } from 'payload'
 
 import { RefreshRouteOnSave } from '@/components/RefreshRouteOnSave'
@@ -13,9 +12,8 @@ import { getNewsletter } from '@/lib/getNewsletter'
 import { getNewsletterSettings } from '@/lib/getNewsletterSettings'
 
 export default async function NewsletterPage({ params }: PageProps<'/newsletters/[locale]/[id]'>) {
-  const { locale, id } = await params
-  const nextIntlLocale = locale as Locale
-  setRequestLocale(nextIntlLocale)
+  const { id } = await params
+  const curLocale = await locale()
 
   const payload = await getPayload({
     config: configPromise
@@ -27,13 +25,13 @@ export default async function NewsletterPage({ params }: PageProps<'/newsletters
     notFound()
   }
 
-  const newsletter = await getNewsletter(id, nextIntlLocale)
+  const newsletter = await getNewsletter(id, curLocale)
 
   if (!newsletter) {
     notFound()
   }
 
-  const { weekly, career } = await getNewsletterSettings(nextIntlLocale)
+  const { weekly, career } = await getNewsletterSettings(curLocale)
 
   const html =
     newsletter.type === 'weekly'
@@ -41,17 +39,17 @@ export default async function NewsletterPage({ params }: PageProps<'/newsletters
           <WeeklyNewsEmail
             newsletterNumber={newsletter.newsletterNumber}
             logo={weekly.logo}
-            newsletters={[{ titlePrefix: weekly.titlePrefix, newsletter, locale: nextIntlLocale }]}
+            newsletters={[{ titlePrefix: weekly.titlePrefix, newsletter, locale: curLocale }]}
             footer={weekly.footer}
-            locale={nextIntlLocale}
+            locale={curLocale}
           />
         )
       : await render(
           <CareerNewsEmail
             newsletterNumber={newsletter.newsletterNumber}
-            newsletters={[{ titlePrefix: career.titlePrefix, newsletter, locale: nextIntlLocale }]}
+            newsletters={[{ titlePrefix: career.titlePrefix, newsletter, locale: curLocale }]}
             footer={career.footer}
-            locale={nextIntlLocale}
+            locale={curLocale}
           />
         )
 

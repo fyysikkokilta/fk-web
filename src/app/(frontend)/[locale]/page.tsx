@@ -1,7 +1,6 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { Locale } from 'next-intl'
-import { setRequestLocale } from 'next-intl/server'
+import { locale } from 'next/root-params'
 import { Suspense } from 'react'
 
 import { DraftModeBanner } from '@/components/DraftModeBanner'
@@ -17,10 +16,9 @@ import { getLandingPage } from '@/lib/getLandingPage'
 import { getPartners } from '@/lib/getPartners'
 import { isDraftMode } from '@/utils/draftMode'
 
-export async function generateMetadata({ params }: PageProps<'/[locale]'>): Promise<Metadata> {
-  const { locale } = await params
-  const nextIntlLocale = locale as Locale
-  const page = await getLandingPage(nextIntlLocale)
+export async function generateMetadata(): Promise<Metadata> {
+  const curLocale = await locale()
+  const page = await getLandingPage(curLocale)
 
   const images = page?.bannerImages
     ?.map((image) => {
@@ -44,9 +42,9 @@ export async function generateMetadata({ params }: PageProps<'/[locale]'>): Prom
       title: page?.meta?.title || page?.title,
       description: page?.meta?.description || '',
       images: images || [],
-      url: `${env.NEXT_PUBLIC_SERVER_URL}/${nextIntlLocale}`,
+      url: `${env.NEXT_PUBLIC_SERVER_URL}/${curLocale}`,
       siteName: page?.title,
-      locale: nextIntlLocale,
+      locale: curLocale,
       type: 'website'
     },
     verification: {
@@ -59,14 +57,12 @@ export const generateStaticParams = async () => {
   return Promise.resolve([])
 }
 
-export default async function LandingPage({ params }: PageProps<'/[locale]'>) {
-  const { locale } = await params
-  const nextIntlLocale = locale as Locale
-  setRequestLocale(nextIntlLocale)
+export default async function LandingPage() {
+  const curLocale = await locale()
 
   const isDraft = await isDraftMode()
-  const landingPage = await getLandingPage(nextIntlLocale)
-  const partners = await getPartners(nextIntlLocale)
+  const landingPage = await getLandingPage(curLocale)
+  const partners = await getPartners(curLocale)
 
   if (!landingPage) {
     notFound()
@@ -80,14 +76,14 @@ export default async function LandingPage({ params }: PageProps<'/[locale]'>) {
         <FrontPageSlideshow page={landingPage} />
         <section className="mx-auto mb-12 w-full max-w-7xl flex-1 p-6">
           <div className="flex flex-col gap-8">
-            <FrontPageAnnouncement page={landingPage} locale={nextIntlLocale} />
+            <FrontPageAnnouncement page={landingPage} locale={curLocale} />
             <Suspense fallback={<FrontPageCalendarFallback />}>
               <FrontPageCalendar page={landingPage} />
             </Suspense>
             <h1 className="mb-8 font-(family-name:--font-lora) text-4xl font-bold wrap-break-word hyphens-auto italic">
               {landingPage.title}
             </h1>
-            <RichText data={landingPage.content} locale={nextIntlLocale} />
+            <RichText data={landingPage.content} locale={curLocale} />
           </div>
         </section>
         {partners && <Partners partnerData={partners} />}
