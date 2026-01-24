@@ -13,6 +13,10 @@ const withNextIntl = createNextIntlPlugin()
 const nextConfig: NextConfig = {
   output: 'standalone',
   reactCompiler: true,
+  experimental: {
+    globalNotFound: true,
+    rootParams: true
+  },
   images: {
     remotePatterns: [
       ...(process.env.NEXT_PUBLIC_SERVER_URL

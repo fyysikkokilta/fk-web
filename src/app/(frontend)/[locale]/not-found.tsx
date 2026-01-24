@@ -3,7 +3,6 @@ import { getTranslations } from 'next-intl/server'
 
 import { Link } from '@/i18n/navigation'
 
-// If the provided locale is not found, redirect to the default locale
 export default async function NotFound() {
   const t = await getTranslations()
 
