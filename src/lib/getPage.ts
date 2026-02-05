@@ -26,17 +26,19 @@ export async function getPage(path: string, locale: Locale, req?: PayloadRequest
   })
 
   if (pathDocs.length === 0) {
-    return null
+    return { page: null, canonicalPath: null }
   }
 
   const paths = pathDocs[0].path as unknown as Record<string, string | null>
-  const isPageAvailableForLocale = paths[locale]
+  const canonicalPath = paths[locale] ?? null
+  const isPageAvailableForLocale = !!paths[locale]
+  const pathToUse = isPageAvailableForLocale ? paths[locale] : paths[locale === 'fi' ? 'en' : 'fi']
 
   try {
     const { docs } = await payload.find({
       collection: 'pages',
       where: {
-        path: { equals: path },
+        path: { equals: pathToUse },
         ...(isDraft ? {} : { hidden: { equals: false } })
       },
       depth: 5,
@@ -46,11 +48,11 @@ export async function getPage(path: string, locale: Locale, req?: PayloadRequest
       req
     })
 
-    return docs[0] || null
+    return { page: docs[0] || null, canonicalPath }
   } catch (error) {
     payload.logger.error(
       `Error fetching page: ${error instanceof Error ? error.message : 'Unknown error'}`
     )
-    return null
+    return { page: null, canonicalPath: null }
   }
 }
