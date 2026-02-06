@@ -2209,6 +2209,10 @@ export interface NewsletterSettings {
      * Recipient email for the career newsletter. This is the email address that will receive the newsletter email. Google groups should be configured to allow emails from Mailgun.
      */
     recipientEmail: string;
+    /**
+     * Career page for the newsletter. Linked to the Telegram message.
+     */
+    careerPage?: (number | null) | Page;
   };
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -2349,6 +2353,7 @@ export interface NewsletterSettingsSelect<T extends boolean = true> {
         senderName?: T;
         senderEmail?: T;
         recipientEmail?: T;
+        careerPage?: T;
       };
   updatedAt?: T;
   createdAt?: T;

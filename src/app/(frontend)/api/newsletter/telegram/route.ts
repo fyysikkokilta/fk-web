@@ -3,9 +3,10 @@ import { NextRequest, NextResponse } from 'next/server'
 import { Locale } from 'next-intl'
 import { getPayload } from 'payload'
 
+import { env } from '@/env'
 import { routing } from '@/i18n/routing'
 import { getCurrentNewsletterNumber } from '@/utils/getNewsletterNumber'
-import { formatWeeklyNewsForTelegram } from '@/utils/newsletters'
+import { formatCareerNewsForTelegram, formatWeeklyNewsForTelegram } from '@/utils/newsletters'
 
 export async function GET(request: NextRequest) {
   try {
@@ -13,22 +14,25 @@ export async function GET(request: NextRequest) {
       config: configPromise
     })
 
-    // Get the locale from query parameters, default to 'fi'
     const searchParams = request.nextUrl.searchParams
     const locale = (searchParams.get('locale') || 'fi') as Locale
+    const type = searchParams.get('type') || 'weekly'
 
     if (!routing.locales.includes(locale as Locale)) {
       return NextResponse.json({ message: 'Invalid locale' }, { status: 400 })
     }
 
-    // Find the latest weekly newsletter
+    if (!['weekly', 'career'].includes(type)) {
+      return NextResponse.json({ message: 'Invalid type' }, { status: 400 })
+    }
+
     const { docs: newsletters } = await payload.find({
       collection: 'newsletters',
       where: {
         and: [
           {
             type: {
-              equals: 'weekly'
+              equals: type
             }
           },
           {
@@ -50,33 +54,66 @@ export async function GET(request: NextRequest) {
     })
 
     if (newsletters.length === 0) {
-      return NextResponse.json({ message: 'No weekly newsletters found' }, { status: 404 })
+      return NextResponse.json({ message: `No ${type} newsletters found` }, { status: 404 })
     }
 
     const latestNewsletter = newsletters[0]
 
-    // Get newsletter settings to access the weekly page
     const newsletterSettings = await payload.findGlobal({
       slug: 'newsletter-settings',
       locale
     })
 
-    if (!newsletterSettings?.weekly?.weeklyPage) {
-      return NextResponse.json({ message: 'Newsletter settings not found' }, { status: 404 })
+    if (type === 'weekly') {
+      if (!newsletterSettings?.weekly?.weeklyPage) {
+        return NextResponse.json({ message: 'Newsletter settings not found' }, { status: 404 })
+      }
+
+      const weeklyPage = newsletterSettings.weekly.weeklyPage
+      if (typeof weeklyPage === 'number') {
+        return NextResponse.json(
+          { message: 'Weekly page not properly configured' },
+          { status: 404 }
+        )
+      }
+
+      const baseUrl = `${env.NEXT_PUBLIC_SERVER_URL}/${locale}/${weeklyPage.path}`
+
+      const telegramMessage = formatWeeklyNewsForTelegram(
+        latestNewsletter.newsItems,
+        latestNewsletter.newsletterNumber,
+        `${newsletterSettings.weekly.titlePrefix} ${latestNewsletter.newsletterNumber}`,
+        locale,
+        baseUrl
+      )
+
+      return NextResponse.json({
+        message: telegramMessage,
+        newsletter: {
+          id: latestNewsletter.id,
+          title: `${newsletterSettings.weekly.titlePrefix} ${latestNewsletter.newsletterNumber}`,
+          newsletterNumber: latestNewsletter.newsletterNumber,
+          type: latestNewsletter.type,
+          date: latestNewsletter.createdAt
+        }
+      })
     }
 
-    const weeklyPage = newsletterSettings.weekly.weeklyPage
-    if (typeof weeklyPage === 'number') {
-      return NextResponse.json({ message: 'Weekly page not properly configured' }, { status: 404 })
+    // Career type
+    if (!newsletterSettings?.career?.careerPage) {
+      return NextResponse.json({ message: 'Career newsletter settings not found' }, { status: 404 })
     }
 
-    const baseUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}/${locale}/${weeklyPage.path}`
+    const careerPage = newsletterSettings.career.careerPage
+    if (typeof careerPage === 'number') {
+      return NextResponse.json({ message: 'Career page not properly configured' }, { status: 404 })
+    }
 
-    // Format the newsletter for Telegram
-    const telegramMessage = formatWeeklyNewsForTelegram(
+    const baseUrl = `${env.NEXT_PUBLIC_SERVER_URL}/${locale}/${careerPage.path}`
+
+    const telegramMessage = formatCareerNewsForTelegram(
       latestNewsletter.newsItems,
-      latestNewsletter.newsletterNumber,
-      `${newsletterSettings.weekly.titlePrefix} ${latestNewsletter.newsletterNumber}`,
+      `${newsletterSettings.career.titlePrefix} ${latestNewsletter.newsletterNumber}`,
       locale,
       baseUrl
     )
@@ -85,7 +122,7 @@ export async function GET(request: NextRequest) {
       message: telegramMessage,
       newsletter: {
         id: latestNewsletter.id,
-        title: `${newsletterSettings.weekly.titlePrefix} ${latestNewsletter.newsletterNumber}`,
+        title: `${newsletterSettings.career.titlePrefix} ${latestNewsletter.newsletterNumber}`,
         newsletterNumber: latestNewsletter.newsletterNumber,
         type: latestNewsletter.type,
         date: latestNewsletter.createdAt

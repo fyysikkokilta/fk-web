@@ -124,6 +124,41 @@ export function formatWeeklyNewsForTelegram(
   return formatted
 }
 
+export function formatCareerNewsForTelegram(
+  newsItems: Newsletter['newsItems'],
+  title: string,
+  locale: Locale,
+  baseUrl: string
+): string {
+  const groupedByType = groupNewsByType(newsItems)
+
+  let formatted = `<b><u>${title}</u></b>\n\n`
+
+  for (const category of Object.values(groupedByType)) {
+    const { type, items } = category
+
+    formatted += `<b>${type}</b>\n`
+    formatted +=
+      items
+        .map((item) => {
+          if (typeof item === 'object') {
+            return `  • ${item.title}`
+          }
+          return ''
+        })
+        .join('\n') + '\n'
+    formatted += '\n'
+  }
+
+  if (locale === 'fi') {
+    formatted += `<a href="${baseUrl}">Lue urakirje</a>`
+  } else {
+    formatted += `<a href="${baseUrl}">Read career newsletter</a>`
+  }
+
+  return formatted
+}
+
 export async function sendNewsletterToTelegram(
   newsletter: Newsletter,
   newsletterSettings: NewsletterSettings['weekly'],

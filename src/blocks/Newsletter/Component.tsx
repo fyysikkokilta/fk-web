@@ -34,6 +34,29 @@ export const Newsletter = ({ block, locale }: NewsletterBlockProps) => {
         )}
 
         {Object.entries(newsGroups).map(([type, group]) => {
+          if (newsletter.type === 'career') {
+            return (
+              <div key={type} className="space-y-4">
+                <h3 id={slugify(group.type)} className="text-2xl font-medium">
+                  {group.type}
+                </h3>
+                {group.items.map((newsItem) => {
+                  if (!newsItem || typeof newsItem !== 'object') return null
+                  return (
+                    <div key={newsItem.id} className="space-y-4">
+                      <h4 id={slugify(newsItem.title)} className="text-xl font-semibold">
+                        {newsItem.title}
+                      </h4>
+                      <div className="max-w-none">
+                        <RichText data={newsItem.content} locale={locale} />
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            )
+          }
+
           const { thisWeek, followingWeeks } = groupNewsByDate(
             group.items,
             newsletter.newsletterNumber

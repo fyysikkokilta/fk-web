@@ -174,6 +174,15 @@ export const NewsletterSettings: GlobalConfig = {
                 description:
                   'Recipient email for the career newsletter. This is the email address that will receive the newsletter email. Google groups should be configured to allow emails from Mailgun.'
               }
+            },
+            {
+              name: 'careerPage',
+              type: 'relationship',
+              relationTo: 'pages',
+              required: false, // TODO: Make this required in the future
+              admin: {
+                description: 'Career page for the newsletter. Linked to the Telegram message.'
+              }
             }
           ]
         }
