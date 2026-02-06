@@ -102,7 +102,7 @@ export const Newsletters: CollectionConfig = {
       defaultValue: getNextNewsletterNumber,
       required: true,
       admin: {
-        description: 'Newsletter week number and year in format "1/25"'
+        description: 'Newsletter week number and year in format "1/2025"'
       },
       validate: (value: string | null | undefined) => {
         if (!value) return 'Newsletter number is required'

@@ -702,7 +702,7 @@ export interface Newsletter {
    */
   type: 'weekly' | 'career';
   /**
-   * Newsletter week number and year in format "1/25"
+   * Newsletter week number and year in format "1/2025"
    */
   newsletterNumber: string;
   /**
