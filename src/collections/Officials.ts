@@ -30,6 +30,13 @@ export const Officials: CollectionConfig = {
       name: 'photo',
       type: 'upload',
       relationTo: 'media'
+    },
+    {
+      name: 'telegramNick',
+      type: 'text',
+      admin: {
+        description: 'Telegram username (with or without @)'
+      }
     }
   ],
   endpoints: [

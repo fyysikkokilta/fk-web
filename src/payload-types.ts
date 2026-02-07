@@ -287,7 +287,10 @@ export interface CollapsibleBlock {
  * via the `definition` "CommitteeBlock".
  */
 export interface CommitteeBlock {
-  officialRole: number | OfficialRole;
+  /**
+   * Select one or more official roles to display
+   */
+  officialRoles: (number | OfficialRole)[];
   /**
    * Select a default image to display there is no image for the official
    */
@@ -322,6 +325,10 @@ export interface Official {
   id: number;
   name: string;
   photo?: (number | null) | Media;
+  /**
+   * Telegram username (with or without @)
+   */
+  telegramNick?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1520,6 +1527,7 @@ export interface OfficialRolesSelect<T extends boolean = true> {
 export interface OfficialsSelect<T extends boolean = true> {
   name?: T;
   photo?: T;
+  telegramNick?: T;
   updatedAt?: T;
   createdAt?: T;
 }

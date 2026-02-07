@@ -5,10 +5,14 @@ export const CommitteeBlock: Block = {
   interfaceName: 'CommitteeBlock',
   fields: [
     {
-      name: 'officialRole',
+      name: 'officialRoles',
       type: 'relationship',
       relationTo: 'official-roles',
-      required: true
+      required: true,
+      hasMany: true,
+      admin: {
+        description: 'Select one or more official roles to display'
+      }
     },
     {
       name: 'defaultImage',
