@@ -107,9 +107,7 @@ export interface Config {
     'newsletter-settings': NewsletterSettingsSelect<false> | NewsletterSettingsSelect<true>;
   };
   locale: 'fi' | 'en';
-  user: User & {
-    collection: 'users';
-  };
+  user: User;
   jobs: {
     tasks: {
       schedulePublish: TaskSchedulePublish;
@@ -1148,6 +1146,7 @@ export interface User {
   enableAPIKey?: boolean | null;
   apiKey?: string | null;
   apiKeyIndex?: string | null;
+  collection: 'users';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
