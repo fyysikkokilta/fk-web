@@ -9,7 +9,15 @@ import { RichText } from '@/components/RichText/BlockRichText'
 import { useRouter } from '@/i18n/navigation'
 import type { FormBlock as FormBlockType } from '@/payload-types'
 
-import { fields } from './fields'
+import { Checkbox } from './Checkbox'
+import { Date } from './Date'
+import { Email } from './Email'
+import { Message } from './Message'
+import { Number } from './Number'
+import { Radio } from './Radio'
+import { Select } from './Select'
+import { Text } from './Text'
+import { Textarea } from './Textarea'
 
 interface FormBlockProps {
   block: FormBlockType
@@ -31,7 +39,7 @@ export const FormBlock = ({ block, locale }: FormBlockProps) => {
 
   const { id: formID, confirmationMessage, confirmationType, redirect, submitButtonLabel } = form
 
-  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault()
     setError(undefined)
 
@@ -132,18 +140,33 @@ export const FormBlock = ({ block, locale }: FormBlockProps) => {
           id={formID.toString()}
           onSubmit={onSubmit}
           className="space-y-6"
-          aria-label={form.title || 'Form'}
+          aria-label={form.title}
         >
           <div className="grid grid-cols-1 gap-6">
-            {form.fields &&
-              form.fields.map((field, index) => {
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                const FieldComponent: React.FC<any> = fields?.[field.blockType]
-                if (FieldComponent) {
-                  return <FieldComponent key={index} form={form} {...field} />
-                }
-                return null
-              })}
+            {form.fields?.map((field, index: number) => {
+              switch (field.blockType) {
+                case 'checkbox':
+                  return <Checkbox key={field.id ?? index} {...field} />
+                case 'date':
+                  return <Date key={field.id ?? index} {...field} />
+                case 'email':
+                  return <Email key={field.id ?? index} {...field} />
+                case 'message':
+                  return <Message key={field.id ?? index} {...field} locale={locale} />
+                case 'number':
+                  return <Number key={field.id ?? index} {...field} />
+                case 'radio':
+                  return <Radio key={field.id ?? index} {...field} />
+                case 'select':
+                  return <Select key={field.id ?? index} {...field} />
+                case 'text':
+                  return <Text key={field.id ?? index} {...field} />
+                case 'textarea':
+                  return <Textarea key={field.id ?? index} {...field} />
+                default:
+                  throw field satisfies never
+              }
+            })}
           </div>
           <div className="flex justify-end">
             <button

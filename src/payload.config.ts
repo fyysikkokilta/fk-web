@@ -346,6 +346,7 @@ export default buildConfig({
         text: true,
         textarea: true,
         select: true,
+        radio: true,
         email: true,
         state: false,
         country: false,
