@@ -1902,10 +1902,15 @@ export interface MainNavigation {
      */
     label: string;
     /**
-     * The type of the navigation item. If the item is a page, it will be shown as a link to the page. If the item is an external link, it will be shown as a link to the external page. If the item is a menu, it will be shown as a dropdown menu.
+     * The type of the navigation item. If the item is a menu, it will be shown as a dropdown menu. If the item is a page navigation, you can select to show the first or last page of the page navigation.
      */
-    type: 'page' | 'external' | 'menu';
+    type: 'page' | 'page-navigation' | 'external' | 'menu';
     page?: (number | null) | Page;
+    pageNavigation?: (number | null) | PageNavigation;
+    /**
+     * The index of the page to show. Indexing is 0-based. Write a negative number to count from the end.
+     */
+    pageIndex?: number | null;
     /**
      * The URL of the external link. Remember to provide all locales.
      */
@@ -1917,10 +1922,15 @@ export interface MainNavigation {
            */
           label: string;
           /**
-           * The type of the navigation item. If the item is a page, it will be shown as a link to the page. If the item is an external link, it will be shown as a link to the external page. If the item is a menu, it will be shown as a dropdown menu.
+           * The type of the navigation item. If the item is a menu, it will be shown as a dropdown menu. If the item is a page navigation, you can select to show the first or last page of the page navigation.
            */
-          type: 'page' | 'external' | 'menu';
+          type: 'page' | 'page-navigation' | 'external' | 'menu';
           page?: (number | null) | Page;
+          pageNavigation?: (number | null) | PageNavigation;
+          /**
+           * The index of the page to show. Indexing is 0-based. Write a negative number to count from the end.
+           */
+          pageIndex?: number | null;
           /**
            * The URL of the external link. Remember to provide all locales.
            */
@@ -1932,10 +1942,15 @@ export interface MainNavigation {
                  */
                 label: string;
                 /**
-                 * The type of the navigation item. If the item is a page, it will be shown as a link to the page. If the item is an external link, it will be shown as a link to the external page. If the item is a menu, it will be shown as a dropdown menu.
+                 * The type of the navigation item. If the item is a menu, it will be shown as a dropdown menu. If the item is a page navigation, you can select to show the first or last page of the page navigation.
                  */
-                type: 'page' | 'external' | 'menu';
+                type: 'page' | 'page-navigation' | 'external' | 'menu';
                 page?: (number | null) | Page;
+                pageNavigation?: (number | null) | PageNavigation;
+                /**
+                 * The index of the page to show. Indexing is 0-based. Write a negative number to count from the end.
+                 */
+                pageIndex?: number | null;
                 /**
                  * The URL of the external link. Remember to provide all locales.
                  */
@@ -2237,6 +2252,8 @@ export interface MainNavigationSelect<T extends boolean = true> {
         label?: T;
         type?: T;
         page?: T;
+        pageNavigation?: T;
+        pageIndex?: T;
         url?: T;
         children?:
           | T
@@ -2244,6 +2261,8 @@ export interface MainNavigationSelect<T extends boolean = true> {
               label?: T;
               type?: T;
               page?: T;
+              pageNavigation?: T;
+              pageIndex?: T;
               url?: T;
               subchildren?:
                 | T
@@ -2251,6 +2270,8 @@ export interface MainNavigationSelect<T extends boolean = true> {
                     label?: T;
                     type?: T;
                     page?: T;
+                    pageNavigation?: T;
+                    pageIndex?: T;
                     url?: T;
                     id?: T;
                   };

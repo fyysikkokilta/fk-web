@@ -26,6 +26,15 @@ export function useGetPath() {
         if (typeof item.page === 'number') return '#'
         return `/${item.page?.path}` || '#'
       }
+      if (item.type === 'page-navigation') {
+        if (typeof item.pageNavigation === 'number' || !item.pageNavigation?.pages) return '#'
+        const pageIndex = item.pageIndex ?? 0
+        const indexToUse = pageIndex >= 0 ? pageIndex : item.pageNavigation.pages.length + pageIndex
+        if (indexToUse < 0 || indexToUse >= item.pageNavigation.pages.length) return '#'
+        const page = item.pageNavigation.pages[indexToUse]
+        if (page && typeof page.page === 'object') return `/${page.page.path}`
+        return '#'
+      }
       if (item.type === 'external') {
         return item.url || '#'
       }

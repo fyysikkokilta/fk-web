@@ -17,12 +17,17 @@ const fields: Field[] = [
   {
     name: 'type',
     type: 'select',
-    options: ['page', 'external', 'menu'],
+    options: [
+      { value: 'page', label: 'Page' },
+      { value: 'page-navigation', label: 'Page Navigation' },
+      { value: 'external', label: 'External' },
+      { value: 'menu', label: 'Menu' }
+    ],
     required: true,
     defaultValue: 'page',
     admin: {
       description:
-        'The type of the navigation item. If the item is a page, it will be shown as a link to the page. If the item is an external link, it will be shown as a link to the external page. If the item is a menu, it will be shown as a dropdown menu.'
+        'The type of the navigation item. If the item is a menu, it will be shown as a dropdown menu. If the item is a page navigation, you can select to show the first or last page of the page navigation.'
     }
   },
   {
@@ -38,6 +43,30 @@ const fields: Field[] = [
     }
   },
   {
+    name: 'pageNavigation',
+    type: 'relationship',
+    relationTo: 'page-navigations',
+    required: true,
+    admin: {
+      condition: (_data, siblingData) => {
+        return siblingData.type === 'page-navigation'
+      }
+    }
+  },
+  {
+    name: 'pageIndex',
+    type: 'number',
+    defaultValue: 0,
+    required: true,
+    admin: {
+      condition: (_data, siblingData) => {
+        return siblingData.type === 'page-navigation'
+      },
+      description:
+        'The index of the page to show. Indexing is 0-based. Write a negative number to count from the end.'
+    }
+  },
+  {
     name: 'url',
     type: 'text',
     required: true,
@@ -49,10 +78,10 @@ const fields: Field[] = [
       description: 'The URL of the external link. Remember to provide all locales.'
     },
     validate: (value: string | null | undefined) => {
-      if (!value) return true
+      if (!value) return 'URL is required'
       const regex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([^\s]*)\/?$/
       if (!regex.test(value)) {
-        return 'Invalid URL'
+        return 'URL is invalid'
       }
       return true
     }
