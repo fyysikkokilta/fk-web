@@ -124,7 +124,7 @@ export const OfficialYear = async ({ block }: OfficialYearProps) => {
                 </span>
                 <div className="px-2 text-sm opacity-90" style={{ color: cell.textColor }}>
                   {roles
-                    .sort((a, b) => {
+                    .toSorted((a, b) => {
                       return a.name.localeCompare(b.name)
                     })
                     .map((role) => role.name || '')

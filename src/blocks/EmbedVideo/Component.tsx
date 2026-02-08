@@ -9,7 +9,7 @@ export const EmbedVideo = ({ block }: EmbedVideoProps) => {
   // Handle YouTube URLs
   if (block.videoUrl.includes('youtube.com') || block.videoUrl.includes('youtu.be')) {
     const videoId = block.videoUrl.match(
-      /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/
+      /(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/
     )?.[1]
     if (videoId) {
       embedUrl = `https://www.youtube.com/embed/${videoId}`
@@ -39,6 +39,7 @@ export const EmbedVideo = ({ block }: EmbedVideoProps) => {
           className="absolute inset-0 h-full w-full"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
+          sandbox="allow-same-origin"
         />
       ) : (
         <div className="bg-fk-gray-lightest absolute inset-0 flex items-center justify-center">

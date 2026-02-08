@@ -62,7 +62,7 @@ export default async function NewsletterPage({ params }: PageProps<'/newsletters
         height="100%"
         width="100%"
         title="Newsletter Preview"
-        sandbox="allow-same-origin allow-scripts"
+        sandbox="allow-same-origin"
       />
     </>
   )

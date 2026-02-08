@@ -6,10 +6,6 @@
 .pnp.js
 .yarn/install-state.gz
 
-/.idea/*
-!/.idea/runConfigurations
-/.vscode
-
 # testing
 /coverage
 
@@ -45,8 +41,6 @@ next-env.d.ts
 /public/documents/*
 !public/media/.gitkeep
 !public/documents/.gitkeep
-
-.eslintcache
 
 # Claude
 .claude

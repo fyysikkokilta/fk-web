@@ -9,7 +9,11 @@ export const fuksiImportController: PayloadHandler = async (req: PayloadRequest)
     return Response.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
-  const { year, groups } = (await req.json?.()) as {
+  const body = req.json ? await req.json() : undefined
+  if (!body) {
+    return Response.json({ error: 'Invalid request body' }, { status: 400 })
+  }
+  const { year, groups } = body as {
     year: number
     groups: {
       name: string

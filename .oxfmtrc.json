@@ -1,0 +1,21 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "trailingComma": "none",
+  "singleQuote": true,
+  "semi": false,
+  "endOfLine": "lf",
+  "bracketSpacing": true,
+  "bracketSameLine": false,
+  "useTabs": false,
+  "tabWidth": 2,
+  "ignorePatterns": [
+    "**/.git",
+    "node_modules",
+    "dist",
+    ".env",
+    "src/app/(payload)/**",
+    "src/migrations/**",
+    "src/payload-types.ts"
+  ],
+  "experimentalTailwindcss": {}
+}

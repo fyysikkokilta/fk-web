@@ -120,6 +120,7 @@ export const PDFViewer = ({ block }: PDFViewerProps) => {
         {/* PDF Viewer */}
         <div className="bg-fk-white relative aspect-3/4 w-full">
           <iframe
+            sandbox="allow-same-origin"
             src={`${url}#page=1&view=FitH&toolbar=0`}
             className="h-full w-full border-none"
             title={title}

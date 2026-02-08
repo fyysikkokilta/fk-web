@@ -203,7 +203,7 @@ const WeeklyNewsEmail = ({
                 <Section className="py-5">
                   {Object.values(newsGroups)
                     .flatMap((group) => group.items)
-                    .sort((a, b) => {
+                    .toSorted((a, b) => {
                       if (typeof a !== 'object' || typeof b !== 'object') return 0
                       return new Date(b?.date).getTime() - new Date(a?.date).getTime()
                     })

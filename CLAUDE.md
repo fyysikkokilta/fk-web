@@ -7,7 +7,9 @@ This file provides guidance for Claude Code when working in the fk-web repositor
 ```bash
 pnpm dev              # Start dev server
 pnpm build            # Production build
-pnpm lint             # ESLint (flat config)
+pnpm lint             # Lint (oxlint)
+pnpm format           # Format (oxfmt)
+pnpm format:check     # Check formatting
 pnpm type:check       # TypeScript check (tsc --noEmit)
 pnpm typegen          # Generate Next.js types
 pnpm generate:types   # Generate Payload types → payload-types.ts
@@ -39,7 +41,7 @@ src/
         [...slug]/page.tsx  # Catch-all for CMS pages
       api/draft/          # Enter draft mode
       api/exit-draft/     # Exit draft mode
-    (payload)/            # Payload admin — excluded from ESLint
+    (payload)/            # Payload admin — excluded from oxlint
   blocks/                 # Each block: config.ts + Component.tsx
   collections/            # Payload collection configs
   globals/                # Payload global configs
@@ -63,7 +65,7 @@ messages/                 # Translation JSON files (fi.json, en.json)
 
 ### Restricted Imports (ESLint errors)
 
-**Never import directly from `next/link` or navigation functions from `next/navigation`.**
+**Never import directly from `next/link` or navigation functions from `next/navigation`.** Enforced by oxlint `no-restricted-imports`.
 
 Use `@/i18n/routing` instead, which re-exports `Link`, `redirect`, `permanentRedirect`, `useRouter`, and `usePathname` from `next-intl/navigation` with locale-aware routing:
 
@@ -80,7 +82,7 @@ The routing module (`src/i18n/routing.ts`) and navigation module (`src/i18n/navi
 
 ### No Raw Strings in JSX
 
-`react/jsx-no-literals` is set to error. All user-visible text must use `next-intl` translations (`useTranslations` / `getTranslations`). Translation files are in `messages/fi.json` and `messages/en.json`.
+All user-visible text must use `next-intl` translations (`useTranslations` / `getTranslations`). Translation files are in `messages/fi.json` and `messages/en.json`. This is a project convention (no linter rule enforces it).
 
 ### Path Alias
 
@@ -89,6 +91,7 @@ The routing module (`src/i18n/routing.ts`) and navigation module (`src/i18n/navi
 ### Auto-generated Files
 
 These files are generated and must stay in sync — **do not hand-edit**:
+
 - `src/payload-types.ts` (from `pnpm generate:types`)
 - Payload import map (from `pnpm generate:importmap`)
 - Migration files in `src/migrations/` (from `pnpm generate:migration`)
@@ -122,6 +125,7 @@ The `revalidateCollection` hook in `src/hooks/revalidateCollection.ts` wraps `re
 ## Draft Mode
 
 Draft mode uses an API-based flow:
+
 - `/api/draft?slug=...` enters draft mode
 - `/api/exit-draft` exits draft mode
 - Use `isDraftMode()` from `src/utils/draftMode.ts` in page components

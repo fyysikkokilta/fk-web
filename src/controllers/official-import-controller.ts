@@ -10,7 +10,11 @@ export const officialImportController: PayloadHandler = async (req: PayloadReque
     return Response.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
-  const { divisions } = (await req.json?.()) as {
+  const body = req.json ? await req.json() : undefined
+  if (!body) {
+    return Response.json({ error: 'Invalid request body' }, { status: 400 })
+  }
+  const { divisions } = body as {
     divisions: {
       name: string
       nameEn: string

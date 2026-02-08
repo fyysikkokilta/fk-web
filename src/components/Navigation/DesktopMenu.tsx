@@ -51,7 +51,7 @@ export function DesktopMenu({ navigation }: { navigation: MainNavigation }) {
                     topLevelClassName +
                     ' border-transparent' +
                     (isActiveItem
-                      ? ' decoration-fk-yellow underline decoration-2 underline-offset-4'
+                      ? 'decoration-fk-yellow underline decoration-2 underline-offset-4'
                       : '')
                   }
                 >
@@ -74,7 +74,7 @@ export function DesktopMenu({ navigation }: { navigation: MainNavigation }) {
                     topLevelClassName +
                     ' border-fk-yellow' +
                     (childIsActive
-                      ? ' decoration-fk-yellow underline decoration-2 underline-offset-2'
+                      ? 'decoration-fk-yellow underline decoration-2 underline-offset-2'
                       : '')
                   }
                 >
@@ -102,7 +102,7 @@ export function DesktopMenu({ navigation }: { navigation: MainNavigation }) {
                                     linkCardClassName +
                                     ' border-fk-yellow border-r-4' +
                                     (grandChildrenIsActive
-                                      ? ' decoration-fk-yellow underline decoration-2 underline-offset-2'
+                                      ? 'decoration-fk-yellow underline decoration-2 underline-offset-2'
                                       : '')
                                   }
                                 >
@@ -122,7 +122,7 @@ export function DesktopMenu({ navigation }: { navigation: MainNavigation }) {
                                               className={
                                                 linkCardClassName +
                                                 (isActiveGrandChild
-                                                  ? ' decoration-fk-yellow underline decoration-2 underline-offset-2'
+                                                  ? 'decoration-fk-yellow underline decoration-2 underline-offset-2'
                                                   : '')
                                               }
                                             >
@@ -167,7 +167,7 @@ export function DesktopMenu({ navigation }: { navigation: MainNavigation }) {
                               className={
                                 linkCardClassName +
                                 (isActiveChild
-                                  ? ' decoration-fk-yellow underline decoration-2 underline-offset-2'
+                                  ? 'decoration-fk-yellow underline decoration-2 underline-offset-2'
                                   : '')
                               }
                             >

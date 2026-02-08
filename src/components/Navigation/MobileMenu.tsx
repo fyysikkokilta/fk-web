@@ -82,7 +82,7 @@ export function MobileMenu({ navigation }: { navigation: MainNavigation }) {
                           'flex w-full items-center justify-between px-4 py-3 text-left font-bold tracking-wide uppercase ' +
                           'hover:text-fk-gray-light focus-visible:relative' +
                           (isActiveItem
-                            ? ' decoration-fk-yellow underline decoration-2 underline-offset-4'
+                            ? 'decoration-fk-yellow underline decoration-2 underline-offset-4'
                             : '')
                         }
                         onClick={() => setIsMobileMenuOpen(false)}
@@ -109,7 +109,7 @@ export function MobileMenu({ navigation }: { navigation: MainNavigation }) {
                             'group flex w-full items-center justify-between px-4 py-3 text-left font-bold tracking-wide uppercase ' +
                             'hover:text-fk-gray-light border-fk-yellow border-b-4 focus-visible:relative' +
                             (childIsActive
-                              ? ' decoration-fk-yellow underline decoration-2 underline-offset-2'
+                              ? 'decoration-fk-yellow underline decoration-2 underline-offset-2'
                               : '')
                           }
                         >
@@ -144,7 +144,7 @@ export function MobileMenu({ navigation }: { navigation: MainNavigation }) {
                                         'group flex w-full items-center justify-between px-4 py-2 text-left font-bold tracking-wide uppercase ' +
                                         'hover:text-fk-gray-light border-fk-yellow border-b-4 focus-visible:relative' +
                                         (grandChildrenIsActive
-                                          ? ' decoration-fk-yellow underline decoration-2 underline-offset-2'
+                                          ? 'decoration-fk-yellow underline decoration-2 underline-offset-2'
                                           : '')
                                       }
                                     >
@@ -165,7 +165,7 @@ export function MobileMenu({ navigation }: { navigation: MainNavigation }) {
                                                 'block px-4 py-2 font-bold tracking-wide uppercase ' +
                                                 'hover:text-fk-gray-light' +
                                                 (isActive(grandChildPath)
-                                                  ? ' decoration-fk-yellow underline decoration-2 underline-offset-2'
+                                                  ? 'decoration-fk-yellow underline decoration-2 underline-offset-2'
                                                   : '')
                                               }
                                             >
@@ -189,7 +189,7 @@ export function MobileMenu({ navigation }: { navigation: MainNavigation }) {
                                     'block px-4 py-2 font-bold tracking-wide uppercase ' +
                                     'hover:text-fk-gray-light' +
                                     (isActiveChild
-                                      ? ' decoration-fk-yellow underline decoration-2 underline-offset-2'
+                                      ? 'decoration-fk-yellow underline decoration-2 underline-offset-2'
                                       : '')
                                   }
                                 >

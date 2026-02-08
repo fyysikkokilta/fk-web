@@ -94,7 +94,7 @@ const extractHeadingsFromRichText = (data: SerializedEditorState, locale: Locale
             if (fuksiYear.fuksiGroups) {
               const groups = fuksiYear.fuksiGroups
                 .filter((group) => typeof group !== 'number')
-                .sort((a, b) => a.name.localeCompare(b.name, 'fi'))
+                .toSorted((a, b) => a.name.localeCompare(b.name, 'fi'))
               groups.forEach((group) => {
                 headings.push(createHeading(group.name, 2))
               })
@@ -217,7 +217,7 @@ export const TableOfContents = ({ show, richText }: TableOfContentsProps) => {
           getIndexFromId(a.target.id) - getIndexFromId(b.target.id)
 
         if (visibleHeadings.length > 1) {
-          const sortedVisibleHeadings = visibleHeadings.sort(byIndex)
+          const sortedVisibleHeadings = visibleHeadings.toSorted(byIndex)
           setActiveId(sortedVisibleHeadings[0].target.id)
         }
       },

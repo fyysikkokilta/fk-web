@@ -36,7 +36,7 @@ export const Calendar = async ({ block, locale }: CalendarProps) => {
     })
   )
 
-  const events = calendarEvents.flat().sort((a, b) => {
+  const events = calendarEvents.flat().toSorted((a, b) => {
     const dateA = new Date(a.start?.dateTime || a.start?.date || '')
     const dateB = new Date(b.start?.dateTime || b.start?.date || '')
     return dateA.getTime() - dateB.getTime()

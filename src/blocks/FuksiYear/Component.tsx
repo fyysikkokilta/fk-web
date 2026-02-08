@@ -18,7 +18,7 @@ export const FuksiYear = async ({ block }: FuksiYearProps) => {
     <div className="prose-img:my-0">
       {block.fuksiGroups
         .filter((group) => typeof group !== 'number')
-        .sort((a, b) => a.name.localeCompare(b.name, 'fi'))
+        .toSorted((a, b) => a.name.localeCompare(b.name, 'fi'))
         .map((group) => {
           return (
             <div key={group.id} className="bg-fk-white rounded-lg">
