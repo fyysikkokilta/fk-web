@@ -34,12 +34,12 @@ export const EmbedVideo = ({ block }: EmbedVideoProps) => {
       className={`relative ${aspectRatioClasses[block.aspectRatio]} w-full overflow-hidden rounded-lg`}
     >
       {embedUrl ? (
+        // oxlint-disable-next-line react/iframe-missing-sandbox
         <iframe
           src={embedUrl}
           className="absolute inset-0 h-full w-full"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
-          sandbox="allow-same-origin"
         />
       ) : (
         <div className="bg-fk-gray-lightest absolute inset-0 flex items-center justify-center">

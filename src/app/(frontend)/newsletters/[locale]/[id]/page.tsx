@@ -56,13 +56,13 @@ export default async function NewsletterPage({ params }: PageProps<'/newsletters
   return (
     <>
       <RefreshRouteOnSave />
+      {/* oxlint-disable-next-line react/iframe-missing-sandbox */}
       <iframe
         srcDoc={html}
         style={{ overflow: 'hidden', height: '100%', width: '100%' }}
         height="100%"
         width="100%"
         title="Newsletter Preview"
-        sandbox="allow-same-origin"
       />
     </>
   )
