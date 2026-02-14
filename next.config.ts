@@ -1,12 +1,7 @@
-import bundleAnalyzer from '@next/bundle-analyzer'
 import { withPayload } from '@payloadcms/next/withPayload'
 import withPlaiceholder from '@plaiceholder/next'
 import type { NextConfig } from 'next'
 import createNextIntlPlugin from 'next-intl/plugin'
-
-const withBundleAnalyzer = bundleAnalyzer({
-  enabled: process.env.ANALYZE === 'true'
-})
 
 const withNextIntl = createNextIntlPlugin()
 
@@ -43,6 +38,6 @@ const nextConfig: NextConfig = {
   }
 }
 
-export default withPayload(withBundleAnalyzer(withNextIntl(withPlaiceholder(nextConfig))), {
+export default withPayload(withNextIntl(withPlaiceholder(nextConfig)), {
   devBundleServerPackages: false
 })

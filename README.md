@@ -73,9 +73,6 @@ FORM_BUILDER_DEFAULT_TO_EMAIL=...
 
 # Job Queue
 JOB_QUEUE_SECRET=your-job-queue-secret
-
-# Analyze bundle (optional)
-ANALYZE=true
 ```
 
 ### 4. Database

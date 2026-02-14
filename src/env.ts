@@ -27,11 +27,6 @@ export const env = createEnv({
     S3_SECRET: z.string().optional(),
     S3_ENDPOINT: z.string().optional(),
 
-    ANALYZE: z
-      .string()
-      .default('false')
-      .transform((val) => val === 'true'),
-
     GOOGLE_CLIENT_ID: z.string(),
     GOOGLE_CLIENT_SECRET: z.string(),
     GOOGLE_API_KEY: z.string(),
