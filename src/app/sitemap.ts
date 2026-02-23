@@ -91,7 +91,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 1,
     alternates: {
       languages: Object.fromEntries(
-        routing.locales.map((locale) => [locale, `${env.NEXT_PUBLIC_SERVER_URL}/${locale}`])
+        routing.locales.map((innerLocale) => [
+          innerLocale,
+          `${env.NEXT_PUBLIC_SERVER_URL}/${innerLocale}`
+        ])
       )
     }
   }))

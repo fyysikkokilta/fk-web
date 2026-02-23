@@ -1,10 +1,10 @@
 export const getNameSlugs = (name: string) => {
   return [name, name.replace(/ /g, '_'), name.replace(/ /g, '-')]
-    .map((name) => [
+    .map((namePart) => [
       name,
-      name.replace(/ å/g, 'a'),
-      name.replace(/ ä/g, 'a'),
-      name.replace(/ ö/g, 'o')
+      namePart.replace(/ å/g, 'a'),
+      namePart.replace(/ ä/g, 'a'),
+      namePart.replace(/ ö/g, 'o')
     ])
     .flat()
 }

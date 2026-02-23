@@ -15,9 +15,7 @@ export const PayloadRedirects = async ({ disableNotFound, url, locale }: Payload
 
   const urlWithLocale = `/${locale}${url}`
 
-  const redirectItem = redirects.find(
-    (redirect) => redirect.from === url || redirect.from === urlWithLocale
-  )
+  const redirectItem = redirects.find((r) => r.from === url || r.from === urlWithLocale)
 
   if (redirectItem) {
     const to = redirectItem.to

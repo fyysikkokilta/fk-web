@@ -425,18 +425,18 @@ export default buildConfig({
               const groupField = field as GroupField
               return {
                 ...field,
-                fields: groupField.fields.map((field) => {
-                  if ('name' in field && field.name === 'type') {
+                fields: groupField.fields.map((childField) => {
+                  if ('name' in childField && childField.name === 'type') {
                     return {
-                      ...field,
+                      ...childField,
                       admin: {
-                        ...field.admin,
+                        ...childField.admin,
                         description:
                           'Use a internal link to redirect to pages inside the Guild website. Otherwise, use a custom URL.'
                       }
                     }
                   }
-                  return field
+                  return childField
                 })
               }
             }
@@ -539,14 +539,14 @@ export default buildConfig({
       collections: {
         media: {
           prefix: 'media',
-          generateFileURL: async ({ filename, prefix }) => {
-            return `${env.NEXT_PUBLIC_S3_PUBLIC_URL}/${prefix}/${filename}`
+          generateFileURL: async ({ filename: mediaFilename, prefix }) => {
+            return `${env.NEXT_PUBLIC_S3_PUBLIC_URL}/${prefix}/${mediaFilename}`
           }
         },
         documents: {
           prefix: 'documents',
-          generateFileURL: async ({ filename, prefix }) => {
-            return `${env.NEXT_PUBLIC_S3_PUBLIC_URL}/${prefix}/${filename}`
+          generateFileURL: async ({ filename: documentFilename, prefix }) => {
+            return `${env.NEXT_PUBLIC_S3_PUBLIC_URL}/${prefix}/${documentFilename}`
           }
         }
       },

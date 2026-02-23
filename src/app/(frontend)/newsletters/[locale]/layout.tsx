@@ -4,7 +4,7 @@ import { NextIntlClientProvider } from 'next-intl'
 import { routing } from '@/i18n/routing'
 
 export const generateStaticParams = () => {
-  return routing.locales.map((locale) => ({ locale }))
+  return routing.locales.map((localeParam) => ({ locale: localeParam }))
 }
 
 export default async function NewslettersLayout({

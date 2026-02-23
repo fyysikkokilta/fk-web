@@ -19,7 +19,7 @@ export const generateStaticParams = () => {
   if (!env.DATABASE_URI) {
     return []
   }
-  return routing.locales.map((locale) => ({ locale }))
+  return routing.locales.map((localeParam) => ({ locale: localeParam }))
 }
 
 export default async function RootLayout({ children }: LayoutProps<'/[locale]'>) {

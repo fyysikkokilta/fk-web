@@ -100,16 +100,16 @@ const CareerNewsEmail = ({
           </Section>
 
           {/* Newsletters */}
-          {newsletters.map(({ newsletter, locale }) => {
+          {newsletters.map(({ newsletter, locale: newsletterLocale }) => {
             const newsGroups = groupNewsByType(newsletter.newsItems || [])
 
             return (
-              <Fragment key={`${newsletter.id}-${locale}`}>
+              <Fragment key={`${newsletter.id}-${newsletterLocale}`}>
                 {/* Greetings */}
                 {newsletter.greetings && (
                   <Section className="py-5">
                     <Text className="font-source-sans text-base leading-6">
-                      <EmailRichText data={newsletter.greetings} locale={locale} />
+                      <EmailRichText data={newsletter.greetings} locale={newsletterLocale} />
                     </Text>
                   </Section>
                 )}
@@ -117,7 +117,7 @@ const CareerNewsEmail = ({
                 {/* Table of Contents */}
                 <Section className="py-5">
                   {Object.entries(newsGroups).map(([type, group]) => (
-                    <div key={`${type}-${locale}`}>
+                    <div key={`${type}-${newsletterLocale}`}>
                       <Heading as="h2" className="font-lora my-1 text-2xl font-bold italic">
                         {group.type}
                       </Heading>
@@ -127,9 +127,9 @@ const CareerNewsEmail = ({
                           if (!item || typeof item !== 'object') return null
 
                           return (
-                            <li key={`${item.id}-${locale}`}>
+                            <li key={`${item.id}-${newsletterLocale}`}>
                               <Link
-                                href={`#${slugify(item.title)}-${locale}`}
+                                href={`#${slugify(item.title)}-${newsletterLocale}`}
                                 target="_self"
                                 className="font-source-sans text-orange no-underline"
                               >
@@ -155,16 +155,16 @@ const CareerNewsEmail = ({
                       if (!newsItem || typeof newsItem !== 'object') return null
 
                       return (
-                        <Container key={`${newsItem.id}-${locale}`} className="mb-8">
+                        <Container key={`${newsItem.id}-${newsletterLocale}`} className="mb-8">
                           <Heading
                             as="h2"
                             className="font-lora my-4 text-2xl font-bold italic"
-                            id={`${slugify(newsItem.title)}-${locale}`}
+                            id={`${slugify(newsItem.title)}-${newsletterLocale}`}
                           >
                             {newsItem.title}
                           </Heading>
                           <Text className="font-source-sans text-base leading-6">
-                            <EmailRichText data={newsItem.content} locale={locale} />
+                            <EmailRichText data={newsItem.content} locale={newsletterLocale} />
                           </Text>
                         </Container>
                       )
@@ -174,7 +174,7 @@ const CareerNewsEmail = ({
                 {/* Closing Words */}
                 {newsletter.closingWords && (
                   <Section className="flex justify-center py-5">
-                    <EmailRichText data={newsletter.closingWords} locale={locale} />
+                    <EmailRichText data={newsletter.closingWords} locale={newsletterLocale} />
                   </Section>
                 )}
                 <Hr />

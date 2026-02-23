@@ -151,12 +151,12 @@ export const CalendarClient = ({ events, locale }: CalendarClientProps) => {
           }
         })}
         formats={{
-          weekdayFormat: (date: Date) =>
-            format(date, 'cccccc', { locale: locale === 'fi' ? fi : enUS }),
-          monthHeaderFormat: (date: Date) =>
-            format(date, 'LLLL yyyy', { locale: locale === 'fi' ? fi : enUS }),
-          dayHeaderFormat: (date: Date) =>
-            format(date, 'cccc d.M.', { locale: locale === 'fi' ? fi : enUS }),
+          weekdayFormat: (weekdayDate: Date) =>
+            format(weekdayDate, 'cccccc', { locale: locale === 'fi' ? fi : enUS }),
+          monthHeaderFormat: (monthHeaderDate: Date) =>
+            format(monthHeaderDate, 'LLLL yyyy', { locale: locale === 'fi' ? fi : enUS }),
+          dayHeaderFormat: (dayHeaderDate: Date) =>
+            format(dayHeaderDate, 'cccc d.M.', { locale: locale === 'fi' ? fi : enUS }),
           dayRangeHeaderFormat: ({ start, end }: { start: Date; end: Date }) =>
             `${format(start, 'd.M.', { locale: locale === 'fi' ? fi : enUS })} - ${format(end, 'd.M.yyyy', { locale: locale === 'fi' ? fi : enUS })}`
         }}
