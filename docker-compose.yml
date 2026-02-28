@@ -7,6 +7,7 @@ services:
     volumes:
       - ./public/media:/app/public/media
       - ./public/documents:/app/public/documents
+      - ./heap-snapshots:/app/heap-snapshots
     env_file:
       - .env
     ports:

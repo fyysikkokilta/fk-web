@@ -8,7 +8,6 @@ const withNextIntl = createNextIntlPlugin()
 const nextConfig: NextConfig = {
   output: 'standalone',
   reactCompiler: true,
-  compress: false,
   experimental: {
     rootParams: true
   },

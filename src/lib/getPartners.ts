@@ -1,11 +1,11 @@
 import { Locale } from 'next-intl'
 import { getPayload, PayloadRequest } from 'payload'
 
-import config from '@/payload.config'
+import configPromise from '@payload-config'
 
 export async function getPartners(locale: Locale, req?: PayloadRequest) {
   const payload = await getPayload({
-    config: config
+    config: configPromise
   })
 
   try {

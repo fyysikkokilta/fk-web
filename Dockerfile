@@ -1,7 +1,7 @@
 # To use this Dockerfile, you have to set `output: 'standalone'` in your next.config.mjs file.
 # From https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile
 
-FROM node:22-alpine AS base
+FROM node:24-alpine AS base
 
 ARG IS_CI=true
 ARG NEXT_PUBLIC_SERVER_URL=https://fyysikkokilta.fi
@@ -58,6 +58,8 @@ COPY --from=builder /app/public ./public
 # Set the correct permission for prerender cache
 RUN mkdir .next
 RUN chown nextjs:nodejs .next
+RUN mkdir heap-snapshots
+RUN chown nextjs:nodejs heap-snapshots
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
@@ -75,6 +77,9 @@ EXPOSE 3000
 
 ENV PORT=3000
 ENV HOSTNAME=0.0.0.0
+
+# Add a signal to create a heap snapshot when the process is killed
+ENV NODE_OPTIONS="--heapsnapshot-signal=SIGUSR2 --diagnostic-dir=/app/heap-snapshots"
 
 # server.js is created by next build from the standalone output
 # https://nextjs.org/docs/pages/api-reference/next-config-js/output

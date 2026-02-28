@@ -7,7 +7,7 @@ This project is designed for extensibility, internationalization, and rich conte
 
 ## Requirements
 
-- **Node.js**: v18.20.2 or >=20.9.0
+- **Node.js**: >=24.0.0
 - **pnpm**: v10+
 - **Docker** (optional, for containerized development/production)
 - **PostgreSQL**: (if not using Docker Compose's built-in service)
