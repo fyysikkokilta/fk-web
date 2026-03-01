@@ -10,7 +10,6 @@ const nextConfig: NextConfig = {
   reactCompiler: true,
   compress: false,
   experimental: {
-    globalNotFound: true,
     rootParams: true
   },
   images: {
