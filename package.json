@@ -88,8 +88,7 @@
       "compress-pdf",
       "esbuild",
       "sharp",
-      "simple-git-hooks",
-      "unrs-resolver"
+      "simple-git-hooks"
     ]
   }
 }
