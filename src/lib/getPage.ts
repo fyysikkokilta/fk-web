@@ -1,10 +1,15 @@
 import configPromise from '@payload-config'
 import { Locale } from 'next-intl'
 import { getPayload, PayloadRequest } from 'payload'
+import { cache } from 'react'
 
 import { isDraftMode } from '../utils/draftMode'
 
-export async function getPage(path: string, locale: Locale, req?: PayloadRequest) {
+export const getPage = cache(async function getPage(
+  path: string,
+  locale: Locale,
+  req?: PayloadRequest
+) {
   const payload = await getPayload({
     config: configPromise
   })
@@ -20,6 +25,8 @@ export async function getPage(path: string, locale: Locale, req?: PayloadRequest
       path: { equals: path },
       ...(isDraft ? {} : { hidden: { equals: false } })
     },
+    depth: 0,
+    limit: 1,
     draft: isDraft,
     locale: 'all',
     req
@@ -42,6 +49,7 @@ export async function getPage(path: string, locale: Locale, req?: PayloadRequest
         ...(isDraft ? {} : { hidden: { equals: false } })
       },
       depth: 5,
+      limit: 1,
       draft: isDraft,
       locale: isPageAvailableForLocale ? locale : locale === 'fi' ? 'en' : 'fi',
       fallbackLocale: locale === 'fi' ? 'en' : 'fi',
@@ -55,4 +63,4 @@ export async function getPage(path: string, locale: Locale, req?: PayloadRequest
     )
     return { page: null, canonicalPath: null }
   }
-}
+})

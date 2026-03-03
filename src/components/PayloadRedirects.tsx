@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import type { Locale } from 'next-intl'
 
 import { redirect } from '@/i18n/navigation'
-import { getRedirects } from '@/lib/getRedirects'
+import { getRedirect } from '@/lib/getRedirect'
 
 interface PayloadRedirectsProps {
   disableNotFound?: boolean
@@ -11,11 +11,7 @@ interface PayloadRedirectsProps {
 }
 
 export const PayloadRedirects = async ({ disableNotFound, url, locale }: PayloadRedirectsProps) => {
-  const redirects = await getRedirects()
-
-  const urlWithLocale = `/${locale}${url}`
-
-  const redirectItem = redirects.find((r) => r.from === url || r.from === urlWithLocale)
+  const redirectItem = await getRedirect(url, locale)
 
   if (redirectItem) {
     const to = redirectItem.to
@@ -31,6 +27,7 @@ export const PayloadRedirects = async ({ disableNotFound, url, locale }: Payload
     if (redirectUrl) {
       const normalizedTarget = redirectUrl.startsWith('/') ? redirectUrl : `/${redirectUrl}`
       const normalizedSource = url.startsWith('/') ? url : `/${url}`
+      const urlWithLocale = `/${locale}${url}`
       const isSamePath = normalizedTarget === normalizedSource || normalizedTarget === urlWithLocale
       if (!isSamePath) {
         redirect({ href: normalizedTarget, locale })

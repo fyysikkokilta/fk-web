@@ -15,9 +15,17 @@ import { routing } from '@/i18n/routing'
 // Eg. /(frontend)/[locale] will revalidate all landing pages for all locales AND all pages for all locales.
 
 export const revalidateGlobal = (globalSlug: GlobalSlug): GlobalAfterChangeHook => {
-  return async ({ req: { payload, context } }) => {
+  return async ({ doc, req: { payload, context } }) => {
     // Don't revalidate if the skipRevalidate flag is set
     if (context.skipRevalidate) {
+      return
+    }
+
+    // Don't revalidate for draft-only saves (autosave). The public site is
+    // unchanged until the document is published, so revalidating here just
+    // causes unnecessary cache churn and memory pressure.
+    const docWithStatus = doc as unknown as { _status?: string }
+    if (docWithStatus._status === 'draft') {
       return
     }
 

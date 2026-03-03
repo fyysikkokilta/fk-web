@@ -179,10 +179,9 @@ export const LandingPage: GlobalConfig = {
     max: env.NODE_ENV === 'production' ? 100 : 20,
     drafts: {
       autosave: {
-        interval: 200
+        interval: 1000
       },
-      schedulePublish: true,
-      validate: true
+      schedulePublish: true
     }
   },
   hooks: {

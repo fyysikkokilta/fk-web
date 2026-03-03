@@ -34,6 +34,7 @@ export const officialImportController: PayloadHandler = async (req: PayloadReque
     const existingDivisions = await req.payload.find({
       collection: 'divisions',
       where: {},
+      depth: 0,
       limit: 0,
       locale: 'fi',
       req
@@ -42,6 +43,7 @@ export const officialImportController: PayloadHandler = async (req: PayloadReque
     const existingOfficialRoles = await req.payload.find({
       collection: 'official-roles',
       where: {},
+      depth: 0,
       limit: 0,
       locale: 'fi',
       req
@@ -50,6 +52,7 @@ export const officialImportController: PayloadHandler = async (req: PayloadReque
     const existingOfficials = await req.payload.find({
       collection: 'officials',
       where: {},
+      depth: 0,
       limit: 0,
       locale: 'fi',
       req
@@ -90,6 +93,7 @@ export const officialImportController: PayloadHandler = async (req: PayloadReque
         where: {
           or: slugifiedNames.map((slugifiedName) => ({ filename: { contains: slugifiedName } }))
         },
+        depth: 0,
         sort: '-createdAt',
         limit: 1,
         req

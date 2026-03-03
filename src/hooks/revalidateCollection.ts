@@ -1,4 +1,4 @@
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 import { after } from 'next/server'
 import type { CollectionAfterChangeHook, CollectionSlug, TypeWithID } from 'payload'
 
@@ -24,6 +24,14 @@ export const revalidateCollection = <T extends TypeWithID>(
       return
     }
 
+    // Don't revalidate for draft-only saves (autosave). The public site is
+    // unchanged until the document is published, so revalidating here just
+    // causes unnecessary cache churn and memory pressure.
+    const docWithStatus = doc as unknown as { _status?: string }
+    if (docWithStatus._status === 'draft') {
+      return
+    }
+
     const isPage = collectionSlug === 'pages'
 
     if (isPage) {
@@ -40,7 +48,7 @@ export const revalidateCollection = <T extends TypeWithID>(
         const pageWithAllLocales = await payload.findByID({
           collection: 'pages',
           id: page.id,
-          depth: 1,
+          depth: 0,
           locale: 'all'
         })
         const localizedPaths = pageWithAllLocales.path as unknown as Record<string, string>
@@ -77,6 +85,10 @@ export const revalidateCollection = <T extends TypeWithID>(
       // Same as above.
       after(async () => {
         revalidatePath(path, 'layout')
+
+        if (collectionSlug === 'redirects') {
+          revalidateTag('redirects', 'max')
+        }
       })
     }
 

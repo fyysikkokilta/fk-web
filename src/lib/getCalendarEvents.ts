@@ -1,12 +1,13 @@
 import { env } from '@/env'
+import { cache } from 'react'
 
-export const getCalendarEvents = async (
+export const getCalendarEvents = cache(async function getCalendarEvents(
   calendarId: string,
   options: {
     maxResults: number
     timeMin: string
   }
-) => {
+) {
   const searchParams = new URLSearchParams()
   searchParams.set('orderBy', 'startTime')
   searchParams.set('singleEvents', 'true')
@@ -48,4 +49,4 @@ export const getCalendarEvents = async (
     )
     return []
   }
-}
+})

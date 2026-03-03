@@ -1,4 +1,4 @@
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 import { after } from 'next/server'
 import type { CollectionAfterDeleteHook, CollectionSlug, TypeWithID } from 'payload'
 
@@ -54,6 +54,10 @@ export const revalidateDeletedCollection = <T extends TypeWithID>(
       // Same as above.
       after(async () => {
         revalidatePath(path, 'layout')
+
+        if (collectionSlug === 'redirects') {
+          revalidateTag('redirects', 'max')
+        }
       })
     }
 

@@ -167,13 +167,12 @@ export const Pages: CollectionConfig = {
     maxPerDoc: env.NODE_ENV === 'production' ? 100 : 20,
     drafts: {
       autosave: {
-        interval: 200
+        interval: 1000
       },
       schedulePublish: {
         timeFormat: 'HH:mm',
         timeIntervals: env.NODE_ENV === 'production' ? 60 : 1
-      },
-      validate: true
+      }
     }
   },
   hooks: {

@@ -49,6 +49,7 @@ export const fuksiImportController: PayloadHandler = async (req: PayloadRequest)
                   filename: { contains: slugifiedName }
                 }))
               },
+              depth: 0,
               // Assume the photo wanted is the most recent one
               // Further modifications can be done by the user in the UI
               sort: '-createdAt',

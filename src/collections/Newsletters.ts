@@ -221,7 +221,7 @@ export const Newsletters: CollectionConfig = {
     maxPerDoc: env.NODE_ENV === 'production' ? 5 : 2,
     drafts: {
       autosave: {
-        interval: 200
+        interval: 1000
       },
       validate: true
     }

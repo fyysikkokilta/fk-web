@@ -32,8 +32,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         }
       ]
     },
+    depth: 0,
     locale: 'all',
-    limit: 10000
+    limit: 0
   })
 
   const landingPage = await payload.findGlobal({
@@ -41,6 +42,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     select: {
       updatedAt: true
     },
+    depth: 0,
     locale: 'all'
   })
 

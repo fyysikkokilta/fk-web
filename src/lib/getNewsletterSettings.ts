@@ -3,8 +3,12 @@ import { Locale } from 'next-intl'
 import { getPayload, PayloadRequest } from 'payload'
 
 import { NewsletterSettings } from '@/payload-types'
+import { cache } from 'react'
 
-export async function getNewsletterSettings(locale: Locale, req?: PayloadRequest) {
+export const getNewsletterSettings = cache(async function getNewsletterSettings(
+  locale: Locale,
+  req?: PayloadRequest
+) {
   const payload = await getPayload({
     config: configPromise
   })
@@ -12,6 +16,7 @@ export async function getNewsletterSettings(locale: Locale, req?: PayloadRequest
   try {
     const result = await payload.findGlobal({
       slug: 'newsletter-settings',
+      depth: 1,
       locale,
       fallbackLocale: locale === 'fi' ? 'en' : 'fi',
       req
@@ -24,4 +29,4 @@ export async function getNewsletterSettings(locale: Locale, req?: PayloadRequest
     )
     return {} as NewsletterSettings
   }
-}
+})

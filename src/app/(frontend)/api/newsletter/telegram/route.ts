@@ -61,6 +61,7 @@ export async function GET(request: NextRequest) {
 
     const newsletterSettings = await payload.findGlobal({
       slug: 'newsletter-settings',
+      depth: 1,
       locale
     })
 
