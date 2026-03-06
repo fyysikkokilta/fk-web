@@ -9,7 +9,8 @@ export const Officials: CollectionConfig = {
   slug: 'officials',
   defaultPopulate: {
     name: true,
-    photo: true
+    photo: true,
+    telegramNick: true
   },
   admin: {
     useAsTitle: 'name',
