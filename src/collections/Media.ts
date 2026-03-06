@@ -14,6 +14,7 @@ export const Media: CollectionConfig = {
     width: true,
     height: true,
     filename: true,
+    prefix: true,
     blurDataUrl: true
   },
   access: {

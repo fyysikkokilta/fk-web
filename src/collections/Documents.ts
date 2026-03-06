@@ -10,6 +10,7 @@ export const Documents: CollectionConfig = {
   defaultPopulate: {
     filename: true,
     title: true,
+    prefix: true,
     url: true
   },
   admin: {
