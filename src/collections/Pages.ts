@@ -31,6 +31,11 @@ const formatPath: FieldHook = async ({ value, data, req: { payload } }: FieldHoo
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
+  // This cuts down HUGELY on the amount of data that is populated each page
+  defaultPopulate: {
+    path: true,
+    title: true
+  },
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'path', 'hidden'],

@@ -6,6 +6,10 @@ import { revalidateDeletedCollection } from '@/hooks/revalidateDeletedCollection
 
 export const FuksiGroups: CollectionConfig = {
   slug: 'fuksi-groups',
+  defaultPopulate: {
+    name: true,
+    fuksis: true
+  },
   admin: {
     useAsTitle: 'name',
     group: 'Fuksis',

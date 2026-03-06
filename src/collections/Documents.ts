@@ -7,6 +7,11 @@ import { revalidateDeletedCollection } from '@/hooks/revalidateDeletedCollection
 
 export const Documents: CollectionConfig = {
   slug: 'documents',
+  defaultPopulate: {
+    filename: true,
+    title: true,
+    url: true
+  },
   admin: {
     useAsTitle: 'filename',
     group: 'Files',

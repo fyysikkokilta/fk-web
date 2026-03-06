@@ -7,6 +7,10 @@ import { revalidateDeletedCollection } from '@/hooks/revalidateDeletedCollection
 
 export const Fuksis: CollectionConfig = {
   slug: 'fuksis',
+  defaultPopulate: {
+    name: true,
+    photo: true
+  },
   labels: {
     singular: 'Fuksi',
     plural: 'Fuksis'

@@ -6,6 +6,10 @@ import { revalidateDeletedCollection } from '@/hooks/revalidateDeletedCollection
 
 export const OfficialRoles: CollectionConfig = {
   slug: 'official-roles',
+  defaultPopulate: {
+    name: true,
+    officials: true
+  },
   admin: {
     useAsTitle: 'name',
     group: 'Officials',

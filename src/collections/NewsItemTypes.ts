@@ -6,6 +6,10 @@ import { revalidateDeletedCollection } from '@/hooks/revalidateDeletedCollection
 
 export const NewsItemTypes: CollectionConfig = {
   slug: 'news-item-types',
+  defaultPopulate: {
+    label: true,
+    value: true
+  },
   access: {
     read: () => true,
     create: admin,

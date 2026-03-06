@@ -6,6 +6,9 @@ import { signedIn } from '@/access/signed-in'
 
 export const Users: CollectionConfig = {
   slug: 'users',
+  defaultPopulate: {
+    email: true
+  },
   access: {
     read: signedIn,
     create: admin,

@@ -8,6 +8,14 @@ import { signedIn } from '../access/signed-in'
 
 export const Media: CollectionConfig = {
   slug: 'media',
+  defaultPopulate: {
+    url: true,
+    alt: true,
+    width: true,
+    height: true,
+    filename: true,
+    blurDataUrl: true
+  },
   access: {
     read: () => true,
     create: signedIn,

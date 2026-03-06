@@ -6,6 +6,9 @@ import { revalidateDeletedCollection } from '@/hooks/revalidateDeletedCollection
 
 export const PageNavigations: CollectionConfig = {
   slug: 'page-navigations',
+  defaultPopulate: {
+    pages: true
+  },
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'pages'],

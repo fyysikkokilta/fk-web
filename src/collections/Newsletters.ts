@@ -57,6 +57,13 @@ const updateReadyToSend: CollectionBeforeChangeHook<NewsletterType> = async ({
 
 export const Newsletters: CollectionConfig = {
   slug: 'newsletters',
+  defaultPopulate: {
+    type: true,
+    newsletterNumber: true,
+    greetings: true,
+    closingWords: true,
+    newsItems: true
+  },
   admin: {
     useAsTitle: 'newsletterNumber',
     defaultColumns: ['newsletterNumber', 'type', 'newsItems', 'sent'],

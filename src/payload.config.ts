@@ -366,6 +366,10 @@ export default buildConfig({
         }))
       },
       formOverrides: {
+        defaultPopulate: {
+          title: true,
+          fields: true
+        },
         admin: {
           group: 'Forms'
         },
@@ -381,6 +385,10 @@ export default buildConfig({
         }
       },
       formSubmissionOverrides: {
+        defaultPopulate: {
+          form: true,
+          submissionData: true
+        },
         admin: {
           group: 'Forms'
         },
@@ -399,6 +407,14 @@ export default buildConfig({
     redirectsPlugin({
       collections: [Pages.slug],
       overrides: {
+        defaultPopulate: {
+          from: true,
+          to: {
+            type: true,
+            reference: true,
+            url: true
+          }
+        },
         access: {
           read: () => true,
           create: signedIn,
