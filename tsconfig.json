@@ -30,7 +30,7 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     ".lintstagedrc.ts",
-    "postcss.config.js"
+    "postcss.config.ts"
   ],
   "exclude": ["node_modules"]
 }
