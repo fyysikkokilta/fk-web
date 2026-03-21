@@ -15,10 +15,11 @@ pnpm typegen          # Generate Next.js types
 pnpm generate:types   # Generate Payload types → payload-types.ts
 pnpm generate:importmap  # Generate Payload import map
 pnpm generate:migration  # Create new migration (--skip-empty)
+pnpm generate:payload # Run all three generate commands at once
 pnpm migrate          # Run pending migrations
 ```
 
-After changing Payload collections/globals/blocks, run `pnpm generate:types` and `pnpm generate:importmap` — CI checks that these are in sync.
+After changing Payload collections/globals/blocks, run `pnpm generate:payload` — CI checks that these are in sync.
 
 ## Tech Stack
 
