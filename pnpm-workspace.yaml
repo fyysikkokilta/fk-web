@@ -5,3 +5,4 @@ minimumReleaseAgeExclude:
   - '@next/*'
   - payload
   - '@payloadcms/*'
+  - compress-pdf
