@@ -1,9 +1,10 @@
 'use client'
 
 import { Accordion } from '@base-ui/react/accordion'
+import { Drawer } from '@base-ui/react/drawer'
 import { ChevronDown, Menu, X } from 'lucide-react'
 import { useTranslations } from 'next-intl'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { NavbarBrand } from '@/components/NavbarBrand'
 import { Link } from '@/i18n/navigation'
@@ -16,55 +17,46 @@ export function MobileMenu({ navigation }: { navigation: MainNavigation }) {
   const isActive = useIsActive()
   const getPath = useGetPath()
   const t = useTranslations()
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [open, setOpen] = useState(false)
 
-  // Lock/unlock body scroll when mobile menu is open
-  useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
-    }
-
-    // Cleanup function to restore scroll when component unmounts
-    return () => {
-      document.body.style.overflow = ''
-    }
-  }, [isMobileMenuOpen])
+  const close = () => setOpen(false)
 
   return (
-    <>
-      <nav className="bg-fk-gray text-fk-white fixed top-0 right-0 left-0 z-50 flex items-center px-2 font-bold lg:hidden">
+    <Drawer.Root open={open} onOpenChange={setOpen} swipeDirection="right">
+      <nav className="bg-fk-gray text-fk-white fixed top-0 right-0 left-0 z-50 flex h-12 items-center px-2 font-bold lg:hidden">
         <NavbarBrand
           LinkElement={Link}
           logo={navigation.logo}
           title={navigation.title}
-          onClose={() => setIsMobileMenuOpen(false)}
+          onClose={close}
         />
-        <LanguageSwitcher LinkElement={Link} />
-        <button
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        <Drawer.Trigger
           className="text-fk-white hover:text-fk-gray-light ml-auto p-2"
-          aria-label={
-            isMobileMenuOpen ? t('mainNavigation.closeMenu') : t('mainNavigation.openMenu')
-          }
+          aria-label={t('mainNavigation.openMenu')}
         >
-          {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </button>
+          <Menu className="h-6 w-6" />
+        </Drawer.Trigger>
       </nav>
 
-      {isMobileMenuOpen && (
-        <>
-          <div
-            className="fixed inset-x-0 top-12 bottom-0 z-40 bg-black/50 lg:hidden"
-            onClick={() => setIsMobileMenuOpen(false)}
-          />
-          <div className="border-fk-gray-light bg-fk-gray fixed inset-x-0 top-12 z-50 max-h-[calc(100dvh-3rem)] w-full overflow-y-auto border-t lg:hidden">
+      <Drawer.Portal>
+        <Drawer.Backdrop className="fixed inset-0 z-40 bg-black/50 opacity-[calc(1-var(--drawer-swipe-progress))] transition-opacity duration-300 ease-out data-ending-style:opacity-0 data-starting-style:opacity-0 data-swiping:duration-0 lg:hidden" />
+        <Drawer.Viewport className="fixed inset-0 z-50 flex items-stretch justify-end lg:hidden">
+          <Drawer.Popup className="bg-fk-gray text-fk-white border-fk-gray-light flex h-full w-[min(20rem,85vw)] transform-[translateX(var(--drawer-swipe-movement-x))] flex-col border-l transition-transform duration-300 ease-out data-ending-style:transform-[translateX(100%)] data-starting-style:transform-[translateX(100%)] data-swiping:select-none">
+            <Drawer.Title className="sr-only">{t('mainNavigation.menu')}</Drawer.Title>
+            <div className="border-fk-gray-light flex h-12 shrink-0 items-center border-b pr-2">
+              <LanguageSwitcher LinkElement={Link} onClick={close} />
+              <Drawer.Close
+                className="text-fk-white hover:text-fk-gray-light ml-auto p-2"
+                aria-label={t('mainNavigation.closeMenu')}
+              >
+                <X className="h-6 w-6" />
+              </Drawer.Close>
+            </div>
             <Accordion.Root
               render={<ul />}
               role="menu"
               aria-label={t('mainNavigation.menu')}
-              className="bg-fk-gray text-fk-white font-bold tracking-wide uppercase"
+              className="bg-fk-gray text-fk-white min-h-0 flex-1 overflow-y-auto font-bold tracking-wide uppercase"
             >
               {navigation.items.map((item) => {
                 const itemPath = getPath(item)
@@ -85,7 +77,7 @@ export function MobileMenu({ navigation }: { navigation: MainNavigation }) {
                             ? 'decoration-fk-yellow underline decoration-2 underline-offset-4'
                             : '')
                         }
-                        onClick={() => setIsMobileMenuOpen(false)}
+                        onClick={close}
                       >
                         {item.label}
                       </Link>
@@ -160,7 +152,7 @@ export function MobileMenu({ navigation }: { navigation: MainNavigation }) {
                                           <li role="menuitem" key={grandChild.id}>
                                             <Link
                                               href={grandChildPath}
-                                              onClick={() => setIsMobileMenuOpen(false)}
+                                              onClick={close}
                                               className={
                                                 'block px-4 py-2 font-bold tracking-wide uppercase ' +
                                                 'hover:text-fk-gray-light' +
@@ -184,7 +176,7 @@ export function MobileMenu({ navigation }: { navigation: MainNavigation }) {
                               <li role="menuitem" key={child.id}>
                                 <Link
                                   href={childPath}
-                                  onClick={() => setIsMobileMenuOpen(false)}
+                                  onClick={close}
                                   className={
                                     'block px-4 py-2 font-bold tracking-wide uppercase ' +
                                     'hover:text-fk-gray-light' +
@@ -207,9 +199,9 @@ export function MobileMenu({ navigation }: { navigation: MainNavigation }) {
                 return null
               })}
             </Accordion.Root>
-          </div>
-        </>
-      )}
-    </>
+          </Drawer.Popup>
+        </Drawer.Viewport>
+      </Drawer.Portal>
+    </Drawer.Root>
   )
 }
