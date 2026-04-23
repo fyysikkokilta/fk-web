@@ -11,7 +11,7 @@ import {
   Section,
   Tailwind,
   Text
-} from '@react-email/components'
+} from 'react-email'
 import type { Locale } from 'next-intl'
 import { Fragment } from 'react'
 

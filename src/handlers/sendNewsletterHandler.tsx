@@ -1,4 +1,4 @@
-import { render } from '@react-email/components'
+import { render } from 'react-email'
 import type { TaskHandler } from 'payload'
 
 import CareerNewsEmail from '@/emails/CareerNewsEmail'

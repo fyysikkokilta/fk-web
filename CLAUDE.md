@@ -10,7 +10,7 @@ pnpm build            # Production build
 pnpm lint             # Lint (oxlint)
 pnpm format           # Format (oxfmt)
 pnpm format:check     # Check formatting
-pnpm type:check       # TypeScript check (tsc --noEmit)
+pnpm typecheck       # TypeScript check (tsgo --noEmit)
 pnpm typegen          # Generate Next.js types
 pnpm generate:types   # Generate Payload types → payload-types.ts
 pnpm generate:importmap  # Generate Payload import map
@@ -62,7 +62,7 @@ messages/                 # Translation JSON files (fi.json, en.json)
 
 - Prettier: single quotes, no semicolons, no trailing commas, 100 char width, LF line endings
 - ESLint with `eslint-plugin-simple-import-sort` — import/export order is enforced as errors
-- Pre-commit hook runs lint-staged (ESLint + tsc)
+- Pre-commit hook runs lint-staged (ESLint + tsgo)
 
 ### Restricted Imports (ESLint errors)
 

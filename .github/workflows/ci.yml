@@ -52,7 +52,7 @@ jobs:
         run: pnpm typegen
 
       - name: Type check
-        run: pnpm type:check
+        run: pnpm typecheck
 
       - name: Check lint
         run: |

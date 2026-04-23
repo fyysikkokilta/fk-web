@@ -11,7 +11,7 @@ import {
   LinkJSXConverter,
   RichText as LexicalRichText
 } from '@payloadcms/richtext-lexical/react'
-import { Img, Link } from '@react-email/components'
+import { Img, Link } from 'react-email'
 import { Locale } from 'next-intl'
 
 import { env } from '@/env'

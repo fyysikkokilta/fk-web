@@ -1,5 +1,5 @@
 import configPromise from '@payload-config'
-import { render } from '@react-email/components'
+import { render } from 'react-email'
 import { headers } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { locale } from 'next/root-params'
