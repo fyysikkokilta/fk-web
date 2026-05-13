@@ -8,7 +8,8 @@
     "toggle": "Toggle table of contents"
   },
   "footer": {
-    "copyright": "© {year} Fyysikkokilta ry"
+    "copyright": "© {year} Fyysikkokilta ry",
+    "hiddenQuote": "“Life becomes easier when you learn to accept an apology you never got.” ― Robert Brault"
   },
   "calendar": {
     "title": "Calendar",

@@ -36,6 +36,9 @@ export const Footer = async ({ footer, locale }: FooterProps) => {
           <div className="text-fk-white text-md mt-8">
             {t('footer.copyright', { year: new Date().getFullYear() })}
           </div>
+          <p className="text-fk-gray mt-2 text-sm" aria-hidden="true">
+            {t('footer.hiddenQuote')}
+          </p>
         </div>
       </div>
     </footer>
