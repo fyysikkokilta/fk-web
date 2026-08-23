@@ -10,7 +10,7 @@ pnpm build            # Production build
 pnpm lint             # Lint (oxlint)
 pnpm format           # Format (oxfmt)
 pnpm format:check     # Check formatting
-pnpm typecheck       # TypeScript check (tsgo --noEmit)
+pnpm typecheck        # TypeScript check (tsc --noEmit)
 pnpm typegen          # Generate Next.js types
 pnpm generate:types   # Generate Payload types → payload-types.ts
 pnpm generate:importmap  # Generate Payload import map
@@ -30,7 +30,7 @@ After changing Payload collections/globals/blocks, run `pnpm generate:payload` �
 - **Tailwind CSS v4** — CSS-first config (no `tailwind.config.*`), configured in `globals.css`
 - **next-intl** for i18n routing and translations
 - **Zod v4** for validation
-- **pnpm 10** (enforced via `preinstall` script), Node >= 24, ESM (`"type": "module"`)
+- **pnpm 11** (enforced via `preinstall` script), Node >= 26, ESM (`"type": "module"`)
 
 ## Project Structure
 
@@ -47,13 +47,12 @@ src/
   collections/            # Payload collection configs
   globals/                # Payload global configs
   components/
-  i18n/                   # Routing, navigation, request config
+  i18n/                   # Routing, navigation, request config, translations (fi.ts, en.ts)
   hooks/                  # Payload hooks (revalidation etc.)
   access/                 # Access control helpers
   utils/
   env.ts                  # Environment validation (t3-oss/env-nextjs)
   payload.config.ts
-messages/                 # Translation JSON files (fi.json, en.json)
 ```
 
 ## Key Conventions
@@ -62,7 +61,7 @@ messages/                 # Translation JSON files (fi.json, en.json)
 
 - Prettier: single quotes, no semicolons, no trailing commas, 100 char width, LF line endings
 - ESLint with `eslint-plugin-simple-import-sort` — import/export order is enforced as errors
-- Pre-commit hook runs lint-staged (ESLint + tsgo)
+- Pre-commit hook runs lint-staged (oxlint + oxfmt + tsc)
 
 ### Restricted Imports (ESLint errors)
 
@@ -83,7 +82,7 @@ The routing module (`src/i18n/routing.ts`) and navigation module (`src/i18n/navi
 
 ### No Raw Strings in JSX
 
-All user-visible text must use `next-intl` translations (`useTranslations` / `getTranslations`). Translation files are in `messages/fi.json` and `messages/en.json`. This is a project convention (no linter rule enforces it).
+All user-visible text must use `next-intl` translations (`useTranslations` / `getTranslations`). Translation files are in `src/i18n/fi.ts` and `src/i18n/en.ts`. This is a project convention (no linter rule enforces it).
 
 ### Path Alias
 

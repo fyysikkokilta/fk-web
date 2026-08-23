@@ -9,9 +9,6 @@ const nextConfig: NextConfig = {
   output: 'standalone',
   reactCompiler: true,
   compress: false,
-  experimental: {
-    rootParams: true
-  },
   images: {
     remotePatterns: [
       ...(process.env.NEXT_PUBLIC_SERVER_URL

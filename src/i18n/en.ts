@@ -1,0 +1,109 @@
+const messages = {
+  mainNavigation: {
+    menu: 'Main navigation menu',
+    openMenu: 'Open menu',
+    closeMenu: 'Close menu'
+  },
+  tableOfContents: {
+    toggle: 'Toggle table of contents'
+  },
+  footer: {
+    copyright: '© {year} Fyysikkokilta ry',
+    hiddenQuote:
+      '“Life becomes easier when you learn to accept an apology you never got.” ― Robert Brault'
+  },
+  calendar: {
+    title: 'Calendar',
+    google: 'Google',
+    previousMonth: 'Previous month',
+    nextMonth: 'Next month',
+    today: 'Today',
+    events: 'events',
+    noEvents: 'No events',
+    location: 'Location',
+    viewInGoogle: 'View in Google Calendar',
+    month: 'Month',
+    week: 'Week',
+    day: 'Day',
+    agenda: 'Agenda',
+    date: 'Date',
+    time: 'Time',
+    event: 'Event',
+    allDay: 'All Day',
+    workWeek: 'Work Week',
+    previous: 'Previous',
+    next: 'Next',
+    yesterday: 'Yesterday',
+    tomorrow: 'Tomorrow',
+    noEventsInRange: 'No events in this date range',
+    more: 'more',
+    description: 'Description',
+    close: 'Close'
+  },
+  form: {
+    submit: 'Submit',
+    reset: 'Reset',
+    loading: 'Loading, please wait...',
+    required: 'This field is required.',
+    invalidEmail: 'Invalid email address.',
+    emailPlaceholder: 'Email',
+    success: 'Form submitted successfully!',
+    error: 'There was an error submitting the form.',
+    requiredField: 'required',
+    checked: 'checked',
+    unchecked: 'unchecked'
+  },
+  pdfViewer: {
+    openInNewTab: 'Open in new tab',
+    fallbackMessage:
+      'Your browser does not support embedding PDFs directly. You can download the PDF by opening it in a new tab.',
+    selectDocument: 'Select document'
+  },
+  draftMode: {
+    preview: 'This is a draft preview',
+    hidden: 'This page is hidden'
+  },
+  common: {
+    noImage: 'No image',
+    defaultImage: 'Default image'
+  },
+  notFound: {
+    meta: {
+      title: 'Page Not Found',
+      description:
+        "The page you're looking for doesn't exist. Navigate back to our homepage to explore the Guild of Physics."
+    },
+    logoAlt: 'Guild of Physics Logo',
+    title: "Oh Lord, it's hard to be humble...",
+    description:
+      "When you're perfect in every way. I can't wait to look in the mirror, cause I get better lookin' each day. To know me is to love me, I must be a hell of a man. Oh Lord, it's hard to be humble, but I'm doin' the best that I can.",
+    subtitle: 'But this page? Not found. Even perfection has its limits!',
+    goHome: 'Go Home & Admire Yourself'
+  },
+  globalError: {
+    title: 'Something Went Wrong',
+    description: "We're sorry, but an unexpected error has occurred.",
+    contactInfo: 'If this issue persists, please contact the Communications Officer.',
+    tryAgain: 'Try Again',
+    goHome: 'Go Home',
+    logoAlt: 'Guild of Physics Logo'
+  },
+  partners: {
+    title: 'Partners'
+  },
+  frontPage: {
+    announcement: 'Announcement',
+    calendar: 'Calendar',
+    slideshow: 'Slideshow',
+    news: 'News',
+    events: 'Events',
+    more: 'More'
+  },
+  languageSwitcher: {
+    label: 'Language',
+    switchLanguage: 'Switch language to Finnish'
+  },
+  skipLink: 'Skip to main content'
+} as const
+
+export default messages
