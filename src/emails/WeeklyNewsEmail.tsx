@@ -141,58 +141,33 @@ const WeeklyNewsEmail = ({
                       group.items,
                       newsletter.newsletterNumber
                     )
+
+                    const combined = [...thisWeek, ...followingWeeks]
+                      .filter(Boolean)
+                      .toSorted((a, b) => new Date((a as any).date).getTime() - new Date((b as any).date).getTime())
+
                     return (
                       <div key={`${type}-${newsletterLocale}`}>
                         <div className="font-lora my-1 text-2xl font-bold italic">{group.type}</div>
 
-                        {thisWeek.length > 0 && (
-                          <>
-                            <div className="font-lora my-1 text-xl font-medium italic">
-                              {getLocalizedTimeframe('thisWeek', newsletterLocale)}
-                            </div>
-                            <ul>
-                              {thisWeek.map((item) => {
-                                if (!item || typeof item !== 'object') return null
+                        {combined.length > 0 && (
+                          <ul>
+                            {combined.map((item) => {
+                              if (!item || typeof item !== 'object') return null
 
-                                return (
-                                  <li key={`${item.id}-this-week-${newsletterLocale}`}>
-                                    <Link
-                                      href={`#${slugify(item.title)}-${newsletterLocale}`}
-                                      target="_self"
-                                      className="font-source-sans text-orange no-underline"
-                                    >
-                                      {item.title}
-                                    </Link>
-                                  </li>
-                                )
-                              })}
-                            </ul>
-                          </>
-                        )}
-
-                        {followingWeeks.length > 0 && (
-                          <>
-                            <div className="font-lora my-1 text-xl font-medium italic">
-                              {getLocalizedTimeframe('followingWeeks', newsletterLocale)}
-                            </div>
-                            <ul>
-                              {followingWeeks.map((item) => {
-                                if (!item || typeof item !== 'object') return null
-
-                                return (
-                                  <li key={`${item.id}-following-weeks-${newsletterLocale}`}>
-                                    <Link
-                                      href={`#${slugify(item.title)}-${newsletterLocale}`}
-                                      target="_self"
-                                      className="font-source-sans text-orange no-underline"
-                                    >
-                                      {item.title}
-                                    </Link>
-                                  </li>
-                                )
-                              })}
-                            </ul>
-                          </>
+                              return (
+                                <li key={`${item.id}-toc-${newsletterLocale}`}>
+                                  <Link
+                                    href={`#${slugify(item.title)}-${newsletterLocale}`}
+                                    target="_self"
+                                    className="font-source-sans text-orange no-underline"
+                                  >
+                                    {item.title}
+                                  </Link>
+                                </li>
+                              )
+                            })}
+                          </ul>
                         )}
                       </div>
                     )
@@ -205,7 +180,7 @@ const WeeklyNewsEmail = ({
                     .flatMap((group) => group.items)
                     .toSorted((a, b) => {
                       if (typeof a !== 'object' || typeof b !== 'object') return 0
-                      return new Date(b?.date).getTime() - new Date(a?.date).getTime()
+                      return new Date(a?.date).getTime() - new Date(b?.date).getTime()
                     })
                     .map((newsItem) => {
                       if (!newsItem || typeof newsItem !== 'object') return null
