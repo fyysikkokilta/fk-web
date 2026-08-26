@@ -1,11 +1,10 @@
 import configPromise from '@payload-config'
 import { Locale } from 'next-intl'
 import { getPayload, PayloadRequest } from 'payload'
-import { cache } from 'react'
 
 import { isDraftMode } from '../utils/draftMode'
 
-export const getNewsletter = cache(async function getNewsletter(
+export const getNewsletter = async function getNewsletter(
   id: string | number,
   locale: Locale,
   req?: PayloadRequest
@@ -32,4 +31,4 @@ export const getNewsletter = cache(async function getNewsletter(
     )
     return null
   }
-})
+}
