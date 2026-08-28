@@ -19,7 +19,7 @@ import type { Locale } from 'next-intl'
 import { Fragment } from 'react'
 
 import type { Newsletter, NewsletterSettings } from '@/payload-types'
-import { getLocalizedTimeframe, groupNewsByDate, groupNewsByType } from '@/utils/newsletters'
+import { groupNewsByDate, groupNewsByType } from '@/utils/newsletters'
 import { slugify } from '@/utils/slugify'
 
 import { EmailRichText } from './EmailRichText'
