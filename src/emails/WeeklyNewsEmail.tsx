@@ -144,7 +144,10 @@ const WeeklyNewsEmail = ({
 
                     const combined = [...thisWeek, ...followingWeeks]
                       .filter(Boolean)
-                      .toSorted((a, b) => new Date((a as any).date).getTime() - new Date((b as any).date).getTime())
+                      .toSorted(
+                        (a, b) =>
+                          new Date((a as any).date).getTime() - new Date((b as any).date).getTime()
+                      )
 
                     return (
                       <div key={`${type}-${newsletterLocale}`}>
