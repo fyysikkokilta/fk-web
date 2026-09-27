@@ -1,6 +1,10 @@
 import { BlocksFeature, HeadingFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
 import { addHours, isAfter, parse, parseISO, startOfHour } from 'date-fns'
-import type { CollectionBeforeChangeHook, CollectionConfig } from 'payload'
+import type {
+  CollectionAfterChangeHook,
+  CollectionBeforeChangeHook,
+  CollectionConfig
+} from 'payload'
 
 import { admin } from '@/access/admin'
 import { publishedOrSignedIn } from '@/access/published-or-signed-in'
@@ -20,7 +24,7 @@ const updateReadyToSend: CollectionBeforeChangeHook<NewsletterType> = async ({
   req
 }) => {
   // Skip if the document is not yet created or has already been sent or is being sent
-  if (!originalDoc || originalDoc.sent || data.sent) {
+  if (!originalDoc || originalDoc.sent || data.sent || data['_status'] === 'draft') {
     return data
   }
 
@@ -34,25 +38,40 @@ const updateReadyToSend: CollectionBeforeChangeHook<NewsletterType> = async ({
     data.jobId = null
   }
 
-  const parsedSendTime = data.sendTime ? parseISO(data.sendTime) : null
-  const sendTime =
-    parsedSendTime && isAfter(parsedSendTime, new Date()) ? parsedSendTime : getNextClockHour()
+  return data
+}
 
-  // If the newsletter is ready to be sent, schedule a job to send it
-  if (data.readyToSend) {
-    const job = await req.payload.jobs.queue({
-      task: 'sendNewsletter',
-      waitUntil: sendTime,
-      input: {
-        newsletterId: originalDoc.id
-      },
-      req
-    })
-
-    data.jobId = job.id
+const scheduleReadyNewsletter: CollectionAfterChangeHook<NewsletterType> = async ({ doc, req }) => {
+  if (doc['_status'] !== 'published' || !doc.readyToSend || doc.sent || doc.jobId) {
+    return doc
   }
 
-  return data
+  const parsedSendTime = doc.sendTime ? parseISO(doc.sendTime) : null
+  const sendTime = doc.sendNow
+    ? new Date()
+    : parsedSendTime && isAfter(parsedSendTime, new Date())
+      ? parsedSendTime
+      : getNextClockHour()
+
+  const job = await req.payload.jobs.queue({
+    task: 'sendNewsletter',
+    waitUntil: sendTime,
+    input: {
+      newsletterId: doc.id
+    },
+    req
+  })
+
+  await req.payload.update({
+    collection: 'newsletters',
+    id: doc.id,
+    data: {
+      jobId: job.id
+    },
+    req
+  })
+
+  return doc
 }
 
 export const Newsletters: CollectionConfig = {
@@ -191,6 +210,16 @@ export const Newsletters: CollectionConfig = {
       }
     },
     {
+      name: 'sendNow',
+      type: 'checkbox',
+      defaultValue: false,
+      admin: {
+        position: 'sidebar',
+        description:
+          'Send as soon as the newsletter is published instead of waiting for the scheduled time.'
+      }
+    },
+    {
       name: 'sendTime',
       type: 'date',
       timezone: true,
@@ -200,7 +229,7 @@ export const Newsletters: CollectionConfig = {
         date: {
           pickerAppearance: 'dayAndTime',
           displayFormat: 'dd.MM.YYYY HH:mm',
-          timeIntervals: env.NODE_ENV === 'production' ? 60 : 1
+          timeIntervals: 1
         },
         description:
           'The time of day to send the newsletter. Make sure the time is in the future, else it will be sent at the next clock hour.'
@@ -235,7 +264,7 @@ export const Newsletters: CollectionConfig = {
   },
   hooks: {
     beforeChange: [updateReadyToSend],
-    afterChange: [revalidateCollection('newsletters')],
+    afterChange: [scheduleReadyNewsletter, revalidateCollection('newsletters')],
     afterDelete: [revalidateDeletedCollection('newsletters')]
   }
 }

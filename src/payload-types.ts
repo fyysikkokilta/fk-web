@@ -766,6 +766,10 @@ export interface Newsletter {
    */
   readyToSend?: boolean | null;
   /**
+   * Send as soon as the newsletter is published instead of waiting for the scheduled time.
+   */
+  sendNow?: boolean | null;
+  /**
    * The time of day to send the newsletter. Make sure the time is in the future, else it will be sent at the next clock hour.
    */
   sendTime?: string | null;
@@ -1512,6 +1516,7 @@ export interface NewslettersSelect<T extends boolean = true> {
   closingWords?: T;
   newsItems?: T;
   readyToSend?: T;
+  sendNow?: T;
   sendTime?: T;
   sendTime_tz?: T;
   sent?: T;
