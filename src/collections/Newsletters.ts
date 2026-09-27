@@ -229,7 +229,7 @@ export const Newsletters: CollectionConfig = {
         date: {
           pickerAppearance: 'dayAndTime',
           displayFormat: 'dd.MM.YYYY HH:mm',
-          timeIntervals: 1
+          timeIntervals: env.NODE_ENV === 'production' ? 60 : 1
         },
         description:
           'The time of day to send the newsletter. Make sure the time is in the future, else it will be sent at the next clock hour.'
