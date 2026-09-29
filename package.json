@@ -54,7 +54,7 @@
     "react-dom": "^19.2.8",
     "react-email": "^6.9.2",
     "react-social-icons": "^6.26.0",
-    "sharp": "^0.35.3",
+    "sharp": "^0.35.4",
     "zod": "^4.4.3"
   },
   "devDependencies": {
