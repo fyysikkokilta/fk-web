@@ -30,7 +30,7 @@
     "@payloadcms/email-nodemailer": "^3.88.0",
     "@payloadcms/live-preview-react": "^3.88.0",
     "@payloadcms/next": "^3.88.0",
-    "@payloadcms/plugin-form-builder": "^3.88.0",
+    "@payloadcms/plugin-form-builder": "^3.90.0",
     "@payloadcms/plugin-import-export": "^3.88.0",
     "@payloadcms/plugin-redirects": "^3.88.0",
     "@payloadcms/plugin-seo": "^3.88.0",
