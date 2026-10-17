@@ -184,6 +184,7 @@ export interface Media {
   alt?: string | null;
   blurDataUrl: string;
   prefix?: string | null;
+  _objectKey?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -928,6 +929,7 @@ export interface Document {
    */
   thumbnail?: (number | null) | Media;
   prefix?: string | null;
+  _objectKey?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -1161,6 +1163,7 @@ export interface User {
   enableAPIKey?: boolean | null;
   apiKey?: string | null;
   apiKeyIndex?: string | null;
+  hasAPIKey?: boolean | null;
   collection: 'users';
 }
 /**
@@ -1272,8 +1275,7 @@ export interface PayloadJob {
       }[]
     | null;
   taskSlug?:
-    | ('inline' | 'schedulePublish' | 'sendNewsletter' | 'createCollectionExport' | 'createCollectionImport')
-    | null;
+    ('inline' | 'schedulePublish' | 'sendNewsletter' | 'createCollectionExport' | 'createCollectionImport') | null;
   queue?: string | null;
   waitUntil?: string | null;
   processing?: boolean | null;
@@ -1429,6 +1431,7 @@ export interface DocumentsSelect<T extends boolean = true> {
   title?: T;
   thumbnail?: T;
   prefix?: T;
+  _objectKey?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -1471,6 +1474,7 @@ export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   blurDataUrl?: T;
   prefix?: T;
+  _objectKey?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -1836,6 +1840,7 @@ export interface UsersSelect<T extends boolean = true> {
   enableAPIKey?: T;
   apiKey?: T;
   apiKeyIndex?: T;
+  hasAPIKey?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2444,7 +2449,10 @@ export interface TaskSchedulePublish {
       value: number | Page;
     } | null;
     global?: 'landing-page' | null;
-    user?: (number | null) | User;
+    user?: {
+      relationTo: 'users';
+      value: number | User;
+    } | null;
   };
   output?: unknown;
 }

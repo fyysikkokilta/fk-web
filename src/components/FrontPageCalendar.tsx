@@ -13,6 +13,7 @@ interface FrontPageCalendarProps {
 export const FrontPageCalendar = async ({ page }: FrontPageCalendarProps) => {
   const calendars = page.calendar?.calendars || []
   const maxResults = page.calendar?.maxEvents || 8
+  // oxlint-disable-next-line react/purity -- server component, renders once per request
   const timeMin = startOfDay(new Date()).toISOString()
 
   if (calendars.length === 0) return null

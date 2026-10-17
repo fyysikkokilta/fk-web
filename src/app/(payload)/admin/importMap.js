@@ -50,9 +50,9 @@ import { ImportSaveButton as ImportSaveButton_cdf7e044479f899a31f804427d568b36 }
 import { ActionsLink as ActionsLink_2eba76e5eb0028b8eb0bf09f56520825 } from '@/views/actions/ActionsLink'
 import { GoogleOAuthLoginButton as GoogleOAuthLoginButton_3ec151d58080d1725cf1637487b38550 } from '@/components/GoogleOAuthLoginButton'
 import { ImportExportProvider as ImportExportProvider_cdf7e044479f899a31f804427d568b36 } from '@payloadcms/plugin-import-export/rsc'
-import { S3ClientUploadHandler as S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24 } from '@payloadcms/storage-s3/client'
 import { default as default_6f9ae834d6327a265161090487d84be2 } from '@/views/actions/ImportView'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
+import { S3ClientUploadHandler as S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24 } from '@payloadcms/storage-s3/client'
 
 /** @type import('payload').ImportMap */
 export const importMap = {
@@ -108,7 +108,7 @@ export const importMap = {
   "@/views/actions/ActionsLink#ActionsLink": ActionsLink_2eba76e5eb0028b8eb0bf09f56520825,
   "@/components/GoogleOAuthLoginButton#GoogleOAuthLoginButton": GoogleOAuthLoginButton_3ec151d58080d1725cf1637487b38550,
   "@payloadcms/plugin-import-export/rsc#ImportExportProvider": ImportExportProvider_cdf7e044479f899a31f804427d568b36,
-  "@payloadcms/storage-s3/client#S3ClientUploadHandler": S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24,
   "@/views/actions/ImportView#default": default_6f9ae834d6327a265161090487d84be2,
-  "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
+  "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1,
+  "@payloadcms/storage-s3/client#S3ClientUploadHandler": S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24
 }

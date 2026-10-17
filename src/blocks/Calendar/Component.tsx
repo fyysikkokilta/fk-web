@@ -18,6 +18,7 @@ interface CalendarProps {
 export const Calendar = async ({ block, locale }: CalendarProps) => {
   const calendars = block?.calendars
   const maxResults = 500
+  // oxlint-disable-next-line react/purity -- server component, renders once per request
   const timeMin = startOfMonth(subMonths(new Date(), 2)).toISOString()
 
   const calendarEvents = await Promise.all(

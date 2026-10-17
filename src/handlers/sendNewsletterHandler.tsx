@@ -55,10 +55,7 @@ const sendNewsletterHandler: TaskHandler<'sendNewsletter'> = async ({ input, req
       to: finnishWeeklySettings.recipientEmail,
       subject: `${finnishWeeklySettings.titlePrefix} / ${englishWeeklySettings.titlePrefix} ${finnishNewsletter.newsletterNumber}`,
       html: combinedHtml,
-      locale: 'fi',
-      fallbackLocale: 'en',
-      from: `${finnishWeeklySettings.senderName} <${finnishWeeklySettings.senderEmail}>`,
-      req
+      from: `${finnishWeeklySettings.senderName} <${finnishWeeklySettings.senderEmail}>`
     })
 
     // Generate newsletter HTML for English list members
@@ -83,10 +80,7 @@ const sendNewsletterHandler: TaskHandler<'sendNewsletter'> = async ({ input, req
       to: englishWeeklySettings.recipientEmail,
       subject: `${englishWeeklySettings.titlePrefix} ${englishNewsletter.newsletterNumber}`,
       html: englishHtml,
-      locale: 'en',
-      fallbackLocale: 'fi',
-      from: `${englishWeeklySettings.senderName} <${englishWeeklySettings.senderEmail}>`,
-      req
+      from: `${englishWeeklySettings.senderName} <${englishWeeklySettings.senderEmail}>`
     })
   } else {
     // Send career newsletter
@@ -113,10 +107,7 @@ const sendNewsletterHandler: TaskHandler<'sendNewsletter'> = async ({ input, req
       to: englishCareerSettings.recipientEmail,
       subject: `${englishCareerSettings.titlePrefix} ${englishNewsletter.newsletterNumber}`,
       html,
-      locale: 'en',
-      fallbackLocale: 'fi',
-      from: `${englishCareerSettings.senderName} <${englishCareerSettings.senderEmail}>`,
-      req
+      from: `${englishCareerSettings.senderName} <${englishCareerSettings.senderEmail}>`
     })
   }
 

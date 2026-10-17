@@ -30,7 +30,7 @@ After changing Payload collections/globals/blocks, run `pnpm generate:payload` â
 - **Tailwind CSS v4** â€” CSS-first config (no `tailwind.config.*`), configured in `globals.css`
 - **next-intl** for i18n routing and translations
 - **Zod v4** for validation
-- **pnpm 11** (enforced via `preinstall` script), Node >= 26, ESM (`"type": "module"`)
+- **pnpm 12** (enforced via `preinstall` script), Node >= 26, ESM (`"type": "module"`)
 
 ## Project Structure
 

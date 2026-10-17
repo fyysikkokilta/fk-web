@@ -74,7 +74,7 @@ function MonthViewEventElement(props: EventProps<BigCalendarEvent>) {
 export const CalendarClient = ({ events, locale }: CalendarClientProps) => {
   const t = useTranslations()
   const [view, setView] = useState<View>(Views.MONTH)
-  const [date, setDate] = useState(new Date())
+  const [date, setDate] = useState(() => new Date())
 
   const calendarEvents: BigCalendarEvent[] = useMemo(() => {
     return events.map((event) => {
@@ -124,7 +124,7 @@ export const CalendarClient = ({ events, locale }: CalendarClientProps) => {
   )
 
   return (
-    <div className="not-prose flex h-full min-h-[600px] w-full flex-col">
+    <div className="not-prose flex h-full min-h-150 w-full flex-col">
       <Calendar
         className="flex-1"
         view={view}
