@@ -8,7 +8,10 @@ const withNextIntl = createNextIntlPlugin()
 const nextConfig: NextConfig = {
   output: 'standalone',
   reactCompiler: true,
-  compress: false,
+  experimental: {
+    turbopackGc: true,
+    turbopackRustReactCompiler: true
+  },
   images: {
     remotePatterns: [
       ...(process.env.NEXT_PUBLIC_SERVER_URL
