@@ -1,6 +1,6 @@
-# CLAUDE.md
+# AGENTS.md
 
-This file provides guidance for Claude Code when working in the fk-web repository (Guild of Physics website).
+This file provides guidance for AI coding agents when working in the fk-web repository (Guild of Physics website).
 
 ## Commands
 
