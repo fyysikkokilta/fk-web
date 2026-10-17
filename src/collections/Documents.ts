@@ -49,7 +49,9 @@ export const Documents: CollectionConfig = {
     beforeOperation: [
       async ({ req, operation }) => {
         if (['create', 'update'].includes(operation) && req.file) {
-          const compressedBuffer = await compress(req.file.data)
+          // compress-pdf overrides the result's `.buffer` with the Buffer itself, which
+          // makes fetch hang on it as a request body. Copy into a normal Buffer.
+          const compressedBuffer = Buffer.from(await compress(req.file.data))
           req.file.data = compressedBuffer
           req.file.size = compressedBuffer.length
         }
